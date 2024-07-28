@@ -7,14 +7,17 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
-    ): FirebaseRepository {
-    override suspend fun saveUser(
-        userUid: String, user: User
-    ): Task<DocumentReference?> {
-        return firebaseFirestore.collection(USER_COLLECTION).document(userUid).collection("info").add(user)
+) : FirebaseRepository {
+    override suspend fun saveUser(userUid: String, user: User): DocumentReference? {
+        return firebaseFirestore.collection(USER_COLLECTION)
+            .document(userUid)
+            .collection("info")
+            .add(user)
+            .await()
     }
 }

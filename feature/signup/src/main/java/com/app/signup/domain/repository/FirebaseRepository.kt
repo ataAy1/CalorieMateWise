@@ -6,8 +6,6 @@ import com.google.firebase.firestore.DocumentReference
 
 interface FirebaseRepository {
 
-    suspend fun saveUser(
-        userUid: String,
-        user: User
-    ): Task<DocumentReference?>
+    suspend fun saveUser(userUid: String, user: User): DocumentReference?
+
 }
