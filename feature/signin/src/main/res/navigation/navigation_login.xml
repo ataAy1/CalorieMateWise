@@ -1,0 +1,33 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_login"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/signInFragment">
+
+    <!-- Login Fragment Definition -->
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.app.signin.presentation.SignIn"
+        android:label="SignIn"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_deneragment"
+            app:destination="@id/deneragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/deneragment"
+        android:name="com.app.signin.presentation.Deneragment"
+        android:label="fragment_deneragment"
+        tools:layout="@layout/fragment_deneragment" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.app.signup.presentation.SignUpFragment"
+        android:label="SignUpFragment" />
+    <include app:graph="@navigation/navigation_home" />
+</navigation>

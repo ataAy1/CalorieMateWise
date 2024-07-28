@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "153989577280",
+    "project_id": "kaloritakip-d237f",
+    "storage_bucket": "kaloritakip-d237f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153989577280:android:56237188e8b7c3f8b9fda5",
+        "android_client_info": {
+          "package_name": "com.caloriematewise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy-rPDgtDRNwFWj5kuCQ9_eqzPWn1ixbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

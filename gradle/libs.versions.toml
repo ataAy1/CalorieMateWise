@@ -1,0 +1,81 @@
+    [versions]
+    agp = "8.4.2"
+    coreKtx = "1.13.1"
+    junit = "4.13.2"
+    junitVersion = "1.2.1"
+    espressoCore = "3.6.1"
+    appcompat = "1.7.0"
+    material = "1.12.0"
+    activity = "1.9.0"
+    constraintlayout = "2.1.4"
+    googleGmsGoogleServices = "4.4.2"
+    firebaseAuth = "23.0.0"
+    firebaseDatabase = "21.0.0"
+    lifecycleViewmodel = "2.8.3"
+    navigationFragment = "2.7.7"
+    navigationUi = "2.7.7"
+    databinding = "8.5.1"
+    ksp = "2.0.0-1.0.22"
+    kotlinSerialization = "2.0.0"
+    firestoreKtx = "25.0.0"
+    android-library = "8.4.1"
+    coil = "2.3.0"
+    glide = "4.15.1"
+    hilt = "2.50"
+    fragmentKtx = "1.8.1"
+    room = "2.6.1"
+    coroutines = "1.7.3"
+    retrofit = "2.9.0"
+    retrofitConverterGson = "2.9.0"
+    picasso = "2.71828"
+    kapt = "1.9.0"
+    firebaseBom = "33.1.2"
+    kotlin = "2.0.0"
+    google-services = "4.4.2"
+
+    [libraries]
+    androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+    junit = { group = "junit", name = "junit", version.ref = "junit" }
+    androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+    androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+    androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+    material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+    androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+    androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+    firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+    firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+    androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodel" }
+    androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragment" }
+    androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUi" }
+    androidx-databinding-common = { group = "androidx.databinding", name = "databinding-common", version.ref = "databinding" }
+    firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firestoreKtx" }
+    coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+
+    firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+    firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseBom" }  # Uses the firebaseBom version
+    google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+
+
+    hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+    hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+    androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
+
+    androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+    room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+    room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+    room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+    kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+    kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+    retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+    retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverterGson" }
+    picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
+
+    [plugins]
+    android-application = { id = "com.android.application", version.ref = "agp" }
+    android-library = { id = "com.android.library", version.ref = "android-library" }
+    jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+    ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+    kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
+    hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+    android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+    google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }

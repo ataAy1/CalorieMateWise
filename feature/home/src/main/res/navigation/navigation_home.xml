@@ -1,0 +1,44 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_home"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.app.home.presentation.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchInteractiveFragment"
+            app:destination="@id/searchInteractiveFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealPlanningFragment"
+            app:destination="@id/mealPlanningFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.app.profile.presentation.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/searchInteractiveFragment"
+        android:name="com.app.search_interactive.presentation.SearchInteractiveFragment"
+        android:label="SearchInteractiveFragment" />
+    <fragment
+        android:id="@+id/mealPlanningFragment"
+        android:name="com.app.meal_planning.presentation.MealPlanningFragment"
+        android:label="MealPlanningFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.app.search.presentation.SearchFragment"
+        android:label="SearchFragment" />
+
+
+</navigation>
