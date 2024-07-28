@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.picasso)
+
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
