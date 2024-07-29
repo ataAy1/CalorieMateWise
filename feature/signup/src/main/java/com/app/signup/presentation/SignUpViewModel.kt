@@ -16,5 +16,17 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState
 
-
+    fun signUp(email: String, password: String) {
+        viewModelScope.launch {
+            _uiState.value = SignUpUiState(isLoading = true)
+            try {
+                val userUid ="4214"
+                val user = User(email, password)
+                signUpUseCase.execute(userUid, user)
+                _uiState.value = SignUpUiState(success = true)
+            } catch (e: Exception) {
+                _uiState.value = SignUpUiState(error = e.message)
+            }
+        }
+    }
 }

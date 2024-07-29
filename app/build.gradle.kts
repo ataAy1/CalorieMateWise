@@ -74,7 +74,10 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     implementation(project(":feature:search-interactive"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:detail"))
     implementation(project(":feature:signin"))
+    implementation(project(":feature:signup"))
     implementation(project(":feature:home"))
     implementation(project(":feature:meal-planning"))
     implementation(project(":feature:search"))

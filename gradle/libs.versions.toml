@@ -32,6 +32,7 @@
     firebaseBom = "33.1.2"
     kotlin = "2.0.0"
     google-services = "4.4.2"
+    lifecycleLiveData = "2.8.3"
 
 
     [libraries]
@@ -70,6 +71,7 @@
     retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
     retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverterGson" }
     picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
+    androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLiveData" }
 
     [plugins]
     android-application = { id = "com.android.application", version.ref = "agp" }
