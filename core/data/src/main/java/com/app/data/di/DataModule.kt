@@ -1,7 +1,6 @@
 package com.app.data.di
 
-import com.app.signup.data.FirebaseRepositoryImpl
-import com.app.signup.domain.repository.FirebaseRepository
+
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides

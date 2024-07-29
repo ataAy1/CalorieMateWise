@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,14 @@ class SignUpFragment : Fragment() {
     private val binding get() = _binding!!
     private val signUpViewModel: SignUpViewModel by viewModels()
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -33,11 +42,18 @@ class SignUpFragment : Fragment() {
         // Collect StateFlow
         lifecycleScope.launch {
             signUpViewModel.uiState.collect { state ->
-                if (state.isLoading) {
+                // Handle the UI state updates here
+                binding.progressBarSignUp.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+
+                state.success?.let {
+                    // Navigate to another screen or show success message
+                    Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
+                    // Example navigation: findNavController().navigate(R.id.action_signUpFragment_to_nextFragment)
                 }
-                if (state.success) {
-                }
-                if (state.error != null) {
+
+                state.error?.let { errorMessage ->
+                    // Show error message
+                    Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
             }
         }
