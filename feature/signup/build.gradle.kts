@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.serialization)
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
+
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,11 +52,16 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+
     implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.androidx.lifecycle.livedata.ktx)
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

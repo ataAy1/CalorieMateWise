@@ -39,20 +39,19 @@ class SignUpFragment : Fragment() {
             signUpViewModel.signUp(email, password)
         }
 
-        // Collect StateFlow
+        observeSignUpState()
+    }
+
+    private fun observeSignUpState() {
         lifecycleScope.launch {
             signUpViewModel.uiState.collect { state ->
-                // Handle the UI state updates here
                 binding.progressBarSignUp.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-                state.success?.let {
-                    // Navigate to another screen or show success message
+                if (state.success) {
                     Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                    // Example navigation: findNavController().navigate(R.id.action_signUpFragment_to_nextFragment)
                 }
 
                 state.error?.let { errorMessage ->
-                    // Show error message
                     Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
             }

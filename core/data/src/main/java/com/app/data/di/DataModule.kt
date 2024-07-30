@@ -13,9 +13,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataModule {
     
-    @Provides
+  /*  @Provides
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
-    }
+    }*/
+
+
 }

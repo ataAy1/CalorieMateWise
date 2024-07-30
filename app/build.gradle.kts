@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.serialization)
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
+
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -70,6 +71,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
@@ -84,8 +86,4 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
-}
-
-kapt {
-    correctErrorTypes = true
 }

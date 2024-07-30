@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
-) : FirebaseRepository {
+) :FirebaseRepository {
     override suspend fun saveUser(userUid: String, user: User): DocumentReference? {
         return firebaseFirestore.collection(USER_COLLECTION)
             .document(userUid)
-            .collection("info")
+            .collection("user_info")
             .add(user)
             .await()
     }

@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set up BottomNavigationView with NavController
         navView.setupWithNavController(navController)
     }
 
