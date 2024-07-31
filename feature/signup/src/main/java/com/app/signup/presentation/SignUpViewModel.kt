@@ -28,7 +28,7 @@ class SignUpViewModel @Inject constructor(
                 val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 val userUid = authResult.user?.uid ?: throw Exception("User UID is null")
 
-                val user = User(email, password)
+                val user = User(email)
                 signUpUseCase.execute(userUid, user)
                 _uiState.value = SignUpUIState(success = true)
             } catch (e: Exception) {

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.app.signin.R
 import com.app.signin.databinding.FragmentSignInBinding
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -30,9 +31,17 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+      /*
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            findNavController().navigate(R.id.action_signInFragment_to_navigation_home)
+        }
+      */
         binding.buttonRegister.setOnClickListener{
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
