@@ -31,17 +31,20 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-      /*
+    override fun onStart() {
+        super.onStart()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             findNavController().navigate(R.id.action_signInFragment_to_navigation_home)
         }
-      */
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+
         binding.buttonRegister.setOnClickListener{
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
