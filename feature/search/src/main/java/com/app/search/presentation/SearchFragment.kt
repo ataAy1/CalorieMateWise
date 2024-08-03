@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.search.R
 import com.app.search.data.model.ParsedFood
@@ -24,6 +26,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var adapter: FoodAdapter
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,11 +58,12 @@ class SearchFragment : Fragment() {
             }
         }
 
-        searchViewModel.search("egg")
+        searchViewModel.search("meat")
     }
 
     private fun setupRecyclerView() {
-        adapter = FoodAdapter()
+        navController = findNavController()
+        adapter = FoodAdapter(navController)
         binding.searchRecylerview.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecylerview.adapter = adapter
     }

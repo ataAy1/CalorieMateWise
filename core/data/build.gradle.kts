@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.serialization)
+    id("org.jetbrains.kotlin.plugin.parcelize")
     id("kotlin-kapt")
 }
 
@@ -68,7 +70,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
 
 }
 

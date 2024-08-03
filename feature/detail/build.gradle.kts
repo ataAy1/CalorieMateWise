@@ -2,8 +2,11 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.navigation.safe.args)
     id("kotlin-kapt")
 }
+
 
 android {
     namespace = "com.app.detail"
@@ -32,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding=true
+    }
 }
 
 dependencies {
@@ -39,7 +45,17 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     kapt(libs.hilt.android.compiler)
+
+    implementation(project(":core:data"))
+    
+    //Coil
+    implementation(libs.coil)
+
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.navigation.safe.args)
     id("kotlin-kapt")
 }
 
@@ -42,27 +44,30 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     kapt(libs.hilt.android.compiler)
 
-     // Retrofit and Gson
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
+    implementation(project(":core:data"))
 
     //Coil
     implementation(libs.coil)
 
-    // AndroidX and Material
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
-
-    implementation(project(":core:utils"))
-
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    implementation(project(":core:utils"))
+    implementation(project(":feature:detail"))
 }
+
+

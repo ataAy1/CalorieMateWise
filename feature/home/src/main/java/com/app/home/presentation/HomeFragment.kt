@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
         Log.e("error","bak")
 
         binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            //findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
 
         }
     }

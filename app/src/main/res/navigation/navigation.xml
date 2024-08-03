@@ -12,6 +12,7 @@
         android:id="@+id/profileFragment3"
         android:name="com.app.profile.presentation.ProfileFragment"
         android:label="ProfileFragment" />
+    <include app:graph="@navigation/navigation_search" />
 </navigation>
 
 

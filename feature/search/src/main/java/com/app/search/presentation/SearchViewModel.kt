@@ -26,9 +26,7 @@ class SearchViewModel @Inject constructor(
 
                 searchUseCase.execute(query).collect { response ->
                     val parsedFoods = response.parsed.map { parsed ->
-
                         mapper.mapFoodToParsedFood(parsed.food)
-
                     }
 
                     val hintFoods = response.hints.map { hint ->

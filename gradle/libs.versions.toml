@@ -11,18 +11,18 @@ constraintlayout = "2.1.4"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
-lifecycleViewmodel = "2.8.3"
+lifecycleViewmodel = "2.8.4"
 navigationFragment = "2.7.7"
 navigationUi = "2.7.7"
 databinding = "8.5.1"
 ksp = "2.0.0-1.0.22"
-kotlinSerialization = "2.0.0"
+kotlinSerialization = "1.7.0"  # Check if this is compatible with your Kotlin version
 firestoreKtx = "25.0.0"
 android-library = "8.4.1"
 coil = "2.3.0"
 glide = "4.15.1"
 hilt = "2.50"
-fragmentKtx = "1.8.1"
+fragmentKtx = "1.8.2"
 room = "2.6.1"
 coroutines = "1.7.3"
 retrofit = "2.9.0"
@@ -30,14 +30,15 @@ retrofitConverterGson = "2.9.0"
 picasso = "2.71828"
 kapt = "1.9.0"
 firebaseBom = "33.1.2"
-kotlin = "2.0.0"
+kotlin = "1.9.24"
 google-services = "4.4.2"
 lifecycleLiveData = "2.8.4"
 hilt-android = "2.50"
 hilt-android-compiler = "2.50"
 googleDaggerHiltAndroid = "2.50"
 jetbrainsKotlinAndroid = "2.0.0"
-androidGradlePlugin = "8.2.2"
+androidGradlePlugin = "8.2.2"  # This is fine for AGP 8.x
+navigationSafeArgs = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,11 +75,13 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverterGson" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLiveData" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsKotlinAndroid" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "googleDaggerHiltAndroid" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "jetbrainsKotlinAndroid" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
+navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationSafeArgs" }
