@@ -1,13 +1,12 @@
-import android.os.Bundle
+// FoodAdapter.kt
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.app.search.data.model.ParsedFood
-import com.app.search.databinding.ItemFoodBinding
 import coil.load
-import com.app.search.R
+import com.app.data.dto.ParsedFood
+import com.app.search.databinding.ItemFoodBinding
+import com.app.search.presentation.SearchFragmentDirections
 
 class FoodAdapter(private val navController: NavController) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
@@ -27,20 +26,13 @@ class FoodAdapter(private val navController: NavController) : RecyclerView.Adapt
         val food = foodList[position]
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("getFoodDetail", "ataa")
-            }
-
-            navController.navigate(com.app.detail.R.id.navigation_detail, bundle)
+            val action = SearchFragmentDirections.actionSearchFragmentToNavigationDetail(food)
+            navController.navigate(action)
         }
 
         holder.binding.foodLabel.text = food.label
         holder.binding.foodCalories.text = "${food.nutrients.ENERC_KCAL} kcal"
-
-        holder.binding.foodImage.load(food.image) {
-            // placeholder(R.drawable.placeholder_image)
-            // error(R.drawable.error_image)
-        }
+        holder.binding.foodImage.load(food.image)
     }
 
     override fun getItemCount(): Int = foodList.size

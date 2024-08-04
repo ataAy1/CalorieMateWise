@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SearchUseCase @Inject constructor(
     private val repository: SearchRepository
 ) {
-    suspend fun execute(query: String): Flow<ApiResponse> {
+    suspend fun execute(query: String): Flow<com.app.data.dto.ApiResponse> {
         return repository.searchFood(query)
     }
 }

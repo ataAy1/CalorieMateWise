@@ -11,5 +11,5 @@ interface FoodDatabaseApi {
         @Query("app_key") appKey: String,
         @Query("ingr") query: String,
         @Query("nutrition-type") nutritionType: String
-    ): ApiResponse
+    ): com.app.data.dto.ApiResponse
 }

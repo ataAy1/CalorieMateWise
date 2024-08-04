@@ -1,10 +1,10 @@
 package com.app.search.data.mapper
 
-import com.app.search.data.model.Food
-import com.app.search.data.model.ParsedFood
+import com.app.data.dto.ParsedFood
+
 
 class SearchMapper {
-    fun mapFoodToParsedFood(food: Food): ParsedFood {
+    fun mapFoodToParsedFood(food: com.app.data.dto.Food): ParsedFood {
         return ParsedFood(
             foodId = food.foodId,
             label = food.label,

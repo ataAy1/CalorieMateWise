@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/navigation_login">
+    app:startDestination="@id/navigation_home">
+
     <fragment
-        android:id="@+id/homeFragment2"
+        android:id="@+id/homeFragment"
         android:name="com.app.home.presentation.HomeFragment"
         android:label="HomeFragment" />
+
     <fragment
-        android:id="@+id/profileFragment3"
+        android:id="@+id/profileFragment"
         android:name="com.app.profile.presentation.ProfileFragment"
         android:label="ProfileFragment" />
+
     <include app:graph="@navigation/navigation_search" />
+    <include app:graph="@navigation/navigation_home" />
+
 </navigation>
-
-

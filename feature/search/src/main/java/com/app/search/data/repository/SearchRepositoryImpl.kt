@@ -14,7 +14,7 @@ import javax.inject.Inject
 class SearchRepositoryImpl @Inject constructor(
     private val apiService: FoodDatabaseApi
 ) : SearchRepository {
-    override fun searchFood(query: String): Flow<ApiResponse> = flow {
+    override fun searchFood(query: String): Flow<com.app.data.dto.ApiResponse> = flow {
         val response = apiService.searchFood(
             appId = Constants.APP_ID,
             appKey = Constants.APP_KEY,
@@ -27,6 +27,6 @@ class SearchRepositoryImpl @Inject constructor(
         // Optional: Do something before the flow starts
     }.catch { e ->
         Log.e("SearchRepositoryImpl", "Error fetching food data", e)
-        emit(ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))
+        emit(com.app.data.dto.ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))
     }
 }

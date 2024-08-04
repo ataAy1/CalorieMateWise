@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_navigation"
             app:destination="@id/navigation" />
+        <action
+            android:id="@+id/action_homeFragment_to_navigation_search"
+            app:destination="@id/navigation_search" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

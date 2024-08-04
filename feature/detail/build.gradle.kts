@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.navigation.safe.args)
     id("kotlin-kapt")
@@ -50,7 +51,13 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     implementation(project(":core:data"))
-    
+
+    //firebase
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
+
+
     //Coil
     implementation(libs.coil)
 
