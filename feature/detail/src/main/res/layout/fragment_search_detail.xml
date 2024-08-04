@@ -86,4 +86,15 @@
         app:layout_constraintEnd_toEndOf="@+id/textFoodCarbohydrates"
         app:layout_constraintStart_toStartOf="@+id/textFoodProtein"
         app:layout_constraintTop_toBottomOf="@+id/textFoodFat" />
+
+    <ProgressBar
+            android:id="@+id/progressBarAddToMeal"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddToMeal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

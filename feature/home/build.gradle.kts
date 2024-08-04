@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.navigation.safe.args)
     id("kotlin-kapt")
 }
 
@@ -10,7 +13,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -29,7 +32,9 @@ android {
 
     }
 
-
+    buildFeatures{
+        viewBinding=true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -52,6 +57,19 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    //firebase
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
+
+
+    //Coil
+    implementation(libs.coil)
+
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
