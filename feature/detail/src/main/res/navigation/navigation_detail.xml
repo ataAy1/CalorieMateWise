@@ -1,0 +1,17 @@
+<!-- navigation_detail.xml -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_detail"
+    app:startDestination="@id/searchDetailFragment">
+
+    <fragment
+        android:id="@+id/searchDetailFragment"
+        android:name="com.app.detail.presentation.SearchDetailFragment"
+        android:label="fragment_search_detail"
+        tools:layout="@layout/fragment_search_detail">
+        <argument
+            android:name="parsedFood"
+            app:argType="com.app.data.dto.ParsedFood" />
+    </fragment>
+</navigation>

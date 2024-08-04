@@ -7,25 +7,16 @@
     tools:context=".presentation.HomeFragment">
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="homeToLogin"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="415dp"
+        android:layout_height="124dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="48dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="406dp"
+        android:layout_height="172dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="#575252"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        app:itemRippleColor="#2962FF"
-
-        app:menu="@menu/menu" />
+        tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
