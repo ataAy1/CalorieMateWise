@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.app.data.dto.ParsedFood
-import com.app.search.databinding.ItemFoodBinding
+import com.app.search.databinding.ItemFoodSearchBinding
 import com.app.search.presentation.SearchFragmentDirections
 
 class FoodAdapter(private val navController: NavController) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
@@ -18,7 +18,7 @@ class FoodAdapter(private val navController: NavController) : RecyclerView.Adapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
-        val binding = ItemFoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFoodSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FoodViewHolder(binding)
     }
 
@@ -37,5 +37,5 @@ class FoodAdapter(private val navController: NavController) : RecyclerView.Adapt
 
     override fun getItemCount(): Int = foodList.size
 
-    class FoodViewHolder(val binding: ItemFoodBinding) : RecyclerView.ViewHolder(binding.root)
+    class FoodViewHolder(val binding: ItemFoodSearchBinding) : RecyclerView.ViewHolder(binding.root)
 }

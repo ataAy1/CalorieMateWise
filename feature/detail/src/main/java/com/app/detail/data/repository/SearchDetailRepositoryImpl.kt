@@ -25,12 +25,12 @@ class SearchDetailRepositoryImpl @Inject constructor(
         try {
             firestore.collection("meals")
                 .document(userId)
-                .collection(food.year) // Collection for the year
-                .document(food.yearOfMonth) // Document for the specific year-month
-                .collection(food.dayOfMonth.toString()) // Collection for the day of the month
-                .document(dayName) // Document ID for the day name
-                .collection("foods") // Subcollection to hold multiple food items
-                .add(food) // Add a new food item with an auto-generated ID
+                .collection(food.year)
+                .document(food.yearOfMonth)
+                .collection(food.dayOfMonth.toString())
+                .document(dayName)
+                .collection("foods")
+                .add(food)
                 .await()
         } catch (e: Exception) {
             throw e

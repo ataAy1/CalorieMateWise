@@ -1,16 +1,21 @@
 package com.app.home.presentation
 
+import FoodsByDateAdapter
+import TodayFoodsAdapter
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.app.home.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.home.databinding.FragmentHomeBinding
-import dagger.hilt.android.AndroidEntryPoint
 
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -18,23 +23,48 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: HomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("error","bak")
 
-        binding.button.setOnClickListener {
-            //findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
+        val foodsByDateAdapter = FoodsByDateAdapter(emptyList())
 
+        binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewTodayFoods.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        binding.recyclerViewTodayFoods.adapter = todayFoodsAdapter
+        binding.recyclerViewFoodsByDate.adapter = foodsByDateAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.todayFoods.collect { foods ->
+                Log.d("UIUpdate", "Updating UI with today foods: $foods")
+                todayFoodsAdapter.updateData(foods)
+            }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.foodsByDate.collect { foods ->
+                Log.d("UIUpdate", "Updating UI with foods by date: $foods")
+                foodsByDateAdapter.updateData(foods)
+            }
+        }
+
+        viewModel.getTodayFoods()
+        viewModel.getFoodsByDate("2024-08-05") // Example date
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
