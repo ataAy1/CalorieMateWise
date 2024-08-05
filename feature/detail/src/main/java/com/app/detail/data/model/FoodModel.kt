@@ -13,5 +13,8 @@ data class FoodModel(
     val carbohydrates: Double,
     val image: String,
     val date: String,
+    val year:String,
+    val yearOfMonth:String,
+    val dayOfMonth:String,
     val dayName: String
 )

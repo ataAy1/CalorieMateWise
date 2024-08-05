@@ -63,7 +63,8 @@ class SearchDetailFragment : Fragment() {
                 Log.d("SearchDetailFragment", "Current User: ${user.uid}, Email: ${user.email}")
 
                 val today = LocalDate.now()
-                val yearMonth = today.format(DateTimeFormatter.ofPattern("yyyy-MM"))
+                val year = today.format(DateTimeFormatter.ofPattern("yyyy"))
+                val yearMonth = today.format(DateTimeFormatter.ofPattern("MM"))
                 val day = today.dayOfMonth
                 val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
 
@@ -76,7 +77,10 @@ class SearchDetailFragment : Fragment() {
                     carbohydrates = foodDetail.nutrients.CHOCDF,
                     image = foodDetail.image,
                     date = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                    dayName = dayName
+                    year = year,
+                    dayName = dayName,
+                    dayOfMonth = day.toString(),
+                    yearOfMonth = yearMonth
                 )
 
                 viewModel.addFoodToMeal(foodModel)
