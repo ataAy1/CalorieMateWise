@@ -53,14 +53,14 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.foodsByDate.collect { foods ->
-                Log.d("UIUpdate", "Updating UI with foods by date: $foods")
+            viewModel.allFoods.collect { foods ->
+                Log.d("UIUpdate", "Updating UI with all foods: $foods")
                 foodsByDateAdapter.updateData(foods)
             }
         }
 
         viewModel.getTodayFoods()
-        viewModel.getFoodsByDate("2024-08-05") // Example date
+        viewModel.getAllFoods()
     }
 
     override fun onDestroyView() {

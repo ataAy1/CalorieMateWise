@@ -1,7 +1,7 @@
 package com.app.home.di
 
 import com.app.home.domain.repository.HomeRepository
-import com.app.home.domain.usecase.GetFoodsByDateUseCase
+import com.app.home.domain.usecase.GetAllFoodsUseCase
 import com.app.home.domain.usecase.GetTodayFoodsUseCase
 import dagger.Module
 import dagger.Provides
@@ -23,9 +23,9 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetFoodsByDateUseCase(
+    fun provideGetAllFoodsUseCase(
         homeRepository: HomeRepository
-    ): GetFoodsByDateUseCase {
-        return GetFoodsByDateUseCase(homeRepository)
+    ): GetAllFoodsUseCase {
+        return GetAllFoodsUseCase(homeRepository)
     }
 }
