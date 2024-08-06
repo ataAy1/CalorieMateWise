@@ -1,5 +1,6 @@
 package com.app.detail.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.app.detail.data.model.FoodModel
@@ -15,24 +16,26 @@ class SearchDetailRepositoryImpl @Inject constructor(
 ) : SearchDetailRepository {
 
     override suspend fun addFoodToMeal(food: FoodModel) {
-        val user = FirebaseAuth.getInstance().currentUser ?: throw Exception("User not authenticated")
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Log.e("FirestoreError", "User not authenticated")
+            throw Exception("User not authenticated")
+        }
+
         val userId = user.uid
         val today = LocalDate.now()
-        val yearMonth = today.format(DateTimeFormatter.ofPattern("yyyy-MM"))
-        val day = today.dayOfMonth
         val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
 
         try {
             firestore.collection("meals")
                 .document(userId)
-                .collection(food.year)
-                .document(food.yearOfMonth)
-                .collection(food.dayOfMonth.toString())
-                .document(dayName)
-                .collection("foods")
+                .collection(today.year.toString())
+                .document(today.monthValue.toString().padStart(2, '0'))
+                .collection(today.dayOfMonth.toString().padStart(2, '0'))
                 .add(food)
                 .await()
         } catch (e: Exception) {
+            Log.e("FirestoreError", "Error saving document", e)
             throw e
         }
     }
