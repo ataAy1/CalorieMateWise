@@ -24,20 +24,41 @@ class SearchDetailRepositoryImpl @Inject constructor(
 
         val userId = user.uid
         val today = LocalDate.now()
+        val year = today.year.toString()
+        val month = today.monthValue.toString().padStart(2, '0')
+        val day = today.dayOfMonth.toString().padStart(2, '0')
         val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
 
         try {
-            firestore.collection("meals")
-                .document(userId)
-                .collection("years")
-                .document(today.year.toString())
-                .collection("months")
-                .document(today.monthValue.toString().padStart(2, '0'))
-                .collection("dayofmonth")
-                .document(today.dayOfMonth.toString().padStart(2, '0'))
-                .collection("foods")
-                .add(food)
-                .await()
+
+            val userDocRef = firestore.collection("meals").document(userId)
+            val userDocSnapshot = userDocRef.get().await()
+            if (!userDocSnapshot.exists()) {
+                userDocRef.set(mapOf("exists" to true)).await()
+            }
+
+
+            val yearDocRef = userDocRef.collection("years").document(year)
+            val yearDocSnapshot = yearDocRef.get().await()
+            if (!yearDocSnapshot.exists()) {
+                yearDocRef.set(mapOf("exists" to true)).await()
+            }
+
+            val monthDocRef = yearDocRef.collection("months").document(month)
+            val monthDocSnapshot = monthDocRef.get().await()
+            if (!monthDocSnapshot.exists()) {
+                monthDocRef.set(mapOf("exists" to true)).await()
+            }
+
+            val dayDocRef = monthDocRef.collection("dayofmonth").document(day)
+            val dayDocSnapshot = dayDocRef.get().await()
+            if (!dayDocSnapshot.exists()) {
+                dayDocRef.set(mapOf("exists" to true)).await()
+            }
+
+            dayDocRef.collection("foods").add(food).await()
+            Log.d("FirestoreDebug", "Food item added successfully")
+
         } catch (e: Exception) {
             Log.e("FirestoreError", "Error saving document", e)
             throw e
