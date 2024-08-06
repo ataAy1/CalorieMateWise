@@ -29,9 +29,13 @@ class SearchDetailRepositoryImpl @Inject constructor(
         try {
             firestore.collection("meals")
                 .document(userId)
-                .collection(today.year.toString())
+                .collection("years")
+                .document(today.year.toString())
+                .collection("months")
                 .document(today.monthValue.toString().padStart(2, '0'))
-                .collection(today.dayOfMonth.toString().padStart(2, '0'))
+                .collection("dayofmonth")
+                .document(today.dayOfMonth.toString().padStart(2, '0'))
+                .collection("foods")
                 .add(food)
                 .await()
         } catch (e: Exception) {
