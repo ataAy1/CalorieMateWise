@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile" />
+        android:id="@+id/userHeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="26dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/userPhotoImageView"
+        app:layout_constraintStart_toEndOf="@+id/userWeightTextView"
+        app:layout_constraintTop_toBottomOf="@+id/userMailTextView" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/foodHistoryRecyclerView"
+        android:layout_width="406dp"
+        android:layout_height="478dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/userMailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/userPhotoImageView"
+        app:layout_constraintStart_toEndOf="@+id/userWeightTextView"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <TextView
+        android:id="@+id/userAgeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/userPhotoImageView"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="@+id/userPhotoImageView"
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoImageView" />
+
+    <TextView
+        android:id="@+id/userWeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/userMailTextView"
+        app:layout_constraintStart_toStartOf="@+id/userPhotoImageView"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <ImageView
+        android:id="@+id/userPhotoImageView"
+        android:layout_width="119dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="158dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+</androidx.constraintlayout.widget.ConstraintLayout>
