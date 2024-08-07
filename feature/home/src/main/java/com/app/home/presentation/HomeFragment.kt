@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.home.databinding.FragmentHomeBinding
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -37,7 +35,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
-        val foodsByDateAdapter = FoodsByDateAdapter(emptyList())
+        val foodsByDateAdapter = FoodsByDateAdapter(emptyMap(), requireActivity())
 
         binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewTodayFoods.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
