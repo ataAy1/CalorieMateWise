@@ -37,7 +37,7 @@ class FoodsByDateAdapter(
             val dayOfMonth = firstFoodItem?.dayOfMonth ?: ""
             val dayName = firstFoodItem?.dayName ?: ""
 
-            binding.buttonDateOfMeal.text = dayOfMonth
+            binding.buttonDateOfMeal.text = dayOfMonth.toString()
 
             binding.buttonDateOfMeal.setOnClickListener {
                 showFoodsForDate("${firstFoodItem?.date} ${firstFoodItem?.dayName}", foods)
