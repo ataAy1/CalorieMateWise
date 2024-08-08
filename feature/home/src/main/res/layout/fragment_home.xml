@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textViewtotalCalories"
         android:layout_width="match_parent"
-        android:layout_height="136dp"
+        android:layout_height="156dp"
         android:textAlignment="center"
         android:gravity="center"
         android:textSize="66dp"
@@ -32,8 +32,8 @@
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/barChart"
-        android:layout_width="401dp"
-        android:layout_height="211dp"
+        android:layout_width="match_parent"
+        android:layout_height="241dp"
         android:layout_marginBottom="44dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,8 +45,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
-        android:layout_width="397dp"
-        android:layout_height="257dp"
+        android:layout_width="match_parent"
+        android:layout_height="197dp"
         android:layout_marginBottom="46dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

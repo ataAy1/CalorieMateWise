@@ -3,9 +3,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.app.home.databinding.ItemTodayFoodsBinding
 import com.app.core.data.model.FoodModel
 import com.app.home.databinding.DialogFoodDetailsBinding
+import com.app.home.databinding.ItemTodayFoodsBinding
 
 class TodayFoodsAdapter(
     private var foods: List<FoodModel>
@@ -54,7 +54,6 @@ class TodayFoodsAdapter(
             val dialogBinding = DialogFoodDetailsBinding.inflate(LayoutInflater.from(binding.root.context))
 
             val dialog = android.app.AlertDialog.Builder(binding.root.context)
-                .setTitle(food.label)
                 .setView(dialogBinding.root)
                 .setPositiveButton(android.R.string.ok, null)
                 .create()

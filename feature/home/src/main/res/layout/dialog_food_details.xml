@@ -1,47 +1,67 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/dialogImageViewFood"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:contentDescription="food_image"/>
+        android:contentDescription="food_image" />
 
     <TextView
         android:id="@+id/dialogTextFoodLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
         android:text="Food Label"/>
 
     <TextView
         android:id="@+id/dialogTextFoodCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calories"/>
+        android:text="Calories: 250"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodCarbs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Carbohydrates"/>
+        android:text="Carbohydrates: 30g"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodProtein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Protein"/>
+        android:text="Protein: 10g"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodFat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fat"/>
+        android:text="Fat: 8g"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

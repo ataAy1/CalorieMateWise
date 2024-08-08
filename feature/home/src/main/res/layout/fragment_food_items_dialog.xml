@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/alice_blue"
     tools:context=".presentation.FoodItemsDialogFragment">
 
     <TextView
@@ -11,42 +13,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:padding="16dp" />
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <TextView
         android:id="@+id/totalCaloriesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Calories"
+        android:textSize="18sp"
+        android:textColor="@color/pink"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/dateTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:padding="16dp" />
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <TextView
         android:id="@+id/totalFatTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Fat"
+        android:textSize="18sp"
+        android:textColor="@color/coral"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/totalCaloriesTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:padding="16dp" />
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <TextView
         android:id="@+id/totalCarbTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Carb Items"
+        android:textSize="18sp"
+        android:textColor="@color/orange_red"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/totalFatTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:padding="16dp" />
+        app:layout_constraintHorizontal_bias="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
