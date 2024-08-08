@@ -11,9 +11,6 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_searchInteractiveFragment"
             app:destination="@id/searchInteractiveFragment" />
         <action
@@ -25,11 +22,10 @@
         <action
             android:id="@+id/action_homeFragment_to_navigation_search"
             app:destination="@id/navigation_search" />
+        <action
+            android:id="@+id/action_homeFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.app.profile.presentation.ProfileFragment"
-        android:label="ProfileFragment" />
     <fragment
         android:id="@+id/searchInteractiveFragment"
         android:name="com.app.search_interactive.presentation.SearchInteractiveFragment"
@@ -39,6 +35,7 @@
         android:name="com.app.meal_planning.presentation.MealPlanningFragment"
         android:label="MealPlanningFragment" />
     <include app:graph="@navigation/navigation_search" />
+    <include app:graph="@navigation/navigation_profile" />
 
 
 </navigation>

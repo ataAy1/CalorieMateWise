@@ -16,7 +16,7 @@ navigationFragment = "2.7.7"
 navigationUi = "2.7.7"
 databinding = "8.5.1"
 ksp = "2.0.0-1.0.22"
-kotlinSerialization = "1.7.0"  # Check if this is compatible with your Kotlin version
+kotlinSerialization = "1.7.0"
 firestoreKtx = "25.0.0"
 android-library = "8.4.1"
 coil = "2.3.0"
@@ -37,8 +37,10 @@ hilt-android = "2.50"
 hilt-android-compiler = "2.50"
 googleDaggerHiltAndroid = "2.50"
 jetbrainsKotlinAndroid = "2.0.0"
-androidGradlePlugin = "8.2.2"  # This is fine for AGP 8.x
+androidGradlePlugin = "8.2.2"
 navigationSafeArgs = "2.7.7"
+mpandroidchart = "v3.1.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +59,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-databinding-common = { group = "androidx.databinding", name = "databinding-common", version.ref = "databinding" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firestoreKtx" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+mpandroidchart = { group = "com.github.PhilJay", name = "mpandroidchart", version.ref = "mpandroidchart" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseBom" }  # Uses the firebaseBom version

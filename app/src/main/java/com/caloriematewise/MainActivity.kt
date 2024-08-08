@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_search,
             R.id.searchInteractiveFragment,
             R.id.mealPlanningFragment,
-            R.id.profileFragment
+            R.id.navigation_profile
         )
 
         val appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations).build()

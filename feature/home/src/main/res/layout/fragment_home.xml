@@ -9,16 +9,31 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFoodsByDate"
-        android:layout_width="406dp"
-        android:layout_height="174dp"
+        android:layout_width="407dp"
+        android:layout_height="196dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/barChart"
+        android:layout_width="401dp"
+        android:layout_height="211dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFoodsByDate"
+        app:layout_constraintVertical_bias="0.811" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
-        android:layout_width="406dp"
-        android:layout_height="258dp"
+        android:layout_width="397dp"
+        android:layout_height="257dp"
         android:layout_marginBottom="46dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

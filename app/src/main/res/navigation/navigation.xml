@@ -10,12 +10,8 @@
         android:name="com.app.home.presentation.HomeFragment"
         android:label="HomeFragment" />
 
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.app.profile.presentation.ProfileFragment"
-        android:label="ProfileFragment" />
-
     <include app:graph="@navigation/navigation_search" />
     <include app:graph="@navigation/navigation_home" />
+    <include app:graph="@navigation/navigation_profile" />
 
 </navigation>

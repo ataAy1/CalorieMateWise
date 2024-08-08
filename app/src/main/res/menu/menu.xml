@@ -22,7 +22,7 @@
         android:title="Meal Planning"/>
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_android_black_24dp"
         android:title="Profile"/>
 
