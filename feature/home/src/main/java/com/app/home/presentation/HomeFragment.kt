@@ -7,13 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.core.data.model.FoodModel
+import com.app.home.R
 import com.app.home.databinding.FragmentHomeBinding
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -47,6 +55,8 @@ class HomeFragment : Fragment() {
             viewModel.todayFoods.collect { foods ->
                 Log.d("UIUpdate", "Updating UI with today foods: $foods")
                 todayFoodsAdapter.updateData(foods)
+                updateBarChartAndTotalCalorie(foods)
+
             }
         }
 
@@ -57,9 +67,39 @@ class HomeFragment : Fragment() {
             }
         }
 
+
+
         viewModel.getTodayFoods()
         viewModel.getAllFoods()
+
+
+
     }
+    private fun updateBarChartAndTotalCalorie(foods: List<FoodModel>) {
+        val protein = foods.sumOf { it.protein }
+        val carbohydrates = foods.sumOf { it.carbohydrates }
+        val fat = foods.sumOf { it.fat }
+        binding.textViewtotalCalories.text= foods.sumOf { it.calories }.toString()
+
+        val entries = listOf(
+            BarEntry(0f, protein.toFloat()),
+            BarEntry(1f, carbohydrates.toFloat()),
+            BarEntry(2f, fat.toFloat())
+        )
+
+        val dataSet = BarDataSet(entries, "Macronutrients")
+        dataSet.colors = listOf(
+            ContextCompat.getColor(requireContext(), R.color.proteinColor),
+            ContextCompat.getColor(requireContext(), R.color.carbohydratesColor),
+            ContextCompat.getColor(requireContext(), R.color.fatColor)
+        )
+
+        val barData = BarData(dataSet)
+        binding.barChart.data = barData
+        binding.barChart.xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Protein", "Carbs", "Fat"))
+        binding.barChart.invalidate()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

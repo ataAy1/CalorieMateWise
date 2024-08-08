@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.app.home.databinding.ItemTodayFoodsBinding
 import com.app.core.data.model.FoodModel
+import com.app.home.databinding.DialogFoodDetailsBinding
 
 class TodayFoodsAdapter(
     private var foods: List<FoodModel>
@@ -32,10 +33,42 @@ class TodayFoodsAdapter(
 
     inner class FoodViewHolder(private val binding: ItemTodayFoodsBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val food = foods[position]
+                    showFoodDetailsDialog(food)
+                }
+            }
+        }
+
         fun bind(food: FoodModel) {
             binding.textFoodLabel.text = food.label
             binding.textFoodCalories.text = food.calories.toString()
             binding.imageViewFood.load(food.image)
         }
+
+        private fun showFoodDetailsDialog(food: FoodModel) {
+            val dialogBinding = DialogFoodDetailsBinding.inflate(LayoutInflater.from(binding.root.context))
+
+            val dialog = android.app.AlertDialog.Builder(binding.root.context)
+                .setTitle(food.label)
+                .setView(dialogBinding.root)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+
+            dialogBinding.dialogTextFoodLabel.text = food.label
+            dialogBinding.dialogTextFoodCalories.text = "Calories: ${food.calories}"
+            dialogBinding.dialogTextFoodCarbs.text = "Carbohydrates: ${food.carbohydrates}"
+            dialogBinding.dialogTextFoodProtein.text = "Protein: ${food.protein}"
+            dialogBinding.dialogTextFoodFat.text = "Fat: ${food.fat}"
+            dialogBinding.dialogImageViewFood.load(food.image)
+
+            dialog.show()
+        }
+
     }
+
 }
