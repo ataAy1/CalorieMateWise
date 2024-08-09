@@ -12,6 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="151dp"
         android:layout_height="187dp"
+        android:background="@drawable/card_today_food_background"
         android:padding="16dp">
 
         <ImageView

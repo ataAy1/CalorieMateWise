@@ -8,15 +8,25 @@
 
 
     <TextView
+        android:id="@+id/dateOfCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="44dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
+
+    <TextView
         android:id="@+id/textViewtotalCalories"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:textAlignment="center"
+        android:layout_height="166dp"
+        android:background="@drawable/gradient_bg"
         android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
         android:textSize="66dp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:background="@drawable/gradient_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,30 +35,40 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFoodsByDate"
         android:layout_width="match_parent"
-        android:layout_height="196dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="241dp"
-        android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
+        android:layout_width="410dp"
+        android:layout_height="270dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFoodsByDate"
-        app:layout_constraintVertical_bias="0.811" />
-
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFoodsByDate" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
         android:layout_width="match_parent"
         android:layout_height="197dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="44dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barChart" />
+
+    <TextView
+        android:id="@+id/textViewTodayDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="22dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
 </androidx.constraintlayout.widget.ConstraintLayout>
