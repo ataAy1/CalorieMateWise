@@ -60,6 +60,11 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":core:utils"))
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
