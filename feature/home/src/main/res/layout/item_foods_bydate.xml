@@ -15,7 +15,7 @@
         android:background="@drawable/button_date_design"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:textColor="#876F6F"
+        android:textColor="#F4EAEA"
         android:textSize="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
