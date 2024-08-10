@@ -37,7 +37,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
+
+        binding.calculate.setOnClickListener{
+
+        }
     }
+
 
     private fun setupRecyclerView() {
         profileAdapter = ProfileAdapter { date, foods ->
@@ -56,8 +61,8 @@ class ProfileFragment : Fragment() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            profileViewModel.uiState.collect { uiState ->
-                val foodParcelizeList = uiState.foodList.map { food ->
+            profileViewModel.foodUiState.collect { foodUiState ->
+                val foodParcelizeList = foodUiState.foodList.map { food ->
                     FoodModelParcelize(
                         food.id, food.label, food.calories, food.protein, food.fat,
                         food.carbohydrates, food.image, food.date, food.year,
@@ -65,8 +70,25 @@ class ProfileFragment : Fragment() {
                     )
                 }
                 profileAdapter.updateData(foodParcelizeList)
-                binding.profileProgressBar.visibility = if (uiState.isLoading) View.VISIBLE else View.GONE
-                uiState.error?.let {
+                binding.profileProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
+                foodUiState.error?.let {
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            profileViewModel.userUiState.collect { userUiState ->
+                userUiState.user?.let { user ->
+                    binding.userHeightTextView.text = "Height: ${user.height}"
+                    binding.userWeightTextView.text = "Weight: ${user.weight}"
+                    binding.userAgeTextView.text = "Age: ${user.age}"
+                    binding.userMailTextView.text = "Email: ${user.email}"
+
+
+                }
+
+                binding.profileProgressBar.visibility = if (userUiState.isLoading) View.VISIBLE else View.GONE
+                userUiState.error?.let {
                 }
             }
         }

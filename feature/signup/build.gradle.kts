@@ -61,7 +61,8 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
-
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

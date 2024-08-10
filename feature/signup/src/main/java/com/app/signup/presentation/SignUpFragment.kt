@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.app.domain.model.Gender
+import com.app.domain.model.User
 import com.app.signup.R
 import com.app.signup.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,11 +39,60 @@ class SignUpFragment : Fragment() {
         binding.buttonRegister.setOnClickListener {
             val email = binding.editTextRegisterEmail.text.toString().trim()
             val password = binding.editTextRegisterPassword.text.toString().trim()
-            signUpViewModel.signUp(email, password)
+            val heightStr = binding.editTextRegisterHeight.text.toString().trim()
+            val weightStr = binding.editTextRegisterWeight.text.toString().trim()
+            val ageStr = binding.editTextRegisterAge.text.toString().trim()
+            val gender = if (binding.radioButtonMale.isChecked) Gender.MALE else Gender.FEMALE
+
+            if (email.isEmpty()) {
+                Toast.makeText(context, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (heightStr.isEmpty()) {
+                Toast.makeText(context, "Height cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (weightStr.isEmpty()) {
+                Toast.makeText(context, "Weight cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (ageStr.isEmpty()) {
+                Toast.makeText(context, "Age cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val heightValue = heightStr.toDoubleOrNull()
+            val weightValue = weightStr.toDoubleOrNull()
+            val ageValue = ageStr.toIntOrNull()
+
+            if (heightValue == null || weightValue == null || ageValue == null) {
+                Toast.makeText(context, "Invalid height, weight, or age value", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val user = User(
+                email = email,
+                height = heightValue,
+                weight = weightValue,
+                age = ageValue,
+                gender = gender
+            )
+
+            // Call the signUp method with proper types
+            signUpViewModel.signUp(email, password, heightValue, weightValue, ageValue, gender)
         }
 
         observeSignUpState()
     }
+
 
     private fun observeSignUpState() {
         lifecycleScope.launch {

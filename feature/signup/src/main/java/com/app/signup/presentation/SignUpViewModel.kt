@@ -2,6 +2,7 @@ package com.app.signup.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.domain.model.Gender
 import com.app.domain.model.User
 import com.app.signup.domain.usecase.SignUpUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -21,15 +22,17 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUIState())
     val uiState: StateFlow<SignUpUIState> = _uiState
 
-    fun signUp(email: String, password: String) {
+    fun signUp(email: String, password: String, height: Double, weight: Double, age: Int, gender: Gender) {
         viewModelScope.launch {
             _uiState.value = SignUpUIState(isLoading = true)
             try {
                 val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 val userUid = authResult.user?.uid ?: throw Exception("User UID is null")
 
-                val user = User(email)
+                val user = User(email = email, height = height, weight = weight, age = age, gender = gender)
+
                 signUpUseCase.execute(userUid, user)
+
                 _uiState.value = SignUpUIState(success = true)
             } catch (e: Exception) {
                 _uiState.value = SignUpUIState(error = e.message ?: "An unknown error occurred")
