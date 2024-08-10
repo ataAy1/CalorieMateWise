@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/foodImageView"
-            android:layout_width="196dp"
+            android:layout_width="226dp"
             android:layout_height="114dp"
             android:layout_marginTop="4dp"
             android:scaleType="centerCrop"
@@ -133,10 +133,10 @@
             android:layout_marginStart="44dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="44dp"
-            android:background="#D3C8C8"
+            android:background="#F1EAEA"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/medium_orchid"
+            android:textColor="@color/brown"
             android:textSize="26dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

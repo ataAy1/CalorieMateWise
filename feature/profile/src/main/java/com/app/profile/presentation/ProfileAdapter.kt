@@ -40,7 +40,7 @@ class ProfileAdapter(
             binding.dayOfMonthTextView.text = date
             binding.totalCaloriesTextView.text = "$totalCalories calories"
 
-            binding.root.setOnClickListener {
+            binding.historyImageView.setOnClickListener {
                 onItemClick(date, foods)
             }
         }

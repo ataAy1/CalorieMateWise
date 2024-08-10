@@ -19,11 +19,12 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="#575252"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        app:itemRippleColor="#2962FF"
+        android:layout_height="68dp"
+        android:background="#F8F4F4"
+        app:itemIconTint="@color/brown"
+        app:itemRippleColor="#1A237E"
+        app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/black"
         app:menu="@menu/menu" />
 
-</LinearLayout>
+    </LinearLayout>

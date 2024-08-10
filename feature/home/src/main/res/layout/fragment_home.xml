@@ -8,19 +8,18 @@
 
 
     <TextView
-        android:id="@+id/dateOfCalendar"
+        android:id="@+id/textViewTargetCalorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="44dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewTodayDate"
         app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
 
     <TextView
         android:id="@+id/textViewtotalCalories"
         android:layout_width="match_parent"
-        android:layout_height="166dp"
+        android:layout_height="176dp"
         android:background="@drawable/gradient_bg"
         android:gravity="center"
         android:textAlignment="center"
@@ -32,43 +31,78 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFoodsByDate"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
-
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/barChart"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFoodsByDate" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTargetCalorie" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
         android:layout_width="match_parent"
-        android:layout_height="197dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barChart" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textViewTodayDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="6dp"
+        android:text="Bugün Ne Yedim?"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewProtein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="TextView"
+        android:textColor="@color/proteinColor"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCarbohydrates"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewCarbohydrates"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewCarbohydrates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="TextView"
+        android:textColor="@color/carbohydratesColor"
+        app:layout_constraintEnd_toStartOf="@+id/textViewFat"
+        app:layout_constraintStart_toEndOf="@+id/textViewProtein"
+        app:layout_constraintTop_toBottomOf="@+id/barChart" />
+
+    <TextView
+        android:id="@+id/textViewFat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:text="TextView"
+        android:textColor="@color/fatColor"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCarbohydrates"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewCarbohydrates"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

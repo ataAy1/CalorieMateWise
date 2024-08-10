@@ -45,11 +45,11 @@ class HomeFragment : Fragment() {
         val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
         val foodsByDateAdapter = FoodsByDateAdapter(emptyMap(), requireActivity())
 
-        binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        //binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewTodayFoods.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerViewTodayFoods.adapter = todayFoodsAdapter
-        binding.recyclerViewFoodsByDate.adapter = foodsByDateAdapter
+        //binding.recyclerViewFoodsByDate.adapter = foodsByDateAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.todayFoods.collect { foods ->
@@ -60,17 +60,17 @@ class HomeFragment : Fragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        /*viewLifecycleOwner.lifecycleScope.launch {
             viewModel.allFoods.collect { foods ->
                 Log.d("UIUpdate", "Updating UI with all foods: $foods")
                 foodsByDateAdapter.updateData(foods)
             }
-        }
+        }*/
 
 
 
         viewModel.getTodayFoods()
-        viewModel.getAllFoods()
+        //viewModel.getAllFoods()
 
 
 
@@ -80,6 +80,13 @@ class HomeFragment : Fragment() {
         val carbohydrates = foods.sumOf { it.carbohydrates }
         val fat = foods.sumOf { it.fat }
         binding.textViewtotalCalories.text= foods.sumOf { it.calories }.toString()
+
+        val dayOfMonth = foods.firstOrNull()?.dayOfMonth ?: "No Date"
+        val yearOfMonth = foods.firstOrNull()?.yearOfMonth ?: "No Date"
+        val dayName = foods.firstOrNull()?.dayName ?: ""
+
+        val formattedDate = "$yearOfMonth-$dayOfMonth - $dayName"
+
 
         val entries = listOf(
             BarEntry(0f, protein.toFloat()),

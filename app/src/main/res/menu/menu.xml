@@ -1,29 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Home"/>
+        android:icon="@drawable/ic_menu_home"
+        android:title="Anasayfa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:layout_gravity="center" />
 
     <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Search"/>
+        android:icon="@drawable/ic_menu_search"
+        android:title="Ara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:layout_gravity="center" />
 
     <item
         android:id="@+id/searchInteractiveFragment"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Search Interactive"/>
+        android:icon="@drawable/ic_menu_meals"
+        android:title="Öğün Planla "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:layout_gravity="center" />
 
     <item
         android:id="@+id/mealPlanningFragment"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Meal Planning"/>
+        android:icon="@drawable/ic_menu_ogunlerim"
+        android:title="Öğünlerim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:layout_gravity="center" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:title="Profile"/>
+        android:icon="@drawable/ic_menu_profile"
+        android:title="Profilim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:layout_gravity="center" />
 
 </menu>
