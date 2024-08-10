@@ -4,36 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/profile_shape_wawe"
     tools:context=".presentation.ProfileFragment">
 
     <ImageView
         android:id="@+id/userPhotoImageView"
         android:layout_width="119dp"
         android:layout_height="105dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/userHeightTextView"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ic_profile_photo_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_profile_photo_1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/userHeightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="66dp"
         android:text="Height"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userPhotoImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/changeProfilPhoto" />
 
     <TextView
         android:id="@+id/userWeightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Weight"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/userHeightTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +51,8 @@
         app:layout_constraintTop_toBottomOf="@id/userWeightTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="packed"/>
 
     <TextView
@@ -57,6 +63,8 @@
         app:layout_constraintTop_toBottomOf="@id/userAgeTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="packed"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -97,12 +105,24 @@
         android:id="@+id/foodHistoryInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="Geçmiş Verilerim"
-        android:textSize="24dp"
         android:textColor="@color/crimson"
+        android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/foodHistoryRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileProgressBar" />
+
+    <ImageView
+        android:id="@+id/changeProfilPhoto"
+        android:layout_width="36dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ic_change_photo"
+        app:layout_constraintEnd_toEndOf="@+id/userPhotoImageView"
+        app:layout_constraintStart_toStartOf="@+id/userPhotoImageView"
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

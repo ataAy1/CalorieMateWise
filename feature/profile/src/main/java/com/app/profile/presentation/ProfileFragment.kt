@@ -1,5 +1,6 @@
 package com.app.profile.presentation
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.app.core.data.model.FoodModelParcelize
+import com.app.profile.R
 import com.app.profile.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -37,6 +41,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
+
+
+
+        binding.changeProfilPhoto.setOnClickListener{
+
+        }
 
         binding.calculate.setOnClickListener{
 
