@@ -22,5 +22,13 @@
         <action
             android:id="@+id/action_profileFragment_to_foodHistoryFragment"
             app:destination="@id/foodHistoryFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_nutritionAnalysisFragment"
+            app:destination="@id/nutritionAnalysisFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nutritionAnalysisFragment"
+        android:name="com.app.profile.presentation.NutritionAnalysisFragment"
+        android:label="fragment_nutrition_analysis"
+        tools:layout="@layout/fragment_nutrition_analysis" />
 </navigation>
