@@ -8,7 +8,7 @@
     tools:context=".presentation.ProfileFragment">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageViewMail"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="@+id/userEmailEditText" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageViewAge"
         android:layout_width="32dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/userWeightEditText" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewWeight"
         android:layout_width="32dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
@@ -177,7 +177,7 @@
         app:layout_constraintTop_toBottomOf="@+id/userPhotoImageView" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageViewHeight"
         android:layout_width="28dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
