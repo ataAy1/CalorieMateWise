@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,11 +48,15 @@ class ProfileFragment : Fragment() {
         observeViewModel()
         setAvatarImage()
 
-        binding.changeProfilPhoto.setOnClickListener {
+        binding.changePhotoImageView.setOnClickListener {
             showAvatarSelectionDialog()
         }
 
-        binding.userCalculate.setOnClickListener {
+        binding.btnCalculateNutrition.setOnClickListener {
+        }
+
+        binding.btnUpdateUserInfo.setOnClickListener{
+            showUpdateUserInfoDialog()
         }
     }
 
@@ -155,6 +161,26 @@ class ProfileFragment : Fragment() {
     private fun setAvatarImage() {
         val selectedAvatar = getSelectedAvatar()
         binding.userPhotoImageView.setImageResource(selectedAvatar)
+    }
+
+
+    private fun showUpdateUserInfoDialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_user_info, null)
+        val heightEditText: EditText = dialogView.findViewById(R.id.heightEditText)
+        val weightEditText: EditText = dialogView.findViewById(R.id.weightEditText)
+        val ageEditText: EditText = dialogView.findViewById(R.id.ageEditText)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Profil Güncelleme")
+            .setView(dialogView)
+            .setPositiveButton("Güncelle") { _, _ ->
+                val height = heightEditText.text.toString()
+                val weight = weightEditText.text.toString()
+                val age = ageEditText.text.toString()
+                profileViewModel.updateUserInfo(height, weight, age)
+            }
+            .setNegativeButton("İptal", null)
+            .show()
     }
 
     override fun onDestroyView() {

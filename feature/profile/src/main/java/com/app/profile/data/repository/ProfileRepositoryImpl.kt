@@ -109,4 +109,38 @@
             }
 
         }
+
+
+        override suspend fun updateUserInfo(height: String, weight: String, age: String) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                val userId = user.uid
+                try {
+                    val userInfoSnapshot = firestore.collection("Users")
+                        .document(userId)
+                        .collection("user_info")
+                        .get()
+                        .await()
+
+                    if (userInfoSnapshot.documents.isNotEmpty()) {
+                        val docId = userInfoSnapshot.documents[0].id
+
+                        firestore.collection("Users")
+                            .document(userId)
+                            .collection("user_info")
+                            .document(docId)
+                            .update(
+                                mapOf(
+                                    "height" to height,
+                                    "weight" to weight,
+                                    "age" to age
+                                )
+                            )
+                            .await()
+                    }
+                } catch (e: Exception) {
+                    Log.e("ProfileRepository", "Error updating user info", e)
+                }
+            }
+        }
     }

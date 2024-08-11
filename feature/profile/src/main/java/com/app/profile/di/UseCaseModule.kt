@@ -3,6 +3,7 @@ package com.app.profile.di
 import com.app.profile.domain.repository.ProfileRepository
 import com.app.profile.domain.usecase.FetchFoodListUseCase
 import com.app.profile.domain.usecase.FetchUserInfoUseCase
+import com.app.profile.domain.usecase.UpdateUserInfoUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,13 @@ object UseCaseModule {
         profileRepository: ProfileRepository
     ): FetchUserInfoUseCase {
         return FetchUserInfoUseCase(profileRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFetchUserUpdateUseCase(
+        profileRepository: ProfileRepository
+    ): UpdateUserInfoUseCase {
+        return UpdateUserInfoUseCase(profileRepository)
     }
 }

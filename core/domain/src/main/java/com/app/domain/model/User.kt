@@ -4,9 +4,9 @@ import java.io.Serializable
 
 data class User(
     val email: String? = null,
-    val height: Double? = null,
-    val weight: Double? = null,
-    val age: Int? = null,
+    val height: String? = null,
+    val weight: String? = null,
+    val age: String? = null,
     val gender: Gender? = null
 ) : Serializable
 

@@ -1,18 +1,15 @@
 package com.app.signup.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.app.domain.model.Gender
 import com.app.domain.model.User
-import com.app.signup.R
 import com.app.signup.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,25 +66,17 @@ class SignUpFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val heightValue = heightStr.toDoubleOrNull()
-            val weightValue = weightStr.toDoubleOrNull()
-            val ageValue = ageStr.toIntOrNull()
 
-            if (heightValue == null || weightValue == null || ageValue == null) {
-                Toast.makeText(context, "Invalid height, weight, or age value", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
 
             val user = User(
                 email = email,
-                height = heightValue,
-                weight = weightValue,
-                age = ageValue,
+                height = heightStr,
+                weight = weightStr,
+                age = ageStr,
                 gender = gender
             )
 
-            // Call the signUp method with proper types
-            signUpViewModel.signUp(email, password, heightValue, weightValue, ageValue, gender)
+            signUpViewModel.signUp(email, password, heightStr, weightStr, ageStr, gender)
         }
 
         observeSignUpState()

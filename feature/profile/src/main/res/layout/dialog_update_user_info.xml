@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/dialog_update_user_info"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="32dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_age"
+        app:layout_constraintBottom_toBottomOf="@+id/ageEditText"
+        app:layout_constraintEnd_toStartOf="@+id/ageEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ageEditText" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="32dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/icon_weight"
+        app:layout_constraintBottom_toBottomOf="@+id/weightEditText"
+        app:layout_constraintEnd_toStartOf="@+id/weightEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weightEditText" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="28dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="9dp"
+        android:background="@drawable/ic_height"
+        app:layout_constraintBottom_toBottomOf="@+id/heightEditText"
+        app:layout_constraintEnd_toStartOf="@+id/heightEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/heightEditText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/heightEditText"
+        android:layout_width="262dp"
+        android:hint="Boy"
+        android:layout_height="43dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="#7B1FA2"
+        android:drawablePadding="8dp"
+        android:editable="false"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/weightEditText"
+        android:layout_width="262dp"
+        android:hint="Kilo"
+        android:layout_height="46dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="#7B1FA2"
+        android:editable="false"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/heightEditText" />
+
+    <EditText
+        android:id="@+id/ageEditText"
+        android:layout_width="262dp"
+        android:layout_height="43dp"
+        android:hint="Yaş"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="#7B1FA2"
+        android:editable="false"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/weightEditText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

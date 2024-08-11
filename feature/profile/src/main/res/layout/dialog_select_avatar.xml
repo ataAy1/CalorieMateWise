@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_margin="4dp"
+        android:textStyle="bold"
+        android:text="Profil için Avatar Seçiniz!"
+        android:background="@color/alice_blue"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:paddingBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/avatar1ImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_profile_photo_1"
+            android:layout_margin="8dp" />
+
+        <ImageView
+            android:id="@+id/avatar2ImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_profile_photo_2"
+            android:layout_margin="8dp" />
+
+        <ImageView
+            android:id="@+id/avatar3ImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_profile_photo_3"
+            android:layout_margin="8dp" />
+
+        <ImageView
+            android:id="@+id/avatar4ImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_profile_photo_4"
+            android:layout_margin="8dp" />
+    </LinearLayout>
+
+</LinearLayout>
