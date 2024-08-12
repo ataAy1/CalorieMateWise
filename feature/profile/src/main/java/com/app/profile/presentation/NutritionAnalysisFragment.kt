@@ -3,9 +3,12 @@ package com.app.profile.presentation
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.app.domain.model.NutritionResult
 import com.app.profile.R
 import com.app.profile.databinding.FragmentNutritionAnalysisBinding
@@ -29,6 +32,14 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentNutritionAnalysisBinding.bind(view)
 
+
+        binding.backButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
+
+
+
+
         binding.btnCalculate.setOnClickListener {
             val age = binding.etAge.text.toString().toIntOrNull()
             val height = binding.etHeight.text.toString().toIntOrNull()
@@ -41,12 +52,13 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
             }
 
             if (age != null && height != null && weight != null && gender != null) {
-                val result =
-                    viewModel.calculateNutrition(age, height, weight, activityLevel, gender)
+                val result = viewModel.calculateNutrition(age, height, weight, activityLevel, gender)
                 displayNutritionAnalysis(result)
             } else {
+                Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         binding.btnSave.setOnClickListener {
             val result = viewModel.nutritionResult.value

@@ -48,15 +48,18 @@ class ProfileFragment : Fragment() {
         observeViewModel()
         setAvatarImage()
 
+
+
+
         binding.changePhotoImageView.setOnClickListener {
             showAvatarSelectionDialog()
         }
 
-        binding.btnCalculateNutrition.setOnClickListener {
+        binding.imageViewCalculateNutrition.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_nutritionAnalysisFragment)
         }
 
-        binding.btnUpdateUserInfo.setOnClickListener{
+        binding.imageViewUpdateUserInfo.setOnClickListener{
             showUpdateUserInfoDialog()
         }
     }
