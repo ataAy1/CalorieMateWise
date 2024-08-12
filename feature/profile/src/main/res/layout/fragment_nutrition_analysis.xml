@@ -2,20 +2,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.NutritionAnalysisFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="84dp"
         tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#F8F7F7">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="8dp"
+                android:text="Günlük İhtiyaç Hesaplama"
+                android:textColor="@color/dark_goldenrod"
+                android:textSize="22dp"
+                android:textStyle="italic|bold" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <EditText
             android:id="@+id/etAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/dark_goldenrod"
+
             android:hint="Yaşınızı Girin" />
 
         <EditText
@@ -23,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:backgroundTint="@color/dark_goldenrod"
             android:hint="Boyunuzu Girin" />
 
         <EditText
@@ -30,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:backgroundTint="@color/dark_goldenrod"
             android:hint="Kilonuzu Girin" />
 
         <TextView
@@ -37,10 +67,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinnerHintTextView"
             android:textStyle="bold"
+            android:layout_marginTop="6dp"
             android:textSize="14dp"
             android:text="Günlük aktivite düzeyiniz"
             android:gravity="center"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/dark_goldenrod"></TextView>
 
         <Spinner
             android:id="@+id/spinnerActivityLevel"
@@ -74,20 +105,35 @@
 
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCalculate"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/button_calculate_design"
             android:layout_height="wrap_content"
             android:text="Hesapla" />
 
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:background="@drawable/button_calculate_design"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:text="Kaydet " />
 
         <TextView
@@ -96,6 +142,7 @@
             android:id="@+id/dailyCalorieTextView"
             android:textStyle="bold"
             android:textSize="24dp"
+
             android:text=""
             android:gravity="center"
             android:textColor="@color/indian_red"></TextView>
