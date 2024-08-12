@@ -53,6 +53,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnCalculateNutrition.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_nutritionAnalysisFragment)
         }
 
         binding.btnUpdateUserInfo.setOnClickListener{

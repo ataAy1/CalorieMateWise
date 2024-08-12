@@ -3,9 +3,12 @@ package com.app.profile.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.domain.model.NutritionResult
+import com.app.profile.domain.usecase.CalculateNutritionUseCase
 import com.app.profile.domain.usecase.FetchFoodListUseCase
 import com.app.profile.domain.usecase.FetchUserInfoUseCase
 import com.app.profile.domain.usecase.UpdateUserInfoUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +19,20 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val fetchFoodListUseCase: FetchFoodListUseCase,
     private val fetchUserInfoUseCase: FetchUserInfoUseCase,
-    private val updateUserInfoUseCase: UpdateUserInfoUseCase
+    private val updateUserInfoUseCase: UpdateUserInfoUseCase,
+    private val calculateNutritionUseCase: CalculateNutritionUseCase,
 
-) : ViewModel() {
+
+    ) : ViewModel() {
 
     private val _foodUiState = MutableStateFlow(ProfileUIState())
     val foodUiState: StateFlow<ProfileUIState> = _foodUiState
 
     private val _userUiState = MutableStateFlow(UserUIState())
     val userUiState: StateFlow<UserUIState> = _userUiState
+
+    private val _nutritionResult = MutableStateFlow<NutritionResult?>(null)
+    val nutritionResult: StateFlow<NutritionResult?> = _nutritionResult
 
     init {
         getAllFoods()
@@ -58,6 +66,26 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             updateUserInfoUseCase.execute(height, weight, age)
             getUserInfo()
+        }
+    }
+
+    fun calculateNutrition(age: Int, height: Int, weight: Int, activityLevel: String, gender: String): NutritionResult {
+        val result = calculateNutritionUseCase.calculate(age, height, weight, activityLevel, gender)
+        _nutritionResult.value = result
+        return result
+    }
+
+
+    fun saveNutritionAnalysis(result: NutritionResult) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            viewModelScope.launch {
+                try {
+                    calculateNutritionUseCase.saveNutritionAnalysis(userId, result)
+                } catch (e: Exception) {
+                    Log.e("ViewModelError", "Error saving nutrition analysis", e)
+                }
+            }
         }
     }
 }

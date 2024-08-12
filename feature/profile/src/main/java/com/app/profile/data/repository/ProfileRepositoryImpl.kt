@@ -2,6 +2,7 @@
 
     import android.util.Log
     import com.app.core.data.model.FoodModel
+    import com.app.domain.model.NutritionResult
     import com.app.domain.model.User
     import com.app.profile.domain.repository.ProfileRepository
     import com.google.firebase.auth.FirebaseAuth
@@ -143,4 +144,34 @@
                 }
             }
         }
+        override suspend fun saveNutritionAnalysis(userId: String, result: NutritionResult) {
+            try {
+                val data = mapOf(
+                    "calories" to result.calories,
+                    "protein" to result.protein,
+                    "fat" to result.fat,
+                    "carbs" to result.carbs,
+                    "gender" to result.gender
+                )
+
+                val userCollectionRef = firestore.collection("Users")
+                    .document(userId)
+                    .collection("user_calculate_analysis")
+
+                val querySnapshot = userCollectionRef.get().await()
+
+                if (querySnapshot.documents.isNotEmpty()) {
+                    val existingDoc = querySnapshot.documents.first()
+                    userCollectionRef.document(existingDoc.id)
+                        .set(data)
+                        .await()
+                } else {
+                    userCollectionRef.add(data).await()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ProfileRepository", "Error saving nutrition analysis", e)
+            }
+        }
+
     }
