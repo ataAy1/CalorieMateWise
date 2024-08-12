@@ -1,156 +1,187 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".presentation.NutritionAnalysisFragment">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        android:layout_height="54dp"
+        android:background="#F8EBEB"
+        android:text="Günlük İhtiyaç Hesaplama"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="#F8F7F7">
+    </TextView>
 
-            <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="start"
-                android:src="@drawable/ic_arrow_back" />
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="8dp"
-                android:text="Günlük İhtiyaç Hesaplama"
-                android:textColor="@color/dark_goldenrod"
-                android:textSize="22dp"
-                android:textStyle="italic|bold" />
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="52dp"
+        android:layout_height="46dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-        </androidx.appcompat.widget.Toolbar>
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/dark_goldenrod"
+        android:hint="Yaşınızı Girin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <EditText
-            android:id="@+id/etAge"
-            android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/etHeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/dark_goldenrod"
+        android:hint="Boyunuzu Girin"
+        app:layout_constraintTop_toBottomOf="@+id/etAge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <EditText
+        android:id="@+id/etWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/dark_goldenrod"
+        android:hint="Kilonuzu Girin"
+        app:layout_constraintTop_toBottomOf="@+id/etHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:id="@+id/spinnerHintTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="Günlük aktivite düzeyiniz"
+        android:textColor="@color/dark_goldenrod"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintTop_toBottomOf="@+id/etWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <Spinner
+        android:id="@+id/spinnerActivityLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:entries="@array/activity_levels"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerHintTextView" />
+
+    <RadioGroup
+        android:id="@+id/rgGender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerActivityLevel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="@color/dark_goldenrod"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="60dp"
+            android:text="Erkek"
+            android:textStyle="bold" />
 
-            android:hint="Yaşınızı Girin" />
-
-        <EditText
-            android:id="@+id/etHeight"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/dark_goldenrod"
-            android:hint="Boyunuzu Girin" />
+            android:text="Kadın"
+            android:textStyle="bold" />
+    </RadioGroup>
 
-        <EditText
-            android:id="@+id/etWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/dark_goldenrod"
-            android:hint="Kilonuzu Girin" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCalculate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/button_calculate_design"
+        android:gravity="center"
+        android:text="Hesapla"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/rgGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerHintTextView"
-            android:textStyle="bold"
-            android:layout_marginTop="6dp"
-            android:textSize="14dp"
-            android:text="Günlük aktivite düzeyiniz"
-            android:gravity="center"
-            android:textColor="@color/dark_goldenrod"></TextView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/button_calculate_design"
+        android:gravity="center"
+        android:text="Kaydet "
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/btnCalculate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
-        <Spinner
-            android:id="@+id/spinnerActivityLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:entries="@array/activity_levels" />
+    <TextView
+        android:id="@+id/dailyCalorieTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/indian_red"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
-        <RadioGroup
-            android:id="@+id/rgGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/nutritionAnalysisChart"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dailyCalorieTextView" />
 
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rbMale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:layout_marginLeft="80dp"
-                android:text="Erkek" />
-
-            <RadioButton
-                android:id="@+id/rbFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kadın" />
-        </RadioGroup>
-
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCalculate"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="40dp"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textSize="16dp"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/button_calculate_design"
-            android:layout_height="wrap_content"
-            android:text="Hesapla" />
-
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_calculate_design"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="40dp"
-            android:text="Kaydet " />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dailyCalorieTextView"
-            android:textStyle="bold"
-            android:textSize="24dp"
-
-            android:text=""
-            android:gravity="center"
-            android:textColor="@color/indian_red"></TextView>
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/nutritionAnalysisChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
