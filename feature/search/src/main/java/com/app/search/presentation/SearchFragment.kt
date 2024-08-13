@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.search.R
 import com.app.search.data.model.ParsedFood
@@ -64,9 +65,13 @@ class SearchFragment : Fragment() {
     private fun setupRecyclerView() {
         navController = findNavController()
         adapter = FoodAdapter(navController)
-        binding.searchRecylerview.layoutManager = LinearLayoutManager(requireContext())
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+
+        binding.searchRecylerview.layoutManager = gridLayoutManager
         binding.searchRecylerview.adapter = adapter
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".presentation.SearchDetailFragment">
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_width="106dp"
         android:layout_height="103dp"
         android:layout_marginStart="154dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="152dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="44dp"
-        android:textSize="24dp"
         android:text="TextView"
+        android:textSize="24dp"
         app:layout_constraintEnd_toStartOf="@+id/textFoodFat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textFoodCalories" />
@@ -57,7 +57,7 @@
         android:id="@+id/textFoodFat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="14dp"
         android:text="TextView"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="48dp"
         android:text="TextView"
         android:textSize="24dp"
@@ -81,20 +81,22 @@
         android:id="@+id/buttonAddToMeal"
         android:layout_width="162dp"
         android:layout_height="48dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="14dp"
         android:text="Ekle"
         app:layout_constraintEnd_toEndOf="@+id/textFoodCarbohydrates"
         app:layout_constraintStart_toStartOf="@+id/textFoodProtein"
         app:layout_constraintTop_toBottomOf="@+id/textFoodFat" />
 
     <ProgressBar
-            android:id="@+id/progressBarAddToMeal"
+        android:id="@+id/progressBarAddToMeal"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:visibility="invisible"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddToMeal" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddToMeal"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

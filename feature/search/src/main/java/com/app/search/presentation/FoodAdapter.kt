@@ -30,8 +30,8 @@ class FoodAdapter(private val navController: NavController) : RecyclerView.Adapt
             navController.navigate(action)
         }
 
-        holder.binding.foodLabel.text = food.label
-        holder.binding.foodCalories.text = "${food.nutrients.ENERC_KCAL} kcal"
+        holder.binding.foodLabel.text = food.label.toString()
+        //holder.binding.foodCalories.text = "${food.nutrients.ENERC_KCAL} kcal"
         holder.binding.foodImage.load(food.image)
     }
 

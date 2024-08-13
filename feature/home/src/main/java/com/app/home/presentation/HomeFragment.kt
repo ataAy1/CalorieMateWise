@@ -22,6 +22,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.components.XAxis
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -42,11 +46,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setDate()
         val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
         val foodsByDateAdapter = FoodsByDateAdapter(emptyMap(), requireActivity())
 
+
         //binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerViewTodayFoods.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewTodayFoods.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerViewTodayFoods.adapter = todayFoodsAdapter
         //binding.recyclerViewFoodsByDate.adapter = foodsByDateAdapter
@@ -73,20 +80,24 @@ class HomeFragment : Fragment() {
         //viewModel.getAllFoods()
 
 
-
     }
+
     private fun updateBarChartAndTotalCalorie(foods: List<FoodModel>) {
         val protein = foods.sumOf { it.protein }
         val carbohydrates = foods.sumOf { it.carbohydrates }
         val fat = foods.sumOf { it.fat }
-        binding.textViewtotalCalories.text= foods.sumOf { it.calories }.toString()
+
+        binding.textViewtotalCalories.text = foods.sumOf { it.calories }.toString()
+
+        binding.textViewProtein.text = "Protein: ${protein.toString()}"
+        binding.textViewCarbohydrates.text = "Karbonhidrat: ${carbohydrates.toString()}"
+        binding.textViewFat.text = "Yağ: ${fat.toString()}"
+
 
         val dayOfMonth = foods.firstOrNull()?.dayOfMonth ?: "No Date"
         val yearOfMonth = foods.firstOrNull()?.yearOfMonth ?: "No Date"
         val dayName = foods.firstOrNull()?.dayName ?: ""
-
         val formattedDate = "$yearOfMonth-$dayOfMonth - $dayName"
-
 
         val entries = listOf(
             BarEntry(0f, protein.toFloat()),
@@ -94,7 +105,7 @@ class HomeFragment : Fragment() {
             BarEntry(2f, fat.toFloat())
         )
 
-        val dataSet = BarDataSet(entries, "Macronutrients")
+        val dataSet = BarDataSet(entries, "Makro Değeleri:")
         dataSet.colors = listOf(
             ContextCompat.getColor(requireContext(), R.color.proteinColor),
             ContextCompat.getColor(requireContext(), R.color.carbohydratesColor),
@@ -103,8 +114,32 @@ class HomeFragment : Fragment() {
 
         val barData = BarData(dataSet)
         binding.barChart.data = barData
-        binding.barChart.xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Protein", "Carbs", "Fat"))
+
+        val xAxis = binding.barChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+        xAxis.labelCount = entries.size
+        xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Protein", "Karbonhidrat", "Yağ"))
+
+        binding.barChart.axisLeft.setDrawGridLines(false)
+        binding.barChart.axisRight.setDrawGridLines(false)
+        binding.barChart.axisRight.isEnabled = false
+        binding.barChart.description.isEnabled = false
+        binding.barChart.legend.isEnabled = false
         binding.barChart.invalidate()
+        binding.barChart.animateY(1260)
+    }
+
+    private fun setDate() {
+        val today = LocalDate.now()
+
+        val locale = Locale("tr")
+
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)
+        val formattedDate = today.format(formatter)
+
+        binding.textViewTodayDate.text = formattedDate
     }
 
 
