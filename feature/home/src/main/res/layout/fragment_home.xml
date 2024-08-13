@@ -66,6 +66,7 @@
         android:layout_marginBottom="6dp"
         android:text="Bugün Ne Yedim?"
         android:textColor="@color/black"
+        android:gravity="start|center"
         android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
         app:layout_constraintEnd_toEndOf="parent"

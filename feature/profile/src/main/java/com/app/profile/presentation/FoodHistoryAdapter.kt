@@ -1,7 +1,6 @@
 package com.app.profile.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -13,12 +12,13 @@ class FoodHistoryAdapter(private val foodList: Array<FoodModelParcelize>) :
 
     inner class FoodViewHolder(private val binding: ItemHistoryMealsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(food: FoodModelParcelize) {
+        fun bind(food: FoodModelParcelize, position: Int) {
+            binding.foodCounterTextView.text = (position + 1).toString()
             binding.foodCalorieTextView.text = food.calories.toString()
             binding.foodProteinTextView.text = food.protein.toString()
             binding.foodFatTextView.text = food.fat.toString()
             binding.foodCarbohydrateTextView.text = food.carbohydrates.toString()
-            binding.fooodNameTextView.text=food.label.toString()
+            binding.fooodNameTextView.text = food.label.toString()
             binding.foodImageView.load(food.image)
         }
     }
@@ -30,7 +30,7 @@ class FoodHistoryAdapter(private val foodList: Array<FoodModelParcelize>) :
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        holder.bind(foodList[position])
+        holder.bind(foodList[position], position)
     }
 
     override fun getItemCount() = foodList.size
