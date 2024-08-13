@@ -24,7 +24,6 @@ class SearchRepositoryImpl @Inject constructor(
         Log.d("SearchRepositoryImpl", "Full response: $response")
         emit(response)
     }.onStart {
-        // Optional: Do something before the flow starts
     }.catch { e ->
         Log.e("SearchRepositoryImpl", "Error fetching food data", e)
         emit(com.app.data.dto.ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))

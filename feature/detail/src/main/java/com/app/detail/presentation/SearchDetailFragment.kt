@@ -46,12 +46,12 @@ class SearchDetailFragment : Fragment() {
                 "ParsedFood received: ${foodDetail.label}, Calories: ${foodDetail.nutrients.ENERC_KCAL}"
             )
 
-            binding.textFoodLabel.text = foodDetail.label
-            binding.textFoodCalories.text = "${foodDetail.nutrients.ENERC_KCAL} kcal"
+            binding.textFoodLabel.text = foodDetail.label.toString()
+            binding.textFoodCalories.text = "${foodDetail.nutrients.ENERC_KCAL} kcal".toString()
             binding.imageViewFood.load(foodDetail.image)
-            binding.textFoodProtein.text = "${foodDetail.nutrients.PROCNT} g"
-            binding.textFoodFat.text = "${foodDetail.nutrients.FAT} g"
-            binding.textFoodCarbohydrates.text = "${foodDetail.nutrients.CHOCDF} g"
+            binding.textFoodProtein.text = "${foodDetail.nutrients.PROCNT} g".toString()
+            binding.textFoodFat.text = "${foodDetail.nutrients.FAT} g".toString()
+            binding.textFoodCarbohydrates.text = "${foodDetail.nutrients.CHOCDF} g".toString()
         } else {
             Log.d("SearchDetailFragment", "No ParsedFood received")
         }
@@ -63,20 +63,23 @@ class SearchDetailFragment : Fragment() {
                 Log.d("SearchDetailFragment", "Current User: ${user.uid}, Email: ${user.email}")
 
                 val today = LocalDate.now()
-                val year = today.format(DateTimeFormatter.ofPattern("yyyy"))
-                val yearMonth = today.format(DateTimeFormatter.ofPattern("MM"))
+                val locale = Locale("tr")
+
+                val year = today.format(DateTimeFormatter.ofPattern("yyyy", locale))
+                val yearMonth = today.format(DateTimeFormatter.ofPattern("MM", locale))
                 val day = today.dayOfMonth
-                val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
+                val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", locale))
+
 
                 val foodModel = FoodModel(
                     id = null,
                     label = foodDetail.label,
-                    calories = foodDetail.nutrients.ENERC_KCAL,
-                    protein = foodDetail.nutrients.PROCNT,
-                    fat = foodDetail.nutrients.FAT,
-                    carbohydrates = foodDetail.nutrients.CHOCDF,
+                    calories = foodDetail.nutrients.ENERC_KCAL.toInt(),
+                    protein = foodDetail.nutrients.PROCNT.toInt(),
+                    fat = foodDetail.nutrients.FAT.toInt(),
+                    carbohydrates = foodDetail.nutrients.CHOCDF.toInt(),
                     image = foodDetail.image,
-                    date = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
                     year = year,
                     dayName = dayName,
                     dayOfMonth = day.toString(),

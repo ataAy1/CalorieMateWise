@@ -46,7 +46,7 @@ class TodayFoodsAdapter(
 
         fun bind(food: FoodModel) {
             binding.textFoodLabel.text = food.label
-            binding.textFoodCalories.text = food.calories.toString()
+            binding.textFoodCalories.text = "${food.calories.toInt()} kalori"
             binding.imageViewFood.load(food.image)
         }
 

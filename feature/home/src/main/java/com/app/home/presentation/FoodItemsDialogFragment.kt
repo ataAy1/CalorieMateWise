@@ -55,12 +55,12 @@ class FoodItemsDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun newInstance(date: String, totalCalories: Double, totalFat: Double, totalFoodCount: Int): FoodItemsDialogFragment {
+        fun newInstance(date: String, totalCalories: Int, totalFat: Int, totalFoodCount: Int): FoodItemsDialogFragment {
             return FoodItemsDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString("DATE", date)
-                    putDouble("TOTAL_CALORIES", totalCalories)
-                    putDouble("TOTAL_FAT", totalFat)
+                    putInt("TOTAL_CALORIES", totalCalories)
+                    putInt("TOTAL_FAT", totalFat)
                     putInt("TOTAL_FOOD_COUNT", totalFoodCount)
                 }
             }
