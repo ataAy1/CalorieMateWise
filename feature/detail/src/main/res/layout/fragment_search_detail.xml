@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".presentation.SearchDetailFragment">
 
     <TextView
         android:id="@+id/textFoodLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:text="TextView"
-        android:textSize="20dp"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageViewFood"
         app:layout_constraintStart_toStartOf="@+id/imageViewFood"
         app:layout_constraintTop_toBottomOf="@+id/imageViewFood" />
@@ -24,30 +25,32 @@
         android:layout_marginTop="24dp"
         android:text="TextView"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewFood"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFood"
+        app:layout_constraintEnd_toEndOf="@+id/textFoodLabel"
+        app:layout_constraintStart_toStartOf="@+id/textFoodLabel"
         app:layout_constraintTop_toBottomOf="@+id/textFoodLabel" />
 
     <ImageView
         android:id="@+id/imageViewFood"
-        android:layout_width="106dp"
-        android:layout_height="103dp"
+        android:layout_width="342dp"
+        android:layout_height="187dp"
         android:layout_marginStart="154dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="152dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <TextView
         android:id="@+id/textFoodProtein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="44dp"
         android:text="TextView"
+        android:textColor="@color/proteinColor"
         android:textSize="24dp"
         app:layout_constraintEnd_toStartOf="@+id/textFoodFat"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,8 +60,9 @@
         android:id="@+id/textFoodFat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="24dp"
         android:text="TextView"
+        android:textColor="@color/fatColor"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,9 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="48dp"
         android:text="TextView"
+        android:textColor="@color/carbohydratesColor"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textFoodFat"
@@ -79,24 +84,64 @@
 
     <Button
         android:id="@+id/buttonAddToMeal"
-        android:layout_width="162dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="263dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="34dp"
         android:text="Ekle"
-        app:layout_constraintEnd_toEndOf="@+id/textFoodCarbohydrates"
-        app:layout_constraintStart_toStartOf="@+id/textFoodProtein"
-        app:layout_constraintTop_toBottomOf="@+id/textFoodFat" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ProgressBar
         android:id="@+id/progressBarAddToMeal"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="344dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddToMeal"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/foodsPieChart"
+        android:layout_width="match_parent"
+        android:layout_height="288dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFoodFat" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="44dp"
+        android:text="100 Gram Üzerinden Hesaplanmaktadır."
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodsPieChart" />
+
+    <EditText
+        android:id="@+id/weightOfFoodEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="4dp"
+        android:hint="100 Gram"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAddToMeal"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddToMeal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonAddToMeal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

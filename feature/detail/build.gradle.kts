@@ -57,12 +57,18 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
 
-
     //Coil
     implementation(libs.coil)
 
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
+
+
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":core:utils"))
+
+    implementation(libs.mpandroidchart)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

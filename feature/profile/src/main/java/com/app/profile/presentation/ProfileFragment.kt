@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
                 val foodParcelizeList = foodUiState.foodList.map { food ->
                     FoodModelParcelize(
                         food.id, food.label, food.calories, food.protein, food.fat,
-                        food.carbohydrates, food.image, food.date, food.year,
+                        food.carbohydrates,food.weightofFood, food.image, food.date, food.year,
                         food.yearOfMonth, food.dayOfMonth, food.dayName
                     )
                 }

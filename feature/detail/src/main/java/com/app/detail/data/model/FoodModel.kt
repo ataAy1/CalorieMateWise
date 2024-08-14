@@ -9,12 +9,13 @@ data class FoodModel(
     val label: String,
     val calories: Int,
     val protein: Int,
+    val weightofFood: Int = 0,
     val fat: Int,
     val carbohydrates: Int,
     val image: String,
     val date: String,
-    val year:String,
-    val yearOfMonth:String,
-    val dayOfMonth:String,
+    val year: String,
+    val yearOfMonth: String,
+    val dayOfMonth: String,
     val dayName: String
 )

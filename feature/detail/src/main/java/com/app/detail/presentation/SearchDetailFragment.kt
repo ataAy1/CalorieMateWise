@@ -1,5 +1,6 @@
 package com.app.detail.presentation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.app.data.dto.ParsedFood
 import com.app.detail.data.model.FoodModel
 import com.app.detail.databinding.FragmentSearchDetailBinding
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -28,6 +34,7 @@ class SearchDetailFragment : Fragment() {
     private val args: SearchDetailFragmentArgs by navArgs()
     private val viewModel: SearchDetailViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,10 +48,7 @@ class SearchDetailFragment : Fragment() {
 
         val foodDetail = args.parsedFood
         if (foodDetail != null) {
-            Log.d(
-                "SearchDetailFragment",
-                "ParsedFood received: ${foodDetail.label}, Calories: ${foodDetail.nutrients.ENERC_KCAL}"
-            )
+            setupPieChart (foodDetail)
 
             binding.textFoodLabel.text = foodDetail.label.toString()
             binding.textFoodCalories.text = "${foodDetail.nutrients.ENERC_KCAL} kcal".toString()
@@ -69,28 +73,45 @@ class SearchDetailFragment : Fragment() {
                 val yearMonth = today.format(DateTimeFormatter.ofPattern("MM", locale))
                 val day = today.dayOfMonth
                 val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", locale))
+                val weightOfFoodText = binding.weightOfFoodEditText.text.toString()
 
+                val weightOfFood = weightOfFoodText.toIntOrNull()
 
-                val foodModel = FoodModel(
-                    id = null,
-                    label = foodDetail.label,
-                    calories = foodDetail.nutrients.ENERC_KCAL.toInt(),
-                    protein = foodDetail.nutrients.PROCNT.toInt(),
-                    fat = foodDetail.nutrients.FAT.toInt(),
-                    carbohydrates = foodDetail.nutrients.CHOCDF.toInt(),
-                    image = foodDetail.image,
-                    date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
-                    year = year,
-                    dayName = dayName,
-                    dayOfMonth = day.toString(),
-                    yearOfMonth = yearMonth
-                )
+                if (weightOfFood != null) {
+                    val ratio = weightOfFood / 100.0
 
-                viewModel.addFoodToMeal(foodModel)
+                    val adjustedCalories = (foodDetail.nutrients.ENERC_KCAL * ratio).toInt()
+                    val adjustedProtein = (foodDetail.nutrients.PROCNT * ratio).toInt()
+                    val adjustedFat = (foodDetail.nutrients.FAT * ratio).toInt()
+                    val adjustedCarbohydrates = (foodDetail.nutrients.CHOCDF * ratio).toInt()
+
+                    val foodModel = FoodModel(
+                        id = null,
+                        label = foodDetail.label,
+                        calories = adjustedCalories,
+                        protein = adjustedProtein,
+                        weightofFood = weightOfFood,
+                        fat = adjustedFat,
+                        carbohydrates = adjustedCarbohydrates,
+                        image = foodDetail.image,
+                        date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
+                        year = year,
+                        dayName = dayName,
+                        dayOfMonth = day.toString(),
+                        yearOfMonth = yearMonth
+                    )
+
+                    viewModel.addFoodToMeal(foodModel)
+
+                } else {
+                    Toast.makeText(requireContext(), "Lütfen gram olarak, (100,200) şeklinde,geçerli bir sayı girini..", Toast.LENGTH_SHORT).show()
+                }
+
             } else {
                 Log.d("SearchDetailFragment", "No user is authenticated")
             }
         }
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.uiState.collect { state ->
@@ -105,6 +126,32 @@ class SearchDetailFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setupPieChart(food: ParsedFood) {
+        val pieChart = binding.foodsPieChart
+
+        val entries = listOf(
+            PieEntry(food.nutrients.PROCNT.toFloat(), "Protein"),
+            PieEntry(food.nutrients.FAT.toFloat(), "Yağ"),
+            PieEntry(food.nutrients.CHOCDF.toFloat(), "KarbonHidrat")
+        )
+
+        val dataSet = PieDataSet(entries, "Makro Değerleri").apply {
+            colors = ColorTemplate.COLORFUL_COLORS.toList()
+            valueTextSize = 16f
+            valueTextColor = android.graphics.Color.BLACK
+        }
+
+        val data = PieData(dataSet)
+
+        pieChart.apply {
+            this.data = data
+            setDrawEntryLabels(true)
+            setDrawHoleEnabled(true)
+            holeRadius = 60f
+            animateY(1250)
         }
     }
 
