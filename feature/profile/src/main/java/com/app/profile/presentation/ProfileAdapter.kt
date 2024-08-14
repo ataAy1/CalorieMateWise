@@ -38,7 +38,7 @@ class ProfileAdapter(
         fun bind(date: String, foods: List<FoodModelParcelize>) {
             val totalCalories = foods.sumOf { it.calories }
             binding.dayOfMonthTextView.text = date
-            binding.totalCaloriesTextView.text = "$totalCalories calories"
+            binding.totalCaloriesTextView.text = "$totalCalories kalori"
 
             binding.historyImageView.setOnClickListener {
                 onItemClick(date, foods)

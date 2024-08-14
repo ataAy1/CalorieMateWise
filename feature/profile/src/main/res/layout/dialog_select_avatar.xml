@@ -14,7 +14,6 @@
         android:textStyle="bold|italic"
         android:textColor="@color/blue"
         android:text="Profil için Avatar Seçiniz!"
-        android:background="#F8F6F0"
         android:textSize="18sp"
         android:layout_gravity="center"
         android:paddingBottom="2dp" />

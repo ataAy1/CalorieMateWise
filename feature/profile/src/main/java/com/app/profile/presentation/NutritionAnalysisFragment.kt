@@ -37,9 +37,6 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
             findNavController().navigateUp()
         }
 
-
-
-
         binding.btnCalculate.setOnClickListener {
             val age = binding.etAge.text.toString().toIntOrNull()
             val height = binding.etHeight.text.toString().toIntOrNull()
@@ -72,18 +69,17 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
     private fun displayNutritionAnalysis(result: NutritionResult) {
         val entries = listOf(
             PieEntry(result.protein.toFloat(), "Protein"),
-            PieEntry(result.fat.toFloat(), "Fat"),
-            PieEntry(result.carbs.toFloat(), "Carbs")
+            PieEntry(result.fat.toFloat(), "Yağ"),
+            PieEntry(result.carbs.toFloat(), "Karbonhidrat")
         )
 
-        val dataSet = PieDataSet(entries, "Nutrition Analysis")
+        val dataSet = PieDataSet(entries, "Beslenme Analizi")
         dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
 
         dataSet.valueTextSize = 16f
 
         val data = PieData(dataSet)
 
-        // Customize chart appearance
         binding.nutritionAnalysisChart.apply {
             this.data = data
             description.isEnabled = false

@@ -18,7 +18,7 @@ class FoodHistoryAdapter(private val foodList: Array<FoodModelParcelize>) :
             binding.foodProteinTextView.text = food.protein.toString()
             binding.foodFatTextView.text = food.fat.toString()
             binding.foodCarbohydrateTextView.text = food.carbohydrates.toString()
-            binding.fooodNameTextView.text = food.label.toString()
+            binding.fooodNameTextView.text = "${food.label}: ${food.weightofFood} gram"
             binding.foodImageView.load(food.image)
         }
     }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.app.data.dto.ParsedFood
@@ -46,16 +47,18 @@ class SearchDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         val foodDetail = args.parsedFood
         if (foodDetail != null) {
-            setupPieChart (foodDetail)
-
-            binding.textFoodLabel.text = foodDetail.label.toString()
-            binding.textFoodCalories.text = "${foodDetail.nutrients.ENERC_KCAL} kcal".toString()
+            setupPieChart(foodDetail)
+            binding.textFoodLabel.text =
+                "${foodDetail.label} - ${foodDetail.nutrients.ENERC_KCAL} kalori"
             binding.imageViewFood.load(foodDetail.image)
-            binding.textFoodProtein.text = "${foodDetail.nutrients.PROCNT} g".toString()
-            binding.textFoodFat.text = "${foodDetail.nutrients.FAT} g".toString()
-            binding.textFoodCarbohydrates.text = "${foodDetail.nutrients.CHOCDF} g".toString()
+            binding.textFoodProtein.text = "Protein: ${foodDetail.nutrients.PROCNT} g"
+            binding.textFoodFat.text = "Yağ: ${foodDetail.nutrients.FAT} g"
+            binding.textFoodCarbohydrates.text = "Karbonhidrat: ${foodDetail.nutrients.CHOCDF} g"
+
         } else {
             Log.d("SearchDetailFragment", "No ParsedFood received")
         }
@@ -104,7 +107,11 @@ class SearchDetailFragment : Fragment() {
                     viewModel.addFoodToMeal(foodModel)
 
                 } else {
-                    Toast.makeText(requireContext(), "Lütfen gram olarak, (100,200) şeklinde,geçerli bir sayı girini..", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Lütfen gram olarak, (100,200) şeklinde,geçerli bir sayı girini..",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             } else {
@@ -127,6 +134,11 @@ class SearchDetailFragment : Fragment() {
                 }
             }
         }
+
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setupPieChart(food: ParsedFood) {
@@ -139,7 +151,7 @@ class SearchDetailFragment : Fragment() {
         )
 
         val dataSet = PieDataSet(entries, "Makro Değerleri").apply {
-            colors = ColorTemplate.COLORFUL_COLORS.toList()
+            colors = ColorTemplate.JOYFUL_COLORS.toList()
             valueTextSize = 16f
             valueTextColor = android.graphics.Color.BLACK
         }
@@ -150,7 +162,7 @@ class SearchDetailFragment : Fragment() {
             this.data = data
             setDrawEntryLabels(true)
             setDrawHoleEnabled(true)
-            holeRadius = 60f
+            holeRadius = 70f
             animateY(1250)
         }
     }

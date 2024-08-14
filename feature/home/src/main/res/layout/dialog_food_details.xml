@@ -9,59 +9,86 @@
     <ImageView
         android:id="@+id/dialogImageViewFood"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:scaleType="centerCrop"
         android:contentDescription="food_image" />
 
     <TextView
         android:id="@+id/dialogTextFoodLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:gravity="center"
+        android:background="#DDC6C6"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
         android:text="Food Label"/>
 
     <TextView
         android:id="@+id/dialogTextFoodCalories"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Calories: 250"
+        android:textStyle="bold"
+        android:textColor="@color/alice_blue"
+        android:background="@color/dark_gray"
         android:textSize="16sp"
-        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:gravity="center"
         android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodCarbs"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/azure"
+        android:background="@color/dark_gray"
+        android:gravity="center"
         android:text="Carbohydrates: 30g"
         android:textSize="16sp"
-        android:textColor="@color/black"
         android:layout_marginTop="4dp"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodProtein"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/azure"
+        android:background="@color/dark_gray"
         android:text="Protein: 10g"
         android:textSize="16sp"
-        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
         android:layout_marginTop="4dp"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/dialogTextFoodFat"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/azure"
+        android:background="@color/dark_gray"
         android:text="Fat: 8g"
         android:textSize="16sp"
-        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
         android:layout_marginTop="4dp"
         android:layout_gravity="center_horizontal"/>
 
+    <TextView
+        android:id="@+id/dialogTextGram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/azure"
+        android:textStyle="bold"
+        android:background="@color/dark_gray"
+        android:text="Gram: 100g"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

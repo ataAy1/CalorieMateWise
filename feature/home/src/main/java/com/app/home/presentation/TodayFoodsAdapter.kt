@@ -59,11 +59,13 @@ class TodayFoodsAdapter(
                 .create()
 
             dialogBinding.dialogTextFoodLabel.text = food.label
-            dialogBinding.dialogTextFoodCalories.text = "Calories: ${food.calories}"
-            dialogBinding.dialogTextFoodCarbs.text = "Carbohydrates: ${food.carbohydrates}"
+            dialogBinding.dialogTextFoodCalories.text = "Kalori: ${food.calories}"
+            dialogBinding.dialogTextFoodCarbs.text = "Karbonhidrat: ${food.carbohydrates}"
             dialogBinding.dialogTextFoodProtein.text = "Protein: ${food.protein}"
-            dialogBinding.dialogTextFoodFat.text = "Fat: ${food.fat}"
+            dialogBinding.dialogTextFoodFat.text = "Yağ: ${food.fat}"
+            dialogBinding.dialogTextGram.text = "Gram: ${food.weightofFood}"
             dialogBinding.dialogImageViewFood.load(food.image)
+
 
             dialog.show()
         }
