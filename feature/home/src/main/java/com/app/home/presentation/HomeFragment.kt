@@ -48,36 +48,33 @@ class HomeFragment : Fragment() {
 
         setDate()
         val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
-        val foodsByDateAdapter = FoodsByDateAdapter(emptyMap(), requireActivity())
 
-
-        //binding.recyclerViewFoodsByDate.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewTodayFoods.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerViewTodayFoods.adapter = todayFoodsAdapter
-        //binding.recyclerViewFoodsByDate.adapter = foodsByDateAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.todayFoods.collect { foods ->
-                Log.d("UIUpdate", "Updating UI with today foods: $foods")
-                todayFoodsAdapter.updateData(foods)
-                updateBarChartAndTotalCalorie(foods)
+            viewModel.uiState.collect { state ->
+                if (state.isLoading) {
+                    binding.progressBarHome.visibility = View.VISIBLE
+                } else {
+                    binding.progressBarHome.visibility = View.GONE
+                    todayFoodsAdapter.updateData(state.todayFoods)
+                    updateBarChartAndTotalCalorie(state.todayFoods)
 
+                }
+                state.error?.let { error ->
+                    Log.e("UIUpdate", "Error: $error")
+                }
             }
         }
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.allFoods.collect { foods ->
-                Log.d("UIUpdate", "Updating UI with all foods: $foods")
-                foodsByDateAdapter.updateData(foods)
-            }
-        }*/
+
 
 
 
         viewModel.getTodayFoods()
-        //viewModel.getAllFoods()
 
 
     }
@@ -128,7 +125,7 @@ class HomeFragment : Fragment() {
         binding.barChart.description.isEnabled = false
         binding.barChart.legend.isEnabled = false
         binding.barChart.invalidate()
-        binding.barChart.animateY(1260)
+        binding.barChart.animateY(1500)
     }
 
     private fun setDate() {

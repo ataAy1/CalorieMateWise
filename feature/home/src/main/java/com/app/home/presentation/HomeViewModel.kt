@@ -1,7 +1,7 @@
 package com.app.home.presentation
 
 
-
+import HomeUIState
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,33 +16,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllFoodsUseCase: GetAllFoodsUseCase,
     private val getTodayFoodsUseCase: GetTodayFoodsUseCase,
 ) : ViewModel() {
 
-    private val _todayFoods = MutableStateFlow<List<FoodModel>>(emptyList())
-    val todayFoods: StateFlow<List<FoodModel>> get() = _todayFoods
-
-    private val _allFoods = MutableStateFlow<List<FoodModel>>(emptyList())
-    val allFoods: StateFlow<List<FoodModel>> get() = _allFoods
-
-    fun getAllFoods() {
-        viewModelScope.launch {
-            getAllFoodsUseCase()
-                .collect { foods ->
-                    Log.d("ViewModelDebug", "Collected all foods: $foods")
-                    _allFoods.value = foods
-                }
-        }
-    }
+    private val _uiState = MutableStateFlow(HomeUIState())
+    val uiState: StateFlow<HomeUIState> get() = _uiState
 
     fun getTodayFoods() {
         viewModelScope.launch {
-            getTodayFoodsUseCase()
-                .collect { foods ->
-                    Log.d("ViewModelDebug", "Collected foods by date ($): $foods")
-                    _todayFoods.value = foods
-                }
+            _uiState.value = HomeUIState(isLoading = true)
+            try {
+                getTodayFoodsUseCase()
+                    .collect { foods ->
+                        Log.d("HomeViewModel", "Fetched today's foods: $foods")
+                        _uiState.value = HomeUIState(todayFoods = foods, isLoading = false)
+                    }
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error fetching today's foods", e)
+                _uiState.value = HomeUIState(isLoading = false, error = e.message)
+            }
         }
-    }
-}
+    } }
