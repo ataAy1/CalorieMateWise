@@ -45,8 +45,10 @@ class SearchFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             searchViewModel.uiState.collect { state ->
                 if (state.isLoading) {
+                    binding.progressBarSearch.visibility = View.VISIBLE
                     Log.d("SearchFragment", "Loading data...")
                 } else {
+                    binding.progressBarSearch.visibility = View.GONE
                     Log.d("SearchFragment", "Data loading complete.")
                     state.combinedResponse?.let { combinedResponse ->
                         Log.d("SearchFragment", "Data received: $combinedResponse")
@@ -58,6 +60,7 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+
 
         searchViewModel.search("meat")
     }
