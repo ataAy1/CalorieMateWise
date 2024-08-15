@@ -36,7 +36,7 @@
         android:id="@+id/etAge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/dark_goldenrod"
         android:hint="Yaşınızı Girin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/button_calculate_design"
         android:gravity="center"
@@ -136,10 +136,10 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/rgGender"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgGender" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
@@ -164,7 +164,7 @@
         android:id="@+id/dailyCalorieTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/indian_red"
@@ -177,8 +177,8 @@
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/nutritionAnalysisChart"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_width="404dp"
+        android:layout_height="335dp"
         android:layout_marginBottom="66dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

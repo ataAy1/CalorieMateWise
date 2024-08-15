@@ -17,6 +17,7 @@ navigationUi = "2.7.7"
 databinding = "8.5.1"
 ksp = "2.0.0-1.0.22"
 kotlinSerialization = "1.7.0"
+firebaseStorage = "20.2.0"
 firestoreKtx = "25.0.0"
 android-library = "8.4.1"
 coil = "2.3.0"
@@ -64,6 +65,8 @@ mpandroidchart = { group = "com.github.PhilJay", name = "mpandroidchart", versio
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseBom" }  # Uses the firebaseBom version
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android-compiler" }

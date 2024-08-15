@@ -62,6 +62,8 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
             if (result != null) {
                 viewModel.saveNutritionAnalysis(result)
             } else {
+                Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun ve hesaplama yapınız", Toast.LENGTH_SHORT).show()
+
             }
         }
     }

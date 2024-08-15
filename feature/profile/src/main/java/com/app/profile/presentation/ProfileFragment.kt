@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,9 +49,6 @@ class ProfileFragment : Fragment() {
         observeViewModel()
         setAvatarImage()
 
-
-
-
         binding.changePhotoImageView.setOnClickListener {
             showAvatarSelectionDialog()
         }
@@ -59,7 +57,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_nutritionAnalysisFragment)
         }
 
-        binding.imageViewUpdateUserInfo.setOnClickListener{
+        binding.imageViewUpdateUserInfo.setOnClickListener {
             showUpdateUserInfoDialog()
         }
     }
@@ -82,32 +80,35 @@ class ProfileFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             profileViewModel.foodUiState.collect { foodUiState ->
-                val foodParcelizeList = foodUiState.foodList.map { food ->
-                    FoodModelParcelize(
-                        food.id, food.label, food.calories, food.protein, food.weightofFood,food.fat,
-                        food.carbohydrates, food.image, food.date, food.year,
-                        food.yearOfMonth, food.dayOfMonth, food.dayName
-                    )
-                }
-                profileAdapter.updateData(foodParcelizeList)
-                binding.profileProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
-                foodUiState.error?.let {
+                if (isAdded) {
+                    val foodParcelizeList = foodUiState.foodList.map { food ->
+                        FoodModelParcelize(
+                            food.id, food.label, food.calories, food.protein, food.weightofFood, food.fat,
+                            food.carbohydrates, food.image, food.date, food.year,
+                            food.yearOfMonth, food.dayOfMonth, food.dayName
+                        )
+                    }
+                    profileAdapter.updateData(foodParcelizeList)
+                    binding.profileProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
+                    foodUiState.error?.let {
+                    }
                 }
             }
         }
 
         lifecycleScope.launch {
             profileViewModel.userUiState.collect { userUiState ->
-                userUiState.user?.let { user ->
-                    binding.userHeightEditText.setText(user.height?.toString() ?: "")
-                    binding.userWeightEditText.setText(user.weight?.toString() ?: "")
-                    binding.userAgeEditText.setText(user.age?.toString() ?: "")
-                    binding.userEmailEditText.setText(user.email ?: "")
-                }
+                if (isAdded) {
+                    userUiState.user?.let { user ->
+                        binding.userHeightEditText.setText(user.height?.toString() ?: "")
+                        binding.userWeightEditText.setText(user.weight?.toString() ?: "")
+                        binding.userAgeEditText.setText(user.age?.toString() ?: "")
+                        binding.userEmailEditText.setText(user.email ?: "")
+                    }
 
-                binding.profileProgressBar.visibility = if (userUiState.isLoading) View.VISIBLE else View.GONE
-                userUiState.error?.let {
-
+                    binding.profileProgressBar.visibility = if (userUiState.isLoading) View.VISIBLE else View.GONE
+                    userUiState.error?.let {
+                    }
                 }
             }
         }
@@ -167,7 +168,6 @@ class ProfileFragment : Fragment() {
         binding.userPhotoImageView.setImageResource(selectedAvatar)
     }
 
-
     private fun showUpdateUserInfoDialog() {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_user_info, null)
         val heightEditText: EditText = dialogView.findViewById(R.id.heightEditText)
@@ -178,14 +178,33 @@ class ProfileFragment : Fragment() {
             .setTitle("Profil Güncelleme")
             .setView(dialogView)
             .setPositiveButton("Güncelle") { _, _ ->
-                val height = heightEditText.text.toString()
-                val weight = weightEditText.text.toString()
-                val age = ageEditText.text.toString()
-                profileViewModel.updateUserInfo(height, weight, age)
+                val heightStr = heightEditText.text.toString()
+                val weightStr = weightEditText.text.toString()
+                val ageStr = ageEditText.text.toString()
+
+                if (heightStr.isBlank() || weightStr.isBlank() || ageStr.isBlank()) {
+                    Toast.makeText(context, "Lütfen tüm alanları doldurun.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                val height = heightStr.toDoubleOrNull()
+                val weight = weightStr.toDoubleOrNull()
+                val age = ageStr.toIntOrNull()
+
+                if (height == null || height <= 0 || weight == null || weight <= 0 || age == null || age <= 0) {
+                    Toast.makeText(context, "Geçersiz veri. Lütfen sayıları doğru girin.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                profileViewModel.updateUserInfo(heightStr, weightStr, ageStr)
+
+                Toast.makeText(context, "Profil başarıyla güncellendi.", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("İptal", null)
             .show()
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
