@@ -1,10 +1,13 @@
 package com.app.detail.data.repository
 
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.app.detail.data.model.FoodModel
 import com.app.detail.domain.repository.SearchDetailRepository
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -64,4 +67,35 @@ class SearchDetailRepositoryImpl @Inject constructor(
             throw e
         }
     }
+
+    override suspend fun uploadImage(imageUri: Uri): String {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+            ?: throw Exception("User not authenticated")
+
+        val storageReference = FirebaseStorage.getInstance().reference
+        val imageRef = storageReference.child("images/$userId/${System.currentTimeMillis()}.jpg")
+
+        try {
+            Log.d("UploadDebug", "Starting upload for Uri: $imageUri")
+            val uploadTask = imageRef.putFile(imageUri).await()
+            Log.d("UploadDebug", "Upload task completed with success: ${uploadTask.task.isSuccessful}")
+
+            if (uploadTask.task.isSuccessful) {
+                val downloadUrl = imageRef.downloadUrl.await().toString()
+                Log.d("UploadDebug", "File uploaded successfully. Download URL: $downloadUrl")
+                return downloadUrl
+            } else {
+                val exception = uploadTask.task.exception
+                Log.e("UploadError", "Upload failed with exception: ${exception?.message}", exception)
+                throw exception ?: Exception("Unknown error occurred during image upload")
+            }
+        } catch (e: StorageException) {
+            Log.e("UploadError", "StorageException: ${e.message}", e)
+            throw e
+        } catch (e: Exception) {
+            Log.e("UploadError", "Exception: ${e.message}", e)
+            throw e
+        }
+    }
+
 }

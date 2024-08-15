@@ -1,6 +1,7 @@
 package com.app.detail.presentation
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import coil.load
 import com.app.data.dto.ParsedFood
 import com.app.detail.data.model.FoodModel
 import com.app.detail.databinding.FragmentSearchDetailBinding
+import com.app.utils.ImageUtils
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -23,6 +25,9 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.io.File
+import java.net.URI
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -35,7 +40,6 @@ class SearchDetailFragment : Fragment() {
     private val args: SearchDetailFragmentArgs by navArgs()
     private val viewModel: SearchDetailViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,8 +51,6 @@ class SearchDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         val foodDetail = args.parsedFood
         if (foodDetail != null) {
             setupPieChart(foodDetail)
@@ -58,7 +60,6 @@ class SearchDetailFragment : Fragment() {
             binding.textFoodProtein.text = "Protein: ${foodDetail.nutrients.PROCNT} g"
             binding.textFoodFat.text = "Yağ: ${foodDetail.nutrients.FAT} g"
             binding.textFoodCarbohydrates.text = "Karbonhidrat: ${foodDetail.nutrients.CHOCDF} g"
-
         } else {
             Log.d("SearchDetailFragment", "No ParsedFood received")
         }
@@ -67,74 +68,114 @@ class SearchDetailFragment : Fragment() {
             val user = FirebaseAuth.getInstance().currentUser
 
             if (user != null) {
-                Log.d("SearchDetailFragment", "Current User: ${user.uid}, Email: ${user.email}")
-
                 val today = LocalDate.now()
                 val locale = Locale("tr")
-
                 val year = today.format(DateTimeFormatter.ofPattern("yyyy", locale))
                 val yearMonth = today.format(DateTimeFormatter.ofPattern("MM", locale))
                 val day = today.dayOfMonth
                 val dayName = today.format(DateTimeFormatter.ofPattern("EEEE", locale))
                 val weightOfFoodText = binding.weightOfFoodEditText.text.toString()
-
                 val weightOfFood = weightOfFoodText.toIntOrNull()
 
                 if (weightOfFood != null) {
                     val ratio = weightOfFood / 100.0
-
                     val adjustedCalories = (foodDetail.nutrients.ENERC_KCAL * ratio).toInt()
                     val adjustedProtein = (foodDetail.nutrients.PROCNT * ratio).toInt()
                     val adjustedFat = (foodDetail.nutrients.FAT * ratio).toInt()
                     val adjustedCarbohydrates = (foodDetail.nutrients.CHOCDF * ratio).toInt()
 
-                    val foodModel = FoodModel(
-                        id = null,
-                        label = foodDetail.label,
-                        calories = adjustedCalories,
-                        protein = adjustedProtein,
-                        weightofFood = weightOfFood,
-                        fat = adjustedFat,
-                        carbohydrates = adjustedCarbohydrates,
-                        image = foodDetail.image,
-                        date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
-                        year = year,
-                        dayName = dayName,
-                        dayOfMonth = day.toString(),
-                        yearOfMonth = yearMonth
-                    )
+                    if (foodDetail.image != null) {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val imageFile = ImageUtils.downloadImage(foodDetail.image, requireContext())
+                            val imageUri = imageFile?.let { Uri.fromFile(it) }
 
-                    viewModel.addFoodToMeal(foodModel)
-
+                            if (imageUri != null) {
+                                try {
+                                    viewModel.uploadImage(imageUri).collect { imageUrl ->
+                                        val foodModel = FoodModel(
+                                            id = null,
+                                            label = foodDetail.label,
+                                            calories = adjustedCalories,
+                                            protein = adjustedProtein,
+                                            weightofFood = weightOfFood,
+                                            fat = adjustedFat,
+                                            carbohydrates = adjustedCarbohydrates,
+                                            image = imageUrl ?: "",
+                                            date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
+                                            year = year,
+                                            dayName = dayName,
+                                            dayOfMonth = day.toString(),
+                                            yearOfMonth = yearMonth
+                                        )
+                                        viewModel.addFoodToMeal(foodModel)
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("SearchDetailFragment", "Error uploading image", e)
+                                    Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Log.e("SearchDetailFragment", "Image URI is null")
+                                Toast.makeText(requireContext(), "Image download failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        val foodModel = FoodModel(
+                            id = null,
+                            label = foodDetail.label,
+                            calories = adjustedCalories,
+                            protein = adjustedProtein,
+                            weightofFood = weightOfFood,
+                            fat = adjustedFat,
+                            carbohydrates = adjustedCarbohydrates,
+                            image = "",
+                            date = today.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)),
+                            year = year,
+                            dayName = dayName,
+                            dayOfMonth = day.toString(),
+                            yearOfMonth = yearMonth
+                        )
+                        viewModel.addFoodToMeal(foodModel)
+                    }
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Lütfen gram olarak, (100,200) şeklinde,geçerli bir sayı girini..",
+                        "Lütfen gram olarak, (100,200) şeklinde, geçerli bir sayı giriniz.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
             } else {
                 Log.d("SearchDetailFragment", "No user is authenticated")
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            Log.d("dene", "No user is authenticated")
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect { state ->
-                if (state.isLoading) {
-                    binding.progressBarAddToMeal.visibility = View.VISIBLE
-                } else {
-                    binding.progressBarAddToMeal.visibility = View.GONE
+            launch {
+                viewModel.uiState.collect { state ->
+                    binding.progressBarAddToMeal.visibility = if (state.isLoading) View.VISIBLE else View.GONE
                     if (state.isSuccess) {
                         Toast.makeText(context, "Yemek Eklendi", Toast.LENGTH_SHORT).show()
+                        binding.progressBarAddToMeal.visibility = View.GONE
                     } else if (state.error != null) {
                         Toast.makeText(context, "Error: ${state.error}", Toast.LENGTH_SHORT).show()
+                        binding.progressBarAddToMeal.visibility = View.GONE
+                    }
+                }
+            }
+
+            launch {
+                Log.d("dene1", "No user is authenticated")
+
+                viewModel.imageUploadUIState.collect { state ->
+                    binding.progressBarAddToMeal.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                    if (state.imageUrl != null) {
+                    } else if (state.error != null) {
+                        Toast.makeText(context, "Image upload error: ${state.error}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
-
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
