@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="proteinColor">#FF5722</color>
+    <color name="carbohydratesColor">#4CAF50</color>
+    <color name="fatColor">#FFC107</color>
+
+</resources>
