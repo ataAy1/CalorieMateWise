@@ -1,0 +1,7 @@
+<resources>
+    <style name="CustomDialogTheme" parent="Theme.MaterialComponents.Dialog">
+        <!-- Customize your dialog appearance here -->
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    </resources>
