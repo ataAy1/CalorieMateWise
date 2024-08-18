@@ -54,7 +54,6 @@
             android:text="Send"/>
     </LinearLayout>
 
-    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
