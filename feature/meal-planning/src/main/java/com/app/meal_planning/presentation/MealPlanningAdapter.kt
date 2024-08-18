@@ -9,7 +9,7 @@ import coil.load
 import com.app.meal_planning.data.model.MealPlanningRecipe
 import com.app.meal_planning.databinding.ItemMealPlanningBinding
 
-class MealAdapter() : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
+class MealAdapter : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     private var mealList: List<MealPlanningRecipe> = emptyList()
 
@@ -33,22 +33,22 @@ class MealAdapter() : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
         val calories = meal.calories ?: 600
         val yield = meal.yield ?: 3
-
-        Log.d("MealAdapter", "Calories: $calories")
-        Log.d("MealAdapter", "Yield: $yield")
-
         val caloriesPerServing = calories.toDouble() / yield.toDouble()
 
-        Log.d("MealAdapter", "Calories per Serving: $caloriesPerServing")
+        val mealsPerDay = 3
+        val totalMeals = mealList.size
+        val days = (totalMeals + mealsPerDay - 1) / mealsPerDay
 
-        holder.binding.textViewMealLabel.text = meal.label
+        val dayIndex = (position / mealsPerDay) + 1
+
+        holder.binding.textViewDayOfMeal.text = "$dayIndex:Gün"
         holder.binding.textViewMealType.text = meal.mealType
+        holder.binding.textViewMealLabel.text = meal.label
         holder.binding.textViewMealCalorie.text = String.format("%.2f", caloriesPerServing)
         holder.binding.imageViewMeal.load(meal.imageUrl) {
             crossfade(true)
         }
     }
-
 
     override fun getItemCount(): Int = mealList.size
 

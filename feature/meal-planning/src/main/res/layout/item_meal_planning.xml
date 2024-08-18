@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="8dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="20dp"
+        android:id="@+id/textViewDayOfMeal"></TextView>
+
     <ImageView
         android:id="@+id/imageViewMeal"
         android:layout_width="match_parent"
