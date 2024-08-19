@@ -133,15 +133,14 @@
     <ProgressBar
         android:id="@+id/profileProgressBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_width="80dp"
+        android:layout_height="58dp"
         android:indeterminateTint="@color/dark_orange"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/foodHistoryRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewUpdateUserInfo"
         app:layout_constraintVertical_bias="0.396" />
 
 

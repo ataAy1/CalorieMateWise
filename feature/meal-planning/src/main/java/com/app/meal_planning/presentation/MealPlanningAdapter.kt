@@ -42,9 +42,8 @@ class MealAdapter : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
         val dayIndex = (position / mealsPerDay) + 1
 
         holder.binding.textViewDayOfMeal.text = "$dayIndex:Gün"
-        holder.binding.textViewMealType.text = meal.mealType
         holder.binding.textViewMealLabel.text = meal.label
-        holder.binding.textViewMealCalorie.text = String.format("%.2f", caloriesPerServing)
+        holder.binding.textViewMealType.text = "${meal.mealType}: ${String.format("%.2f", caloriesPerServing)} CALORIE"
         holder.binding.imageViewMeal.load(meal.imageUrl) {
             crossfade(true)
         }

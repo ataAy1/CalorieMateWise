@@ -38,6 +38,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.okhttp)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.androidx.core.ktx)

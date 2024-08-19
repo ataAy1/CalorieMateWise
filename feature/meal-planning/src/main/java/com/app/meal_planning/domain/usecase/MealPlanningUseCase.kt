@@ -19,4 +19,6 @@ class MealPlanningUseCase @Inject constructor(
         Log.d("MealPlanningUseCase", "Fetching recipe details for URI: $uri")
         return repository.getRecipeByUri(uri)
     }
+
+
 }

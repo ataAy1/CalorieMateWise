@@ -24,4 +24,6 @@ object DataModule {
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
+
+
 }

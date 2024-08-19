@@ -1,13 +1,18 @@
 package com.app.meal_planning.presentation
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.meal_planning.data.mapper.MealsMapper
+import com.app.meal_planning.data.model.MealPlanUpload
 import com.app.meal_planning.data.model.MealPlanningRecipe
 import com.app.meal_planning.domain.usecase.MealPlanningUseCase
+import com.app.meal_planning.domain.usecase.UploadMealPlanUseCase
 import com.app.meal_planning.data.model.MealsModel
 import com.app.meal_planning.dto.MealPlanRequest
+import com.app.utils.ImageUtil
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -19,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MealPlanningViewModel @Inject constructor(
-    private val useCase: MealPlanningUseCase
+    private val useCase: MealPlanningUseCase,
+    private val uploadUseCase: UploadMealPlanUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MealPlanUIState>(MealPlanUIState.Loading)
@@ -27,33 +33,33 @@ class MealPlanningViewModel @Inject constructor(
 
     fun fetchMealPlan(request: MealPlanRequest) {
         viewModelScope.launch {
+            _uiState.value = MealPlanUIState.Loading
             try {
                 val mealsModel = useCase.execute(request)
-                val sortedMeals = mealsModel.meals
-                Log.d("MealPlanningViewModel", "Meals model received: $mealsModel")
-                Log.d("MealPlanningViewModel", "Sorted meals: $sortedMeals")
+                val orderedMeals = mealsModel.meals
+                Log.d("MealPlanningViewModel3", "Meals model received: $mealsModel")
+                Log.d("MealPlanningViewModel4", "Ordered meals: $orderedMeals")
 
                 val allMeals = Collections.synchronizedList(mutableListOf<MealPlanningRecipe>())
-                val recipeFetchJobs = sortedMeals.map { meal ->
-                    val mealUri = meal.linkOfFood
-                    val mealType = meal.mealType
 
-                    if (mealUri != null && mealType != null) {
-                        async {
+                val recipeFetchJobs = orderedMeals.map { meal ->
+                    async {
+                        val mealUri = meal.linkOfFood
+                        val mealType = meal.mealType
+
+                        if (mealUri != null && mealType != null) {
                             val recipes = getRecipeDetails(mealUri, mealType)
                             recipes?.let { allMeals.addAll(it) }
                         }
-                    } else {
-                        null
                     }
-                }.filterNotNull()
+                }
 
                 recipeFetchJobs.awaitAll()
 
                 _uiState.value = MealPlanUIState.Success(allMeals)
 
             } catch (e: Exception) {
-                Log.e("MealPlanningViewModel", "Exception: ", e)
+                Log.e("MealPlanningViewModel1", "Exception: ", e)
                 _uiState.value = MealPlanUIState.Error("Failed to load meal plan: ${e.message}")
             }
         }
@@ -62,7 +68,7 @@ class MealPlanningViewModel @Inject constructor(
     private suspend fun getRecipeDetails(uri: String, mealType: String): List<MealPlanningRecipe>? {
         return try {
             val recipeResponse = useCase.getRecipeDetails(uri)
-            Log.d("MealPlanningViewModel", "Recipe response: $recipeResponse")
+            Log.d("MealPlanningViewModel2", "Recipe response: $recipeResponse")
 
             recipeResponse.hits.map { hit ->
                 val recipe = hit.recipe
@@ -73,12 +79,20 @@ class MealPlanningViewModel @Inject constructor(
                     label = recipe.label,
                     calories = recipe.calories.toInt(),
                     yield = recipe.yield.toInt()
-
                 )
             }
         } catch (e: Exception) {
             Log.e("MealPlanningViewModel", "Exception: ", e)
             null
+        }
+    }
+
+    fun uploadMealPlans(mealPlans: List<MealPlanUpload>, context: Context) {
+        viewModelScope.launch {
+            try {
+                uploadUseCase.execute(mealPlans,context)
+            } catch (e: Exception) {
+            }
         }
     }
 }
