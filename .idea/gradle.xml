@@ -19,9 +19,9 @@
             <option value="$PROJECT_DIR$/feature/detail" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/meal-planning" />
+            <option value="$PROJECT_DIR$/feature/meal-planning-detail" />
             <option value="$PROJECT_DIR$/feature/profile" />
             <option value="$PROJECT_DIR$/feature/search" />
-            <option value="$PROJECT_DIR$/feature/search-interactive" />
             <option value="$PROJECT_DIR$/feature/signin" />
             <option value="$PROJECT_DIR$/feature/signup" />
           </set>
