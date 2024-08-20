@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_meal_planning_detail"
+    app:startDestination="@id/mealPlanningListFragment">
+
+    <fragment
+        android:id="@+id/mealPlanningListFragment"
+        android:name="com.app.meal_planning_detail.presentation.MealPlanningListFragment">
+        <action
+            android:id="@+id/action_mealPlanningListFragment_to_mealSetsFragment"
+            app:destination="@id/mealSetsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealSetsFragment"
+        android:name="com.app.meal_planning_detail.presentation.MealSetsFragment">
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mealSetsFragment_to_mealPlanningDetailFragment"
+            app:destination="@id/mealPlanningDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealPlanningDetailFragment"
+        android:name="com.app.meal_planning_detail.presentation.MealPlanningDetailFragment"
+        android:label="fragment_meal_planning_detail"
+        tools:layout="@layout/fragment_meal_planning_detail">
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <argument
+            android:name="mealSetId"
+            app:argType="string" />
+    </fragment>
+
+
+</navigation>

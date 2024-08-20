@@ -13,5 +13,6 @@
     <include app:graph="@navigation/navigation_search" />
     <include app:graph="@navigation/navigation_home" />
     <include app:graph="@navigation/navigation_profile" />
+    <include app:graph="@navigation/navigation_meal_planning_detail" />
 
 </navigation>

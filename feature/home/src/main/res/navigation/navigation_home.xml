@@ -25,10 +25,13 @@
         <action
             android:id="@+id/action_homeFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_homeFragment_to_navigation_meal_planning_detail"
+            app:destination="@id/navigation_meal_planning_detail" />
     </fragment>
     <fragment
         android:id="@+id/searchInteractiveFragment"
-        android:name="com.app.search_interactive.presentation.SearchInteractiveFragment"
+        android:name="com.app.meal_planning_detail.presentation.SearchInteractiveFragment"
         android:label="SearchInteractiveFragment" />
     <fragment
         android:id="@+id/mealPlanningFragment"
@@ -36,6 +39,7 @@
         android:label="MealPlanningFragment" />
     <include app:graph="@navigation/navigation_search" />
     <include app:graph="@navigation/navigation_profile" />
+    <include app:graph="@navigation/navigation_meal_planning_detail" />
 
 
 </navigation>

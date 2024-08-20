@@ -21,7 +21,7 @@
         android:layout_gravity="center" />
 
     <item
-        android:id="@+id/searchInteractiveFragment"
+        android:id="@+id/navigation_meal_planning_detail"
         android:icon="@drawable/ic_menu_meals"
         android:title="Öğün Planla "
         android:layout_width="wrap_content"
