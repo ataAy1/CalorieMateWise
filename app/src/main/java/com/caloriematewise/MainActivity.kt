@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         val topLevelDestinations = setOf(
             R.id.navigation_home,
             R.id.navigation_search,
-            R.id.searchInteractiveFragment,
+            R.id.navigation_meal_planning_detail,
             R.id.mealPlanningFragment,
             R.id.navigation_profile
         )

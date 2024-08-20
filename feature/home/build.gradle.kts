@@ -46,7 +46,7 @@ dependencies {
 
     implementation(project(":feature:meal-planning"))
     implementation(project(":feature:search"))
-    implementation(project(":feature:search-interactive"))
+    implementation(project(":feature:meal-planning-detail"))
     implementation(project(":feature:profile"))
 
     implementation(project(":core:domain"))

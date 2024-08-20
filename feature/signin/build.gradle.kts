@@ -41,7 +41,7 @@ android {
 dependencies {
 
     implementation(project(":feature:profile"))
-    implementation(project(":feature:search-interactive"))
+    implementation(project(":feature:meal-planning-detail"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
     implementation(project(":feature:signup"))
