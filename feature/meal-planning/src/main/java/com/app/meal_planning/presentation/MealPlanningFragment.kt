@@ -189,11 +189,9 @@ class MealPlanningFragment : Fragment() {
                             mealAdapter.submitList(state.updatedMeals)
                             binding.progressBar.visibility = View.GONE
 
-
                             val mealPlans = state.updatedMeals.mapIndexed { index, meal ->
                                 transformToMealPlanUpload(meal, index + 1)
                             }
-
 
                             viewModel.uploadMealPlans(mealPlans, requireContext())
                         }
@@ -215,13 +213,10 @@ class MealPlanningFragment : Fragment() {
                     }
                 }
             }
-
         } else {
             chatAdapter.addMessage("Please enter valid inputs.")
         }
     }
-
-
     fun transformToMealPlanUpload(meal: MealPlanningRecipe, order: Int): MealPlanUpload {
         val mealPlanUpload = MealPlanUpload(
             mealType = meal.mealType ?: "Unknown",

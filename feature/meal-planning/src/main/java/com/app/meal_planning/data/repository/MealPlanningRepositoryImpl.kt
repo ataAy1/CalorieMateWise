@@ -1,23 +1,36 @@
 package com.app.meal_planning.data.repository
 
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import com.app.meal_planning.data.mapper.MealsMapper
+import com.app.meal_planning.data.model.MealPlanUpload
 import com.app.meal_planning.data.remote.MealPlanningApi
 import com.app.meal_planning.domain.repository.MealPlanningRepository
 import com.app.meal_planning.dto.MealPlanRequest
 import com.app.meal_planning.data.model.MealsModel
 import com.app.meal_planning.dto.RecipeResponse
+import com.app.utils.DateUtil
+import com.app.utils.ImageUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import retrofit2.Response
+import java.util.UUID
 
 class MealPlanningRepositoryImpl @Inject constructor(
     private val api: MealPlanningApi,
-    private val mapper: MealsMapper
+    private val mapper: MealsMapper,
+    private val firestore: FirebaseFirestore,
+    private val storage: FirebaseStorage,
+    private val auth: FirebaseAuth
 ) : MealPlanningRepository {
 
     override suspend fun getMealPlan(request: MealPlanRequest): MealsModel {
-        Log.d("MealPlanningRepositoryImpl", "Sending request: $request")
+        Log.d("MealPlanningRepositoryImpl3", "Sending request: $request")
         val response = api.getMealPlan(
             appId = "490834e2",
             userId = "micheal708",
@@ -27,18 +40,18 @@ class MealPlanningRepositoryImpl @Inject constructor(
 
         if (response.isSuccessful) {
             val responseBody = response.body() ?: throw Exception("Response body is null")
-            Log.d("MealPlanningRepositoryImpl", "Response received: $responseBody")
+            Log.d("MealPlanningRepositoryImpl1", "Response received: $responseBody")
             return mapper.mapToMealsModel(responseBody)
         } else {
             val errorBody = response.errorBody()?.string() ?: "Unknown error"
-            Log.e("MealPlanningRepositoryImpl", "API call failed with code ${response.code()}: $errorBody")
+            Log.e("MealPlanningRepositoryImpl2", "API call failed with code ${response.code()}: $errorBody")
             throw Exception("API call failed with code ${response.code()}: $errorBody")
         }
 
     }
 
     override suspend fun getRecipeByUri(uri: String): RecipeResponse {
-        Log.d("MealPlanningRepositoryImpl", "Fetching recipe details for URI: $uri")
+        Log.d("MealPlanningRepositoryImpl4", "Fetching recipe details for URI: $uri")
         val fieldsArray = listOf("label", "image", "calories", "mealType","yield")
 
         val response = api.getRecipeByUri(
@@ -56,9 +69,91 @@ class MealPlanningRepositoryImpl @Inject constructor(
 
         } else {
             val errorBody = response.errorBody()?.string() ?: "Unknown error"
-            Log.e("MealPlanningRepositoryImpl", "API call failed with code ${response.code()}: $errorBody")
+            Log.e("MealPlanningRepositoryImpl5", "API call failed with code ${response.code()}: $errorBody")
             throw Exception("API call failed with code ${response.code()}: $errorBody")
         }
     }
 
+    override suspend fun uploadMealPlans(mealPlans: List<MealPlanUpload>, context: Context) {
+        val userId = auth.currentUser?.uid
+        val currentDate = DateUtil.getCurrentDate()
+        val uniqueMealSetId = UUID.randomUUID().toString()
+
+        if (userId == null) {
+            Log.e("uploadMealPlans", "User ID is null")
+            return
+        }
+
+        val mealPlansRef = firestore.collection("mealPlanning")
+            .document(userId)
+            .collection("dates")
+            .document(currentDate)
+            .collection("mealSets")
+
+        val mealSetDocRef = mealPlansRef.document(uniqueMealSetId)
+
+        try {
+            val dateDocRef = firestore.collection("mealPlanning")
+                .document(userId)
+                .collection("dates")
+                .document(currentDate)
+
+            val dateDocSnapshot = dateDocRef.get().await()
+            if (!dateDocSnapshot.exists()) {
+                dateDocRef.set(mapOf("exists" to true)).await()
+                Log.d("uploadMealPlans", "Date document created for: $currentDate")
+            }
+
+            val mealSetDocSnapshot = mealSetDocRef.get().await()
+            if (!mealSetDocSnapshot.exists()) {
+                mealSetDocRef.set(mapOf("exists" to true)).await()
+                Log.d("uploadMealPlans", "Meal set document created for: $uniqueMealSetId")
+            }
+
+            val batch = firestore.batch()
+
+            for (mealPlan in mealPlans) {
+                val imageUri = mealPlan.imageUrl
+
+                if (imageUri.isNotEmpty()) {
+                    try {
+                        val imageByteArray = ImageUtil.downloadImage(imageUri, context)
+
+                        if (imageByteArray != null) {
+                            val imageRef = storage.reference.child("mealPlanningImages/$userId/${Uri.parse(imageUri).lastPathSegment}")
+
+                            val uploadTask = imageRef.putBytes(imageByteArray).await()
+
+                            val imageDownloadUrl = uploadTask.metadata?.reference?.downloadUrl?.await().toString()
+
+                            val mealPlanData = mealPlan.copy(imageUrl = imageDownloadUrl)
+
+                            val mealPlanRef = mealSetDocRef.collection("meals").document()
+                            batch.set(mealPlanRef, mealPlanData)
+                        } else {
+                            Log.e("uploadMealPlans", "Error downloading image from $imageUri")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("uploadMealPlans", "Error uploading image or meal plan: ", e)
+                    }
+                } else {
+                    try {
+                        val mealPlanData = mealPlan.copy(imageUrl = "")
+
+                        val mealPlanRef = mealSetDocRef.collection("meals").document()
+                        batch.set(mealPlanRef, mealPlanData)
+                    } catch (e: Exception) {
+                        Log.e("uploadMealPlans", "Error uploading meal plan: ", e)
+                    }
+                }
+            }
+
+            batch.commit().await()
+            Log.d("uploadMealPlans", "All meal plans uploaded successfully")
+
+        } catch (e: Exception) {
+            Log.e("uploadMealPlans", "Error uploading meal plans", e)
+            throw e
+        }
+    }
 }

@@ -46,6 +46,7 @@ class MealPlanningViewModel @Inject constructor(
                     async {
                         val mealUri = meal.linkOfFood
                         val mealType = meal.mealType
+                        Log.d("MealPlanningViewModel14", "mealUri meals: $mealUri")
 
                         if (mealUri != null && mealType != null) {
                             val recipes = getRecipeDetails(mealUri, mealType)
@@ -67,8 +68,9 @@ class MealPlanningViewModel @Inject constructor(
 
     private suspend fun getRecipeDetails(uri: String, mealType: String): List<MealPlanningRecipe>? {
         return try {
+            Log.d("MealPlanningViewModel23", "Fetching recipe details for URI: $uri")
             val recipeResponse = useCase.getRecipeDetails(uri)
-            Log.d("MealPlanningViewModel2", "Recipe response: $recipeResponse")
+            Log.d("MealPlanningViewModel2", "Recipe response for URI $uri: $recipeResponse")
 
             recipeResponse.hits.map { hit ->
                 val recipe = hit.recipe
@@ -82,10 +84,11 @@ class MealPlanningViewModel @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            Log.e("MealPlanningViewModel", "Exception: ", e)
+            Log.e("MealPlanningViewModel", "Exception during getRecipeDetails for URI: $uri", e)
             null
         }
     }
+
 
     fun uploadMealPlans(mealPlans: List<MealPlanUpload>, context: Context) {
         viewModelScope.launch {
