@@ -10,4 +10,7 @@ sealed class MealPlanUIState {
     object Uploading : MealPlanUIState()
     object UploadSuccess : MealPlanUIState()
     data class UploadError(val message: String) : MealPlanUIState()
+
+    data class UserCountDateFetched(val countDate: String) : MealPlanUIState()
+    data class UserCountError(val message: String) : MealPlanUIState()
 }

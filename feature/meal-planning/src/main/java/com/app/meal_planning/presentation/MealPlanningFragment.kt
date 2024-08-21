@@ -22,8 +22,11 @@ import com.app.meal_planning.dto.MealPlanRequest
 import com.app.meal_planning.dto.NutrientRange
 import com.app.meal_planning.dto.Plan
 import com.app.meal_planning.dto.SectionDetail
+import com.app.utils.DateUtil
+import com.google.firebase.firestore.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeParseException
 
 @AndroidEntryPoint
 class MealPlanningFragment : Fragment() {
@@ -46,26 +49,27 @@ class MealPlanningFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.inputLayout.visibility = View.VISIBLE
 
         chatAdapter = ChatAdapter()
         binding.recyclerViewChat.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewChat.adapter = chatAdapter
 
         mealAdapter = MealAdapter()
-        binding.recyclerViewMealPlanning.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewMealPlanning.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewMealPlanning.adapter = mealAdapter
 
-
-        startChatFlow()
+        checkUserStatus()
     }
 
     private fun startChatFlow() {
-        chatAdapter.promptForInput("How many calories do you want?")
+        chatAdapter.promptForInput("Günlük kaç kalori hedefiniz var?")
 
         binding.buttonSend.setOnClickListener {
             val userInput = binding.editTextMessage.text.toString()
             if (userInput.isNotBlank()) {
-                chatAdapter.addMessage("You: $userInput")
+                chatAdapter.addMessage("Sen: $userInput")
                 handleUserResponse(userInput)
                 binding.editTextMessage.text.clear()
             }
@@ -79,21 +83,31 @@ class MealPlanningFragment : Fragment() {
                 val calorieRange = parseCalorieRange(response)
                 if (calorieRange != null) {
                     userInputs["calories"] = response
-                    chatAdapter.promptForInput("How many days for the meal plan?")
+                    chatAdapter.promptForInput("Kaç Günlük Öğün Listesi Yapılsın?")
                 } else {
-                    Toast.makeText(requireContext(), "Invalid input! Please enter a valid calorie range (e.g., 1500-2500).", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Geçersiz İşlem ! min-max kalori değerleri  olarak giriniz! Örnek: 1500-2500.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+
             !userInputs.containsKey("days") -> {
                 Log.d("ChatDebug", "Received days input: $response")
                 val days = response.toIntOrNull()
-                if (days != null && days > 0) {
+                if (days != null && days in 1..7) {
                     userInputs["days"] = response
-                    chatAdapter.promptForInput("Please list all items you want to include for breakfast, lunch, and dinner (e.g., pancake, bread, salad).")
+                    chatAdapter.promptForInput("Talep ettiğiniz öğününüzde içermesi gerekenleri yazınız")
                 } else {
-                    Toast.makeText(requireContext(), "Invalid input! Please enter a valid number of days (e.g., 3).", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Sadece 1 ile 7 arası sayı giriniz! Kaç günlük plan yapılsın? Örnek: 1",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+
             userInputs.containsKey("days") && !userInputs.containsKey("items") -> {
                 Log.d("ChatDebug", "Received meal items input: $response")
                 userInputs["items"] = response
@@ -117,17 +131,17 @@ class MealPlanningFragment : Fragment() {
         val invalidItems = items.filterNot { it in validDishes }
 
         if (invalidItems.isNotEmpty()) {
-            var setFoodItems=validDishes
+            var setFoodItems = validDishes
 
             val sections = mutableMapOf<String, SectionDetail>()
             sections["Breakfast"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =setFoodItems)))
+                accept = Accept(all = listOf(HealthFilter(dish = setFoodItems)))
             )
             sections["Lunch"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =setFoodItems)))
+                accept = Accept(all = listOf(HealthFilter(dish = setFoodItems)))
             )
             sections["Dinner"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =setFoodItems)))
+                accept = Accept(all = listOf(HealthFilter(dish = setFoodItems)))
             )
             val gson = com.google.gson.Gson()
             userInputs["sections"] = gson.toJson(sections)
@@ -135,19 +149,19 @@ class MealPlanningFragment : Fragment() {
         } else {
             val sections = mutableMapOf<String, SectionDetail>()
             sections["Breakfast"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =items)))
+                accept = Accept(all = listOf(HealthFilter(dish = items)))
             )
             sections["Lunch"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =items)))
+                accept = Accept(all = listOf(HealthFilter(dish = items)))
             )
             sections["Dinner"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish =items)))
+                accept = Accept(all = listOf(HealthFilter(dish = items)))
             )
 
             val gson = com.google.gson.Gson()
             userInputs["sections"] = gson.toJson(sections)
             createMealPlanRequest()
-    }
+        }
     }
 
     private fun createMealPlanRequest() {
@@ -183,33 +197,50 @@ class MealPlanningFragment : Fragment() {
                         is MealPlanUIState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                         }
+
                         is MealPlanUIState.Success -> {
-                            Log.d("MealPlanningFragment", "Meals from server: ${state.updatedMeals}")
-                            chatAdapter.addMessage("Meal Plan Generated Successfully!")
+                            Log.d(
+                                "MealPlanningFragment",
+                                "Meals from server: ${state.updatedMeals}"
+                            )
+                            Toast.makeText(
+                                requireContext(),
+                                "Öğün Programın Hazır! Detayları 'Öğünlerim' kısmında görebilirsin.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             mealAdapter.submitList(state.updatedMeals)
                             binding.progressBar.visibility = View.GONE
+                            binding.inputLayout.visibility = View.GONE
 
                             val mealPlans = state.updatedMeals.mapIndexed { index, meal ->
                                 transformToMealPlanUpload(meal, index + 1)
                             }
 
                             viewModel.uploadMealPlans(mealPlans, requireContext())
+                            viewModel.updateUserCount(DateUtil.getCurrentDate().toString())
                         }
+
                         is MealPlanUIState.Error -> {
                             chatAdapter.addMessage("Error: ${state.message}")
                             binding.progressBar.visibility = View.GONE
                         }
+
                         is MealPlanUIState.Uploading -> {
                             binding.progressBar.visibility = View.VISIBLE
                         }
+
                         is MealPlanUIState.UploadSuccess -> {
                             chatAdapter.addMessage("Meal Plan Uploaded Successfully!")
                             binding.progressBar.visibility = View.GONE
                         }
+
                         is MealPlanUIState.UploadError -> {
                             chatAdapter.addMessage("Upload Error: ${state.message}")
                             binding.progressBar.visibility = View.GONE
                         }
+
+                        is MealPlanUIState.UserCountDateFetched -> TODO()
+                        is MealPlanUIState.UserCountError -> TODO()
                     }
                 }
             }
@@ -217,6 +248,7 @@ class MealPlanningFragment : Fragment() {
             chatAdapter.addMessage("Please enter valid inputs.")
         }
     }
+
     fun transformToMealPlanUpload(meal: MealPlanningRecipe, order: Int): MealPlanUpload {
         val mealPlanUpload = MealPlanUpload(
             mealType = meal.mealType ?: "Unknown",
@@ -225,7 +257,7 @@ class MealPlanningFragment : Fragment() {
             label = meal.label ?: "No Label",
             calories = meal.calories ?: 0,
             yield = meal.yield ?: 1,
-            order = order
+            order = meal.timestamp.toInt()
         )
 
 
@@ -245,7 +277,10 @@ class MealPlanningFragment : Fragment() {
             if (minValue != null && maxValue != null && minValue <= maxValue) {
                 Pair(minValue, maxValue)
             } else {
-                Log.d("ChatDebug", "Invalid calorie range values: minValue=$minValue, maxValue=$maxValue")
+                Log.d(
+                    "ChatDebug",
+                    "Invalid calorie range values: minValue=$minValue, maxValue=$maxValue"
+                )
                 null
             }
         } else {
@@ -257,11 +292,89 @@ class MealPlanningFragment : Fragment() {
     private fun parseSections(sectionsString: String): Map<String, SectionDetail> {
         val gson = com.google.gson.Gson()
         return try {
-            val type = object : com.google.gson.reflect.TypeToken<Map<String, SectionDetail>>() {}.type
+            val type =
+                object : com.google.gson.reflect.TypeToken<Map<String, SectionDetail>>() {}.type
             gson.fromJson(sectionsString, type)
         } catch (e: Exception) {
             Log.e("ChatDebug", "Error parsing sections: ${e.message}")
             emptyMap()
+        }
+    }
+
+
+    private fun fetchUserCount() {
+        viewModel.fetchUserCount()
+    }
+
+    private fun updateUserCount(newCountDate: String) {
+        viewModel.updateUserCount(newCountDate)
+    }
+
+    private fun checkUserStatus() {
+        viewModel.fetchUserCount()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                when (state) {
+                    is MealPlanUIState.Loading -> {
+                        // Show loading indicator if needed
+                        Log.d("checkUserStatus", "Loading state")
+                    }
+
+                    is MealPlanUIState.UserCountDateFetched -> {
+                        Log.d("checkUserStatus", "UserCountDateFetched state")
+                        Log.d("checkUserStatus", "Fetched countDate: ${state.countDate}")
+
+                        val currentDate = DateUtil.getCurrentDate().toString()
+                        Log.d("checkUserStatus", "Current date: $currentDate")
+
+                        if (state.countDate.isNullOrEmpty() || state.countDate == "0") {
+                            // Handle the case where countDate is invalid
+                            Log.d("checkUserStatus", "countDate is null, empty, or '0', starting chat flow")
+                            startChatFlow()
+                        } else {
+                            val lastUpdateDate = state.countDate.toString()
+                            Log.d("checkUserStatus", "Last update date: $lastUpdateDate")
+
+                            try {
+                                if (DateUtil.daysBetween(lastUpdateDate, currentDate) >= 3) {
+                                    Log.d("checkUserStatus", "Days between last update and current date >= 3, starting chat flow")
+                                    startChatFlow()
+                                } else {
+                                    Log.d("checkUserStatus", "Days between last update and current date < 3, showing wait message")
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Please wait for 3 days before requesting a new meal plan.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            } catch (e: DateTimeParseException) {
+                                // Log error parsing date
+                                Log.e("checkUserStatus", "Error parsing date: ${e.message}", e)
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Error parsing date: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                    is MealPlanUIState.UserCountError -> {
+                        // Log the error
+                        Log.e("checkUserStatus", "Error fetching user count: ${state.message}")
+                        Toast.makeText(
+                            requireContext(),
+                            "Error fetching user count",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    else -> {
+                        // Log other states if needed
+                        Log.d("checkUserStatus", "Unhandled state: $state")
+                    }
+                }
+            }
         }
     }
 

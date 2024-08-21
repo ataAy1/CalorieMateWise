@@ -16,6 +16,7 @@
     import java.util.Locale
     import javax.inject.Inject
     import com.google.firebase.firestore.CollectionReference
+    import com.google.firebase.firestore.Query
 
     class HomeRepositoryImpl @Inject constructor(
         private val firestore: FirebaseFirestore
@@ -48,6 +49,7 @@
                     .collection("dayofmonth")
                     .document(dayOfMonth)
                     .collection("foods")
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .await()
 

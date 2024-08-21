@@ -15,8 +15,8 @@ data class MealPlanningRecipe(
     val imageUrl: String?,
     val label: String?,
     val calories: Int?,
-    val yield: Int?
-
+    val yield: Int?,
+    val timestamp: Long = System.currentTimeMillis()
 )
 
 data class DayMeals(

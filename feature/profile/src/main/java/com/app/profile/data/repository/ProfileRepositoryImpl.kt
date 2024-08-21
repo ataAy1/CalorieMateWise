@@ -7,6 +7,7 @@
     import com.app.profile.domain.repository.ProfileRepository
     import com.google.firebase.auth.FirebaseAuth
     import com.google.firebase.firestore.FirebaseFirestore
+    import com.google.firebase.firestore.Query
     import kotlinx.coroutines.flow.Flow
     import kotlinx.coroutines.flow.flow
     import kotlinx.coroutines.tasks.await
@@ -66,6 +67,7 @@
                                 .collection("dayofmonth")
                                 .document(day)
                                 .collection("foods")
+                                .orderBy("timestamp", Query.Direction.DESCENDING)
                                 .get()
                                 .await()
 

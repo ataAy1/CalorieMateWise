@@ -156,4 +156,45 @@ class MealPlanningRepositoryImpl @Inject constructor(
             throw e
         }
     }
+
+    override suspend fun getUserCount(): String {
+        return try {
+            val userId = auth.currentUser?.uid ?: throw Exception("User not authenticated")
+            val userDocRef = firestore.collection("Users").document(userId)
+            val userDocSnapshot = userDocRef.get().await()
+
+            if (userDocSnapshot.exists()) {
+                val count = userDocSnapshot.getString("count") ?: "0"
+                Log.d("fetchUserCount", "User count fetched: $count")
+                count
+            } else {
+                "0"
+            }
+        } catch (e: Exception) {
+            Log.e("fetchUserCount", "Error fetching user count", e)
+            "0"
+        }
+    }
+
+
+    override suspend fun updateUserCount(newCountDate: String) {
+        try {
+            val userId = auth.currentUser?.uid ?: throw Exception("User not authenticated")
+            val userDocRef = firestore.collection("Users").document(userId)
+
+            val userDocSnapshot = userDocRef.get().await()
+            if (!userDocSnapshot.exists()) {
+                userDocRef.set(mapOf("count" to newCountDate)).await()
+                Log.d("fetchUserCount", "User document created and count set to $newCountDate")
+            } else {
+                userDocRef.update("count", newCountDate).await()
+                Log.d("fetchUserCount", "User count updated to $newCountDate")
+            }
+        } catch (e: Exception) {
+            Log.e("fetchUserCount", "Error updating user count", e)
+            throw e
+        }
+    }
+
+
 }

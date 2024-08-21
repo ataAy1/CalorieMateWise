@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="3dp"
     android:elevation="2dp"
     android:radius="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:background="@drawable/card_history_detail_background"
         android:padding="2dp">
 
@@ -44,10 +44,10 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/icon_kcal"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/foodImageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
 
         <TextView
             android:id="@+id/foodFatTextView"
@@ -66,10 +66,10 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/icon_fat"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/carbsIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
 
         <TextView
             android:id="@+id/foodProteinTextView"
@@ -88,10 +88,10 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/icon_protein"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/caloriesIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
 
         <TextView
             android:id="@+id/foodCarbohydrateTextView"
@@ -110,16 +110,16 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/icon_carby"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/proteinIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
 
         <TextView
             android:id="@+id/fooodNameTextView"
             android:layout_width="173dp"
             android:layout_height="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="34dp"
             android:gravity="center"
             android:text=""
             android:textColor="@color/chocolate"
@@ -136,11 +136,11 @@
             android:layout_marginStart="6dp"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
-            android:background="@color/black"
+            android:background="@color/burlyWood"
             android:gravity="center"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/foodImageView"

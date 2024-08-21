@@ -3,6 +3,7 @@ package com.app.meal_planning.di
 import com.app.meal_planning.domain.repository.MealPlanningRepository
 import com.app.meal_planning.domain.usecase.MealPlanningUseCase
 import com.app.meal_planning.domain.usecase.UploadMealPlanUseCase
+import com.app.meal_planning.domain.usecase.UserCounterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +25,13 @@ object UseCaseModule {
     fun providUploadMealPlanUseCase(repository: MealPlanningRepository): UploadMealPlanUseCase {
         return UploadMealPlanUseCase(repository)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideUserCounterUseCase(repository: MealPlanningRepository): UserCounterUseCase {
+        return UserCounterUseCase(repository)
+    }
+
+
 }

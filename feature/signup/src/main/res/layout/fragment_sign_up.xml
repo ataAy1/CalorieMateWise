@@ -15,7 +15,7 @@
         android:layout_marginTop="224dp"
         android:layout_marginEnd="126dp"
         android:text="Kayıt Ekranı"
-        android:textColor="@color/sandy_brown"
+        android:textColor="@color/black"
         android:textSize="36dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"

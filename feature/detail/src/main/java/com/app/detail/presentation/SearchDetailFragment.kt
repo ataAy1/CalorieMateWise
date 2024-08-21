@@ -105,7 +105,8 @@ class SearchDetailFragment : Fragment() {
                                             year = year,
                                             dayName = dayName,
                                             dayOfMonth = day.toString(),
-                                            yearOfMonth = yearMonth
+                                            yearOfMonth = yearMonth,
+                                            timestamp = System.currentTimeMillis()
                                         )
                                         viewModel.addFoodToMeal(foodModel)
                                     }

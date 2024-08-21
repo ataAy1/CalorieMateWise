@@ -10,6 +10,7 @@ import com.app.meal_planning.data.model.MealPlanningRecipe
 import com.app.meal_planning.domain.usecase.MealPlanningUseCase
 import com.app.meal_planning.domain.usecase.UploadMealPlanUseCase
 import com.app.meal_planning.data.model.MealsModel
+import com.app.meal_planning.domain.usecase.UserCounterUseCase
 import com.app.meal_planning.dto.MealPlanRequest
 import com.app.utils.ImageUtil
 import com.google.firebase.ktx.Firebase
@@ -25,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MealPlanningViewModel @Inject constructor(
     private val useCase: MealPlanningUseCase,
-    private val uploadUseCase: UploadMealPlanUseCase
+    private val uploadUseCase: UploadMealPlanUseCase,
+    private val userCounterUseCase: UserCounterUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MealPlanUIState>(MealPlanUIState.Loading)
@@ -80,7 +82,9 @@ class MealPlanningViewModel @Inject constructor(
                     imageUrl = recipe.image,
                     label = recipe.label,
                     calories = recipe.calories.toInt(),
-                    yield = recipe.yield.toInt()
+                    yield = recipe.yield.toInt(),
+                    timestamp = System.currentTimeMillis()
+
                 )
             }
         } catch (e: Exception) {
@@ -95,6 +99,32 @@ class MealPlanningViewModel @Inject constructor(
             try {
                 uploadUseCase.execute(mealPlans,context)
             } catch (e: Exception) {
+            }
+        }
+    }
+
+
+    fun fetchUserCount() {
+        viewModelScope.launch {
+            _uiState.value = MealPlanUIState.Loading
+            try {
+                val count = userCounterUseCase.getUserCount()
+                _uiState.value = MealPlanUIState.UserCountDateFetched(count)
+                Log.d("fetchUserCount", "User count fetched: $count")
+            } catch (e: Exception) {
+                _uiState.value = MealPlanUIState.UserCountError("Error fetching user count: ${e.message}")
+                Log.e("fetchUserCount", "Error fetching user count", e)
+            }
+        }
+    }
+
+    fun updateUserCount(newCountDate: String) {
+        viewModelScope.launch {
+            try {
+                userCounterUseCase.updateUserCount(newCountDate)
+                Log.d("fetchUserCount", "User count updated to: $newCountDate")
+            } catch (e: Exception) {
+                Log.e("fetchUserCount", "Error updating user count", e)
             }
         }
     }

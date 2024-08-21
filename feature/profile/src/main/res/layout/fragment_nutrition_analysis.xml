@@ -25,9 +25,10 @@
 
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="44dp"
-        android:layout_height="42dp"
-        android:src="@drawable/ic_arrow_back"
+        android:layout_width="34dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="4dp"
+        android:src="@drawable/icon_arrow_back"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -36,7 +37,7 @@
         android:id="@+id/etAge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/dark_goldenrod"
         android:hint="Yaşınızı Girin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +165,7 @@
         android:id="@+id/dailyCalorieTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/indian_red"
@@ -178,8 +179,9 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/nutritionAnalysisChart"
         android:layout_width="404dp"
-        android:layout_height="335dp"
-        android:layout_marginBottom="66dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

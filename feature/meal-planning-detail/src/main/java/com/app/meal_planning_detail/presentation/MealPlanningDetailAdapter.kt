@@ -13,23 +13,37 @@ class MealPlanningDetailAdapter :
     ListAdapter<MealPlanUpload, MealPlanningDetailAdapter.MealPlanViewHolder>(MealPlanDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealPlanViewHolder {
-        val binding = ItemMealPlanningDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMealPlanningDetailBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return MealPlanViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MealPlanViewHolder, position: Int) {
         val mealPlan = getItem(position)
-        holder.bind(mealPlan)
+        holder.bind(mealPlan, position)
     }
 
     class MealPlanViewHolder(private val binding: ItemMealPlanningDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(mealPlan: MealPlanUpload) {
+        private val mealsPerDay = 3
+
+        fun bind(mealPlan: MealPlanUpload, position: Int) {
             binding.textViewLabel.text = mealPlan.label
-            binding.textViewCalories.text = "Calories: ${mealPlan.calories}"
-            binding.imageViewMeal.load(mealPlan.imageUrl) {
+
+            val caloriesPerYield = if (mealPlan.yield > 0) {
+                mealPlan.calories / mealPlan.yield
+            } else {
+                0
             }
+            binding.textViewCalories.text = "Kalori: ${caloriesPerYield}"
+            binding.imageViewMeal.load(mealPlan.imageUrl)
+
+            val day = (position / mealsPerDay) + 1
+            binding.mealOfDay.text = "$day.Gün Öğününüz"
         }
     }
 

@@ -75,28 +75,28 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
             PieEntry(result.carbs.toFloat(), "Karbonhidrat")
         )
 
-        val dataSet = PieDataSet(entries, "Beslenme Analizi")
+        val dataSet = PieDataSet(entries, "")
         dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
 
-        dataSet.valueTextSize = 16f
+        dataSet.valueTextSize = 12f
 
         val data = PieData(dataSet)
 
         binding.nutritionAnalysisChart.apply {
             this.data = data
             description.isEnabled = false
-            legend.textSize = 16f
-            setEntryLabelTextSize(16f)
+            legend.textSize = 10f
+            setEntryLabelTextSize(10f)
             setEntryLabelColor(Color.BLACK)
             setHoleColor(Color.WHITE)
-            setHoleRadius(60f)
+            setHoleRadius(44f)
             setTransparentCircleAlpha(0)
-            setTransparentCircleRadius(65f)
+            setTransparentCircleRadius(50f)
             animateY(1000)
         }
 
         binding.nutritionAnalysisChart.invalidate()
-        binding.dailyCalorieTextView.text = result.calories.toString()
+        binding.dailyCalorieTextView.text = "Günlük Kalori İhtiyacınız: ${result.calories}"
     }
 
 

@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
         navView = binding.bottomNavigationView
 
         val topLevelDestinations = setOf(
-            R.id.navigation_home,
-            R.id.navigation_search,
-            R.id.navigation_meal_planning_detail,
+            R.id.homeFragment,
+            com.app.search.R.id.searchFragment,
+            com.app.search_interactive.R.id.mealPlanningListFragment,
             R.id.mealPlanningFragment,
-            R.id.navigation_profile
+            com.app.profile.R.id.profileFragment
         )
 
         val appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations).build()
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             if (topLevelDestinations.contains(destination.id)) {
                 navView.visibility = View.VISIBLE
             } else {
-                navView.visibility = View.VISIBLE
+                navView.visibility = View.GONE
             }
         }
 

@@ -89,7 +89,7 @@ class ProfileFragment : Fragment() {
                         )
                     }
                     profileAdapter.updateData(foodParcelizeList)
-                    binding.profileProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
+                    binding.foodProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
                     foodUiState.error?.let {
                     }
                 }
