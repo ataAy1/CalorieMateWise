@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.search.data.mapper.SearchMapper
 import com.app.search.domain.usecase.SearchUseCase
+import com.app.utils.TranslationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,8 +24,8 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = SearchUIState(isLoading = true)
             try {
-
-                searchUseCase.execute(query).collect { response ->
+                val translatedQuery = TranslationUtil.translateToEnglish(query)
+                searchUseCase.execute(translatedQuery).collect { response ->
                     val parsedFoods = response.parsed.map { parsed ->
                         mapper.mapFoodToParsedFood(parsed.food)
                     }
@@ -36,7 +37,7 @@ class SearchViewModel @Inject constructor(
                     val combinedResponse = parsedFoods + hintFoods
 
                     _uiState.value = SearchUIState(
-                        combinedResponse = combinedResponse,
+                        combinedResponseState = combinedResponse,
                         isLoading = false
                     )
                 }
