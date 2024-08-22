@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 29
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,7 +40,6 @@ android {
 
 dependencies {
 
-    implementation(project(":feature:profile"))
     implementation(project(":feature:meal-planning-detail"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))

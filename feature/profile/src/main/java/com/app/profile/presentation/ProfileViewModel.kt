@@ -7,9 +7,11 @@ import com.app.domain.model.NutritionResult
 import com.app.profile.domain.usecase.CalculateNutritionUseCase
 import com.app.profile.domain.usecase.FetchFoodListUseCase
 import com.app.profile.domain.usecase.FetchUserInfoUseCase
+import com.app.profile.domain.usecase.LogOutUseCase
 import com.app.profile.domain.usecase.UpdateUserInfoUseCase
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,8 +23,7 @@ class ProfileViewModel @Inject constructor(
     private val fetchUserInfoUseCase: FetchUserInfoUseCase,
     private val updateUserInfoUseCase: UpdateUserInfoUseCase,
     private val calculateNutritionUseCase: CalculateNutritionUseCase,
-
-
+    private val logOutUseCase: LogOutUseCase
     ) : ViewModel() {
 
     private val _foodUiState = MutableStateFlow(ProfileUIState())
@@ -33,6 +34,10 @@ class ProfileViewModel @Inject constructor(
 
     private val _nutritionResult = MutableStateFlow<NutritionResult?>(null)
     val nutritionResult: StateFlow<NutritionResult?> = _nutritionResult
+
+
+    private val _logoutUiState = MutableStateFlow<LogoutUiState>(LogoutUiState.Idle)
+    val logoutUiState: StateFlow<LogoutUiState> = _logoutUiState
 
     init {
         getAllFoods()
@@ -85,6 +90,18 @@ class ProfileViewModel @Inject constructor(
                 } catch (e: Exception) {
                     Log.e("ViewModelError", "Error saving nutrition analysis", e)
                 }
+            }
+        }
+    }
+
+    fun logOut() {
+        viewModelScope.launch {
+            try {
+                _logoutUiState.value = LogoutUiState.Loading
+                logOutUseCase.execute()
+                _logoutUiState.value = LogoutUiState.Success
+            } catch (e: Exception) {
+                _logoutUiState.value = LogoutUiState.Error(e.message ?: "Logout failed")
             }
         }
     }

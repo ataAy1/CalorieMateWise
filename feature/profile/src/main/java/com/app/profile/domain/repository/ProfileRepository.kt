@@ -6,9 +6,9 @@ import com.app.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {
-    fun getAllFoods(): Flow<List<FoodModel>>
-    fun getUserInfo(): Flow<User>
+    suspend fun getAllFoods(): Flow<List<FoodModel>>
+    suspend fun getUserInfo(): Flow<User>
     suspend fun updateUserInfo(height: String, weight: String, age: String)
     suspend fun saveNutritionAnalysis(userId: String, result: NutritionResult)
-
+    suspend fun logOut()
 }

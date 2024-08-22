@@ -13,6 +13,7 @@ import com.app.meal_planning.data.model.MealsModel
 import com.app.meal_planning.domain.usecase.UserCounterUseCase
 import com.app.meal_planning.dto.MealPlanRequest
 import com.app.utils.ImageUtil
+import com.app.utils.TranslationUtil
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -59,7 +60,13 @@ class MealPlanningViewModel @Inject constructor(
 
                 recipeFetchJobs.awaitAll()
 
-                _uiState.value = MealPlanUIState.Success(allMeals)
+                val translatedMeals = allMeals.map { meal ->
+                    meal.copy(
+                        label = TranslationUtil.translateToTurkish(meal.label ?: ""),
+                        mealType = TranslationUtil.translateToTurkish(meal.mealType)
+                    )
+                }
+                _uiState.value = MealPlanUIState.Success(translatedMeals)
 
             } catch (e: Exception) {
                 Log.e("MealPlanningViewModel1", "Exception: ", e)

@@ -60,7 +60,7 @@ class MealPlanningFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewMealPlanning.adapter = mealAdapter
 
-        checkUserStatus()
+        startChatFlow()
     }
 
     private fun startChatFlow() {
@@ -316,7 +316,6 @@ class MealPlanningFragment : Fragment() {
             viewModel.uiState.collect { state ->
                 when (state) {
                     is MealPlanUIState.Loading -> {
-                        // Show loading indicator if needed
                         Log.d("checkUserStatus", "Loading state")
                     }
 
@@ -328,7 +327,6 @@ class MealPlanningFragment : Fragment() {
                         Log.d("checkUserStatus", "Current date: $currentDate")
 
                         if (state.countDate.isNullOrEmpty() || state.countDate == "0") {
-                            // Handle the case where countDate is invalid
                             Log.d("checkUserStatus", "countDate is null, empty, or '0', starting chat flow")
                             startChatFlow()
                         } else {
@@ -343,12 +341,11 @@ class MealPlanningFragment : Fragment() {
                                     Log.d("checkUserStatus", "Days between last update and current date < 3, showing wait message")
                                     Toast.makeText(
                                         requireContext(),
-                                        "Please wait for 3 days before requesting a new meal plan.",
+                                        "Her 3 günde 1 öğün planı yapabilirsiniz.Lütfen 3 gün bekleyin",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             } catch (e: DateTimeParseException) {
-                                // Log error parsing date
                                 Log.e("checkUserStatus", "Error parsing date: ${e.message}", e)
                                 Toast.makeText(
                                     requireContext(),
@@ -360,23 +357,18 @@ class MealPlanningFragment : Fragment() {
                     }
 
                     is MealPlanUIState.UserCountError -> {
-                        // Log the error
                         Log.e("checkUserStatus", "Error fetching user count: ${state.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error fetching user count",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), "Error fetching user count", Toast.LENGTH_SHORT).show()
                     }
 
                     else -> {
-                        // Log other states if needed
                         Log.d("checkUserStatus", "Unhandled state: $state")
                     }
                 }
             }
         }
     }
+
 
 
 

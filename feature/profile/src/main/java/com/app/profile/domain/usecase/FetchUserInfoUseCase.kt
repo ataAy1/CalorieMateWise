@@ -8,5 +8,5 @@ import javax.inject.Inject
 class FetchUserInfoUseCase @Inject constructor(
     private val profileRepository: ProfileRepository
 ) {
-    fun execute(): Flow<User> = profileRepository.getUserInfo()
+    suspend fun execute(): Flow<User> = profileRepository.getUserInfo()
 }

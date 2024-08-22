@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -23,7 +24,10 @@ import com.app.core.data.model.FoodModelParcelize
 import com.app.profile.R
 import com.app.profile.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -48,6 +52,11 @@ class ProfileFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
         setAvatarImage()
+
+        binding.buttonExit.setOnClickListener {
+            profileViewModel.logOut()
+        }
+
 
         binding.changePhotoImageView.setOnClickListener {
             showAvatarSelectionDialog()
@@ -83,13 +92,24 @@ class ProfileFragment : Fragment() {
                 if (isAdded) {
                     val foodParcelizeList = foodUiState.foodList.map { food ->
                         FoodModelParcelize(
-                            food.id, food.label, food.calories, food.protein, food.weightofFood, food.fat,
-                            food.carbohydrates, food.image, food.date, food.year,
-                            food.yearOfMonth, food.dayOfMonth, food.dayName
+                            food.id,
+                            food.label,
+                            food.calories,
+                            food.protein,
+                            food.weightofFood,
+                            food.fat,
+                            food.carbohydrates,
+                            food.image,
+                            food.date,
+                            food.year,
+                            food.yearOfMonth,
+                            food.dayOfMonth,
+                            food.dayName
                         )
                     }
                     profileAdapter.updateData(foodParcelizeList)
-                    binding.foodProgressBar.visibility = if (foodUiState.isLoading) View.VISIBLE else View.GONE
+                    binding.foodProgressBar.visibility =
+                        if (foodUiState.isLoading) View.VISIBLE else View.GONE
                     foodUiState.error?.let {
                     }
                 }
@@ -106,7 +126,8 @@ class ProfileFragment : Fragment() {
                         binding.userEmailEditText.setText(user.email ?: "")
                     }
 
-                    binding.profileProgressBar.visibility = if (userUiState.isLoading) View.VISIBLE else View.GONE
+                    binding.profileProgressBar.visibility =
+                        if (userUiState.isLoading) View.VISIBLE else View.GONE
                     userUiState.error?.let {
                     }
                 }
@@ -154,12 +175,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveSelectedAvatar(resourceId: Int) {
-        val sharedPreferences = requireContext().getSharedPreferences("ProfilePreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("ProfilePreferences", Context.MODE_PRIVATE)
         sharedPreferences.edit().putInt("SelectedAvatar", resourceId).apply()
     }
 
     private fun getSelectedAvatar(): Int {
-        val sharedPreferences = requireContext().getSharedPreferences("ProfilePreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("ProfilePreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("SelectedAvatar", R.drawable.ic_profile_photo_2)
     }
 
@@ -169,7 +192,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showUpdateUserInfoDialog() {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_user_info, null)
+        val dialogView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_user_info, null)
         val heightEditText: EditText = dialogView.findViewById(R.id.heightEditText)
         val weightEditText: EditText = dialogView.findViewById(R.id.weightEditText)
         val ageEditText: EditText = dialogView.findViewById(R.id.ageEditText)
@@ -183,7 +207,8 @@ class ProfileFragment : Fragment() {
                 val ageStr = ageEditText.text.toString()
 
                 if (heightStr.isBlank() || weightStr.isBlank() || ageStr.isBlank()) {
-                    Toast.makeText(context, "Lütfen tüm alanları doldurun.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Lütfen tüm alanları doldurun.", Toast.LENGTH_SHORT)
+                        .show()
                     return@setPositiveButton
                 }
 
@@ -192,7 +217,11 @@ class ProfileFragment : Fragment() {
                 val age = ageStr.toIntOrNull()
 
                 if (height == null || height <= 0 || weight == null || weight <= 0 || age == null || age <= 0) {
-                    Toast.makeText(context, "Geçersiz veri. Lütfen sayıları doğru girin.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Geçersiz veri. Lütfen sayıları doğru girin.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setPositiveButton
                 }
 
@@ -205,9 +234,37 @@ class ProfileFragment : Fragment() {
     }
 
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun observeLogoutState() {
+        profileViewModel.logoutUiState.onEach { state ->
+            when (state) {
+                is LogoutUiState.Loading -> {
+                }
+                is LogoutUiState.Success -> {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        Toast.makeText(context, "Çıkış Yapıldı ..", Toast.LENGTH_LONG).show()
+
+                        delay(2000)
+                       /* findNavController().navigate(
+                            R.id.action_profileFragment_to_signInFragment2,
+                            null,
+                            navOptions {
+                                popUpTo(R.id.profileFragment) { inclusive = true }
+                            }
+                        )*/
+                    }
+                }
+                is LogoutUiState.Error -> {
+                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                }
+                else -> Unit
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
 }
+

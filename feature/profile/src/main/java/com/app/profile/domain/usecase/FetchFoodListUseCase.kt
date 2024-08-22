@@ -8,7 +8,7 @@ import javax.inject.Inject
 class FetchFoodListUseCase @Inject constructor(
     private val repository: ProfileRepository
 ) {
-    fun execute(): Flow<List<FoodModel>> {
+    suspend fun execute(): Flow<List<FoodModel>> {
         return repository.getAllFoods()
     }
 }
