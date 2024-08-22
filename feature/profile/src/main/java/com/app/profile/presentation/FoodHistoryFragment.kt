@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.core.data.model.FoodModelParcelize
@@ -26,6 +27,10 @@ class FoodHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.backButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
 
         val foodList: Array<FoodModelParcelize> = args.foodList
         setupRecyclerView(foodList)

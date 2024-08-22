@@ -24,17 +24,17 @@ data class Nutrients(
 
 data class Food(
     val foodId: String,
-    val label: String,
-    val knownAs: String,
+    var label: String,
+    var knownAs: String,
     val nutrients: Nutrients,
-    val category: String,
-    val categoryLabel: String,
-    val image: String
+    var category: String,
+    var categoryLabel: String,
+    var image: String
 )
 
 data class Measure(
     val uri: String,
-    val label: String,
+    var label: String,
     val weight: Double,
     val qualified: List<Qualified>? = null
 )

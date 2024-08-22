@@ -9,7 +9,9 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchFood"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
+        android:hint="Yiyecek Araması ..."
+        android:backgroundTint="#D32F2F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,13 +28,15 @@
 
     <ProgressBar
         android:id="@+id/progressBarSearch"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:visibility="invisible"
+        android:indeterminateDrawable="@drawable/progress_bar_icon"
         app:layout_constraintBottom_toBottomOf="@+id/searchRecylerview"
         app:layout_constraintEnd_toEndOf="@+id/searchRecylerview"
         app:layout_constraintStart_toStartOf="@+id/searchRecylerview"
         app:layout_constraintTop_toTopOf="@+id/searchRecylerview" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

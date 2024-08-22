@@ -1,6 +1,9 @@
 package com.app.utils
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.Locale
 
@@ -29,4 +32,11 @@ object DateUtil {
             null
         }
     }
+    fun daysBetween(startDate: String, endDate: String): Long {
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val start = LocalDate.parse(startDate, formatter)
+        val end = LocalDate.parse(endDate, formatter)
+        return ChronoUnit.DAYS.between(start, end)
+    }
+
 }

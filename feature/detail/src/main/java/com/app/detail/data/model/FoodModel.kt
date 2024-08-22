@@ -17,5 +17,6 @@ data class FoodModel(
     val year: String,
     val yearOfMonth: String,
     val dayOfMonth: String,
-    val dayName: String
+    val dayName: String,
+    val timestamp: Long = System.currentTimeMillis()
 )

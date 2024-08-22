@@ -18,7 +18,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
             binding.textViewMessage.text = text
 
             binding.textViewMessage.setTextColor(
-                if (isQuestion) ContextCompat.getColor(binding.root.context, com.app.utils.R.color.alice_blue) else ContextCompat.getColor(binding.root.context, com.app.utils.R.color.dark_goldenrod)
+                if (isQuestion) ContextCompat.getColor(binding.root.context, com.app.utils.R.color.white) else ContextCompat.getColor(binding.root.context, com.app.utils.R.color.white)
             )
 
             val drawable = if (isQuestion) R.drawable.chat_bubble_question else R.drawable.chat_bubble_user

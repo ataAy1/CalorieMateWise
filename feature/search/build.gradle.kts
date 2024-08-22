@@ -48,7 +48,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     kapt(libs.hilt.android.compiler)
 
-    implementation(project(":core:data"))
 
     //Coil
     implementation(libs.coil)
@@ -66,6 +65,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
 
+    implementation(project(":core:data"))
     implementation(project(":core:utils"))
     implementation(project(":feature:detail"))
 }

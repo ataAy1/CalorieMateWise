@@ -50,7 +50,7 @@
         android:id="@+id/userPhotoImageView"
         android:layout_width="119dp"
         android:layout_height="105dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/ic_profile_photo_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -248,6 +248,16 @@
         app:layout_constraintEnd_toEndOf="@+id/imageViewUpdateUserInfo"
         app:layout_constraintStart_toStartOf="@+id/imageViewUpdateUserInfo"
         app:layout_constraintTop_toBottomOf="@+id/imageViewUpdateUserInfo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonExit"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/ic_exit"
+        app:layout_constraintBottom_toBottomOf="@+id/userPhotoImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userPhotoImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data"))
+
+    implementation(libs.mlkit.translate)
+    implementation(libs.kotlinx.coroutines.play.services)
 
 
     // Hilt
