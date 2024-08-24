@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_signInFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_signInFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
 
     <fragment
@@ -23,4 +26,9 @@
         android:name="com.app.signup.presentation.SignUpFragment"
         android:label="SignUpFragment" />
     <include app:graph="@navigation/navigation_home" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.app.signin.presentation.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
 </navigation>

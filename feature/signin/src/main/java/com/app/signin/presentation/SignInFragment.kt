@@ -43,7 +43,9 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
+        binding.resetPasswordText.setOnClickListener{
+            findNavController().navigate(R.id.action_signInFragment_to_resetPasswordFragment)
+        }
 
         binding.buttonRegister.setOnClickListener{
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
@@ -51,10 +53,18 @@ class SignInFragment : Fragment() {
 
 
         binding.buttonLogin.setOnClickListener {
-            val email = binding.editTextLoginEmail.text.toString().trim()
-            val password = binding.editTextLoginPassword.text.toString().trim()
-            signInViewModel.signIn(email, password)
-            observeSignInState()
+            binding.buttonLogin.setOnClickListener {
+                val email = binding.editTextLoginEmail.text.toString().trim()
+                val password = binding.editTextLoginPassword.text.toString().trim()
+
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    signInViewModel.signIn(email, password)
+                    observeSignInState()
+                } else {
+                    Toast.makeText(requireContext(), "Email ve şifre boş olamaz ..", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
     }
 
@@ -64,7 +74,7 @@ class SignInFragment : Fragment() {
                 binding.progressBarSignIn.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
                 if (state.success) {
-                    Toast.makeText(context, "Sign In Successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Giriş Yapıldı ..", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_signInFragment_to_navigation_home)
                 }
 
