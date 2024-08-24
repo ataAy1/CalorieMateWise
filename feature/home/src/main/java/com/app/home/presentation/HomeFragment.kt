@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.NotificationCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,7 +34,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +48,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setDate()
-        val todayFoodsAdapter = TodayFoodsAdapter(emptyList())
+
+        val todayFoodsAdapter = TodayFoodsAdapter(emptyList()) { food ->
+            food.id?.let { id ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        viewModel.deleteFood(id)
+                        Toast.makeText(requireContext(), "Silindi", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                    }
+                }
+            } ?: run {
+                Log.e("HomeFragment", "Food id is null")
+            }
+        }
+
 
         binding.recyclerViewTodayFoods.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -70,14 +85,24 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-
-
-
         viewModel.getTodayFoods()
 
-
     }
+
+    val todayFoodsAdapter = TodayFoodsAdapter(emptyList()) { food ->
+        food.id?.let { id ->
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    viewModel.deleteFood(id)
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Error deleting food: ${e.message}")
+                }
+            }
+        } ?: run {
+            Log.e("HomeFragment", "Food id is null")
+        }
+    }
+
 
     private fun updateBarChartAndTotalCalorie(foods: List<FoodModel>) {
         val protein = foods.sumOf { it.protein }

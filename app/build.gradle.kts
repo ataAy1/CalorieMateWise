@@ -68,6 +68,9 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.picasso)
 
+    implementation(libs.mlkit.translate)
+    implementation(libs.kotlinx.coroutines.play.services)
+
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
@@ -88,4 +91,6 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:utils"))
+
 }

@@ -145,4 +145,39 @@
             }
         }
 
+        override suspend fun deleteFood(foodId: String) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user == null) {
+                Log.e("FirestoreError", "User not authenticated")
+                return
+            }
+            val userId = user.uid
+            val date = LocalDate.now()
+
+            val year = date.year.toString()
+            val yearMonth = date.monthValue.toString().padStart(2, '0')
+            val dayOfMonth = date.dayOfMonth.toString().padStart(2, '0')
+
+            try {
+                firestore.collection("meals")
+                    .document(userId)
+                    .collection("years")
+                    .document(year)
+                    .collection("months")
+                    .document(yearMonth)
+                    .collection("dayofmonth")
+                    .document(dayOfMonth)
+                    .collection("foods")
+                    .document(foodId)
+                    .delete()
+                    .await()
+
+                Log.d("FirestoreSuccess", "Food item with ID $foodId deleted")
+            } catch (e: Exception) {
+                Log.e("FirestoreError", "Error deleting food item", e)
+                throw e
+            }
+        }
+
+
     }

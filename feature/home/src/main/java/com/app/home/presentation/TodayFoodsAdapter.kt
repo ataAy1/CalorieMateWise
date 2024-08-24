@@ -6,9 +6,11 @@ import coil.load
 import com.app.core.data.model.FoodModel
 import com.app.home.databinding.DialogFoodDetailsBinding
 import com.app.home.databinding.ItemTodayFoodsBinding
+import com.app.home.presentation.HomeFragment
 
 class TodayFoodsAdapter(
-    private var foods: List<FoodModel>
+    private var foods: List<FoodModel>,
+    private val onDeleteFood: (FoodModel) -> Unit
 ) : RecyclerView.Adapter<TodayFoodsAdapter.FoodViewHolder>() {
 
     fun updateData(newFoods: List<FoodModel>) {
@@ -55,7 +57,10 @@ class TodayFoodsAdapter(
 
             val dialog = android.app.AlertDialog.Builder(binding.root.context)
                 .setView(dialogBinding.root)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton("Tamam", null)
+                .setNegativeButton("Sil") { _, _ ->
+                    onDeleteFood(food)
+                }
                 .create()
 
             dialogBinding.dialogTextFoodLabel.text = food.label
@@ -66,10 +71,10 @@ class TodayFoodsAdapter(
             dialogBinding.dialogTextGram.text = "Gram: ${food.weightofFood}"
             dialogBinding.dialogImageViewFood.load(food.image)
 
-
             dialog.show()
         }
+    }
 
     }
 
-}
+

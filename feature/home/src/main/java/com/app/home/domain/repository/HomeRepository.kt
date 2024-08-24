@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface HomeRepository {
     fun getTodayFoods(): Flow<List<FoodModel>>
     fun getAllFoods(): Flow<List<FoodModel>>
+    suspend fun deleteFood(foodId: String)
+
 }

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.core.data.model.FoodModel
+import com.app.home.domain.usecase.DeleteFoodUseCase
 import com.app.home.domain.usecase.GetAllFoodsUseCase
 import com.app.home.domain.usecase.GetTodayFoodsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getTodayFoodsUseCase: GetTodayFoodsUseCase,
-) : ViewModel() {
+    private val deleteFoodUseCase: DeleteFoodUseCase,
+
+    ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState: StateFlow<HomeUIState> get() = _uiState
@@ -36,4 +39,18 @@ class HomeViewModel @Inject constructor(
                 _uiState.value = HomeUIState(isLoading = false, error = e.message)
             }
         }
-    } }
+    }
+
+
+    fun deleteFood(foodId: String) {
+        viewModelScope.launch {
+            try {
+                deleteFoodUseCase(foodId)
+                getTodayFoods()
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error deleting food item", e)
+            }
+        }
+    }
+
+}
