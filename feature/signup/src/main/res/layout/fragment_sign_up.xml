@@ -8,26 +8,39 @@
     tools:context=".presentation.SignUpFragment">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="126dp"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/black"
         android:text="Kayıt Ekranı"
-        android:textColor="@color/black"
-        android:textSize="36dp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </TextView>
+
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="32dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="4dp"
+        android:src="@drawable/icon_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
 
     <EditText
         android:id="@+id/editTextRegisterEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="244dp"
         android:layout_marginEnd="14dp"
         android:backgroundTint="#D32F2F"
         android:hint="Email Adresi"
@@ -35,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
         android:id="@+id/editTextRegisterPassword"
@@ -134,9 +147,11 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="44dp"
         android:background="@color/carbohydratesColor"
-        android:text="Kayıt OL"
+        android:text="Kayıt Ol"
         android:textSize="26dp"
+        android:textAllCaps="false"
         android:textStyle="bold"
+        android:textColor="@color/alice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

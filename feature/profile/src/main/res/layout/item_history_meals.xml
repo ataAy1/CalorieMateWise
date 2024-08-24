@@ -22,10 +22,12 @@
             android:layout_width="139dp"
             android:layout_height="101dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/foodCalorieTextView"
@@ -43,8 +45,8 @@
             android:id="@+id/caloriesIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/icon_kcal"
             app:layout_constraintStart_toEndOf="@+id/foodImageView"
             app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
@@ -65,8 +67,8 @@
             android:id="@+id/fatIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/icon_fat"
             app:layout_constraintStart_toEndOf="@+id/carbsIcon"
             app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
@@ -87,8 +89,8 @@
             android:id="@+id/proteinIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/icon_protein"
             app:layout_constraintStart_toEndOf="@+id/caloriesIcon"
             app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
@@ -109,8 +111,8 @@
             android:id="@+id/carbsIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/icon_carby"
             app:layout_constraintStart_toEndOf="@+id/proteinIcon"
             app:layout_constraintTop_toBottomOf="@+id/fooodNameTextView" />
@@ -119,32 +121,14 @@
             android:id="@+id/fooodNameTextView"
             android:layout_width="173dp"
             android:layout_height="24dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/chocolate"
+            android:textColor="@color/brown"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/fatIcon"
             app:layout_constraintStart_toStartOf="@+id/caloriesIcon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/foodCounterTextView"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"
-            android:background="@color/burlyWood"
-            android:gravity="center"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/foodImageView"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

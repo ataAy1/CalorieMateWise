@@ -52,7 +52,7 @@ class SignInFragment : Fragment() {
         }
 
 
-        binding.buttonLogin.setOnClickListener {
+
             binding.buttonLogin.setOnClickListener {
                 val email = binding.editTextLoginEmail.text.toString().trim()
                 val password = binding.editTextLoginPassword.text.toString().trim()
@@ -65,7 +65,7 @@ class SignInFragment : Fragment() {
                 }
             }
 
-        }
+
     }
 
     private fun observeSignInState() {

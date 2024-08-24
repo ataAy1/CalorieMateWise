@@ -3,13 +3,16 @@ package com.caloriematewise
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.app.utils.TranslationUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.caloriematewise.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navView: BottomNavigationView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,9 +48,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         navView.setupWithNavController(navController)
+
+        lifecycleScope.launch {
+            TranslationUtil.ensureModelsDownloaded()
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+
 }

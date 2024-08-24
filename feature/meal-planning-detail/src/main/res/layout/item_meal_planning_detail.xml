@@ -17,16 +17,15 @@
         <ImageView
             android:id="@+id/imageViewMeal"
             android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="122dp"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mealOfDay"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_default="wrap" />
 
         <TextView
@@ -62,21 +61,20 @@
 
         <TextView
             android:id="@+id/mealOfDay"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
-            android:layout_marginStart="24dp"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
+            android:layout_width="187dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="44dp"
             android:gravity="center"
-            android:background="#FAF8F8"
-            android:textColor="@color/brown"
-            android:text="dsadsasdasdaads"
+            android:text=""
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textSize="16dp"
+            android:textColor="@color/brown"
+            android:textSize="18dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewMeal"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.app.domain.model.Gender
 import com.app.domain.model.User
 import com.app.signup.databinding.FragmentSignUpBinding
@@ -32,6 +33,10 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.backButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
 
         binding.buttonRegister.setOnClickListener {
             val email = binding.editTextRegisterEmail.text.toString().trim()

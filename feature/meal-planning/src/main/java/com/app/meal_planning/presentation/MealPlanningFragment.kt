@@ -64,7 +64,7 @@ class MealPlanningFragment : Fragment() {
     }
 
     private fun startChatFlow() {
-        chatAdapter.promptForInput("Günlük kaç kalori hedefiniz var?")
+        chatAdapter.promptForInput("Merhaba Hoşgeldiniz, Günlük kalori hedefiniz nedir ?")
 
         binding.buttonSend.setOnClickListener {
             val userInput = binding.editTextMessage.text.toString()
@@ -83,11 +83,11 @@ class MealPlanningFragment : Fragment() {
                 val calorieRange = parseCalorieRange(response)
                 if (calorieRange != null) {
                     userInputs["calories"] = response
-                    chatAdapter.promptForInput("Kaç Günlük Öğün Listesi Yapılsın?")
+                    chatAdapter.promptForInput("Kaç Günlük Program Listesi Planlansın?")
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Geçersiz İşlem ! min-max kalori değerleri  olarak giriniz! Örnek: 1500-2500.",
+                        "Min-max kalori olarak giriniz!Örnek: 1500-2000.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -98,11 +98,12 @@ class MealPlanningFragment : Fragment() {
                 val days = response.toIntOrNull()
                 if (days != null && days in 1..7) {
                     userInputs["days"] = response
-                    chatAdapter.promptForInput("Talep ettiğiniz öğününüzde içermesi gerekenleri yazınız")
+                    chatAdapter.promptForInput("Talep ettiğiniz ve içermesi gerekenleri yiyecekleri yazınız.")
+                    Toast.makeText( requireContext(), "Örnek: ön yemek, yan yemek, ana yemek, salata, deniz ürünleri, çorba, şekerleme", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Sadece 1 ile 7 arası sayı giriniz! Kaç günlük plan yapılsın? Örnek: 1",
+                        "Sadece 1 ile 7 arası sayı giriniz!Örnek: 1",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -110,6 +111,7 @@ class MealPlanningFragment : Fragment() {
 
             userInputs.containsKey("days") && !userInputs.containsKey("items") -> {
                 Log.d("ChatDebug", "Received meal items input: $response")
+
                 userInputs["items"] = response
                 parseMealItems(response)
             }
@@ -122,15 +124,29 @@ class MealPlanningFragment : Fragment() {
         val sections = mutableMapOf<String, SectionDetail>()
 
         val validDishes = listOf(
-            "pizza", "sandwiches", "biscuits and cookies", "bread", "cereals",
-            "condiments and sauces", "desserts", "drinks", "egg", "ice cream and custard",
-            "main course", "pastry", "pies and tarts", "preps", "preserve", "salad",
-            "seafood", "side dish", "soup", "special occasions", "starter", "sweets"
+            "desserts","main course","salad",
+            "seafood", "side dish", "soup",  "starter", "sweets"
         )
 
-        val invalidItems = items.filterNot { it in validDishes }
+        val turkishToEnglishMapping = mapOf(
+            "tatlılar" to "desserts",
+            "ana yemek" to "main course",
+            "salata" to "salad",
+            "deniz ürünleri" to "seafood",
+            "yan yemek" to "side dish",
+            "çorba" to "soup",
+            "ön yemek" to "starter",
+            "şekerleme" to "sweets"
+        )
 
-        if (invalidItems.isNotEmpty()) {
+        val translatedItems = items.map { item ->
+            turkishToEnglishMapping[item] ?: item
+        }
+
+        val validItems = translatedItems.filter { it in validDishes }
+        Log.d("parseMealItems", "Received meal items input: $validItems")
+
+        if (validItems.isNotEmpty()) {
             var setFoodItems = validDishes
 
             val sections = mutableMapOf<String, SectionDetail>()
@@ -149,13 +165,13 @@ class MealPlanningFragment : Fragment() {
         } else {
             val sections = mutableMapOf<String, SectionDetail>()
             sections["Breakfast"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish = items)))
+                accept = Accept(all = listOf(HealthFilter(dish = validDishes)))
             )
             sections["Lunch"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish = items)))
+                accept = Accept(all = listOf(HealthFilter(dish = validDishes)))
             )
             sections["Dinner"] = SectionDetail(
-                accept = Accept(all = listOf(HealthFilter(dish = items)))
+                accept = Accept(all = listOf(HealthFilter(dish = validDishes)))
             )
 
             val gson = com.google.gson.Gson()

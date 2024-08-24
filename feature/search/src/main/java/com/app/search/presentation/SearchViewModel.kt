@@ -1,5 +1,6 @@
 package com.app.search.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.search.data.mapper.SearchMapper
@@ -23,6 +24,8 @@ class SearchViewModel @Inject constructor(
     fun search(query: String) {
         viewModelScope.launch {
             _uiState.value = SearchUIState(isLoading = true)
+            Log.d("SearchUIState", "$query")
+
             try {
                 val translatedQuery = TranslationUtil.translateToEnglish(query)
                 searchUseCase.execute(translatedQuery).collect { response ->

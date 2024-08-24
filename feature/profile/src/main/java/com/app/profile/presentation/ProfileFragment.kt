@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
         setAvatarImage()
 
         binding.buttonExit.setOnClickListener {
-            profileViewModel.logOut()
+            showLogoutConfirmationDialog()
         }
 
 
@@ -120,9 +120,10 @@ class ProfileFragment : Fragment() {
             profileViewModel.userUiState.collect { userUiState ->
                 if (isAdded) {
                     userUiState.user?.let { user ->
-                        binding.userHeightEditText.setText(user.height?.toString() ?: "")
-                        binding.userWeightEditText.setText(user.weight?.toString() ?: "")
-                        binding.userAgeEditText.setText(user.age?.toString() ?: "")
+                        binding.userHeightEditText.setText(user.height?.let { "$it cm" } ?: "")
+                        binding.userWeightEditText.setText(user.weight?.let { "$it kg" } ?: "")
+                        binding.userAgeEditText.setText(user.age?.let { "$it yaş" } ?: "")
+
                         binding.userEmailEditText.setText(user.email ?: "")
                     }
 
@@ -249,13 +250,8 @@ class ProfileFragment : Fragment() {
                         Toast.makeText(context, "Çıkış Yapıldı ..", Toast.LENGTH_LONG).show()
 
                         delay(2000)
-                       /* findNavController().navigate(
-                            R.id.action_profileFragment_to_signInFragment2,
-                            null,
-                            navOptions {
-                                popUpTo(R.id.profileFragment) { inclusive = true }
-                            }
-                        )*/
+                        requireActivity().finishAffinity(
+                        )
                     }
                 }
                 is LogoutUiState.Error -> {
@@ -264,6 +260,18 @@ class ProfileFragment : Fragment() {
                 else -> Unit
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Çıkış Yapma")
+        builder.setMessage("Uygulamadan Çıkış Yapmak İstiyorum?")
+        builder.setPositiveButton("Evet") { _, _ ->
+            profileViewModel.logOut()
+            observeLogoutState()
+        }
+        builder.setNegativeButton("Hayır", null)
+        builder.show()
     }
 
 }

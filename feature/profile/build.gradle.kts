@@ -51,8 +51,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
 
-    implementation(project(":core:domain"))
-    implementation(project(":core:data"))
+
 
     //Coil
     implementation(libs.coil)

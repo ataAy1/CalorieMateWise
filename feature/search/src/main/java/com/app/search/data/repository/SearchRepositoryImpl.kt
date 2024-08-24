@@ -28,13 +28,8 @@ class SearchRepositoryImpl @Inject constructor(
 
             Log.d("SearchRepositoryImpl", "API response: $response")
 
-            val translatedResponse = withContext(Dispatchers.IO) {
-                TranslationUtil.translateApiResponse(response)
-            }
 
-            Log.d("SearchRepositoryImpl", "Translated response: $translatedResponse")
-
-            emit(translatedResponse)
+            emit(response)
         } catch (e: Exception) {
             Log.e("SearchRepositoryImpl", "Error fetching food data", e)
             emit(ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))

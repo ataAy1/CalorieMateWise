@@ -16,9 +16,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.app.search.R
 import com.app.search.data.model.ParsedFood
 import com.app.search.databinding.FragmentSearchBinding
+import com.app.utils.TranslationUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -40,7 +44,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("SearchFragment", "onViewCreated called")
 
         setupRecyclerView()
         setupSearchView()
@@ -96,20 +99,21 @@ class SearchFragment : Fragment() {
 
                     state.combinedResponseState?.let { combinedResponse ->
                         if (combinedResponse.isEmpty()) {
-                            Toast.makeText(requireContext(), "No results found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Sonuç Bulunamadı", Toast.LENGTH_SHORT).show()
                         } else {
                             val processedFoodList = combinedResponse.map { parsedFood ->
                                 val roundedProtein = roundToTwoDecimalPlaces(parsedFood.nutrients.PROCNT)
                                 val roundedCalories = roundToTwoDecimalPlaces(parsedFood.nutrients.ENERC_KCAL)
                                 val roundedFat = roundToTwoDecimalPlaces(parsedFood.nutrients.FAT)
                                 val roundedCarbs = roundToTwoDecimalPlaces(parsedFood.nutrients.CHOCDF)
+                                val label = TranslationUtil.translateToTurkish(parsedFood.label?: "")
 
                                 parsedFood.copy(
                                     nutrients = parsedFood.nutrients.copy(
                                         PROCNT = roundedProtein,
                                         ENERC_KCAL = roundedCalories,
                                         FAT = roundedFat,
-                                        CHOCDF = roundedCarbs
+                                        CHOCDF = roundedCarbs,
                                     )
                                 )
                             }
@@ -133,6 +137,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun roundToTwoDecimalPlaces(value: Double): Double {
-        return String.format("%.1f", value).toDouble()
+        val symbols = DecimalFormatSymbols(Locale.getDefault()).apply {
+            decimalSeparator = '.'
+        }
+        val decimalFormat = DecimalFormat("#.0", symbols)
+        return decimalFormat.format(value).toDouble()
     }
+
 }

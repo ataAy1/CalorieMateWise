@@ -8,16 +8,6 @@
 
 
     <TextView
-        android:id="@+id/textViewTargetCalorie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
-
-    <TextView
         android:id="@+id/textViewtotalCalories"
         android:layout_width="match_parent"
         android:layout_height="144dp"
@@ -36,19 +26,21 @@
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTargetCalorie" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textViewTodayDate"
@@ -56,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="TextView"
+        android:textSize="18dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,14 +59,14 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="6dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="34dp"
         android:gravity="start|center"
         android:text="Bugün Ne Yedim?"
         android:textColor="@color/black"
         android:textSize="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTodayFoods"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProtein" />
 
     <TextView
         android:id="@+id/textViewProtein"

@@ -6,25 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".presentation.SearchFragment">
 
+
+
+    <TextView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/black"
+        android:text="Yiyecek Arama"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </TextView>
+
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchFood"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:hint="Yiyecek Araması ..."
-        android:backgroundTint="#D32F2F"
+        android:layout_marginTop="4dp"
+        android:textColorHint="@color/brown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecylerview"
-        android:layout_width="0dp"
+        android:layout_width="410dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/searchFood"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchFood" />
 
     <ProgressBar
         android:id="@+id/progressBarSearch"

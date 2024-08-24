@@ -22,7 +22,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:text=""
-        android:textColor="@color/brown"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,6 +30,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Breakfast Set" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="44dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_forward"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

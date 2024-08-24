@@ -96,6 +96,7 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
         }
 
         binding.nutritionAnalysisChart.invalidate()
+
         binding.dailyCalorieTextView.text = "Günlük Kalori İhtiyacınız: ${result.calories}"
     }
 

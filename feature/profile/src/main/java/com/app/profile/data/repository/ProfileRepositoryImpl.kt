@@ -17,7 +17,7 @@
         private val firestore: FirebaseFirestore
     ) : ProfileRepository {
 
-        override fun getAllFoods(): Flow<List<FoodModel>> = flow {
+        override suspend fun getAllFoods(): Flow<List<FoodModel>> = flow {
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 emit(emptyList())
@@ -67,7 +67,7 @@
                                 .collection("dayofmonth")
                                 .document(day)
                                 .collection("foods")
-                                .orderBy("timestamp", Query.Direction.DESCENDING)
+                                .orderBy("timestamp", Query.Direction.ASCENDING)
                                 .get()
                                 .await()
 
@@ -81,7 +81,7 @@
                 emit(emptyList())
             }
         }
-        override fun getUserInfo(): Flow<User> = flow {
+        override suspend fun getUserInfo(): Flow<User> = flow {
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 emit(User())
@@ -175,5 +175,11 @@
                 Log.e("ProfileRepository", "Error saving nutrition analysis", e)
             }
         }
-
+        override suspend fun logOut() {
+            try {
+                FirebaseAuth.getInstance().signOut()
+            } catch (e: Exception) {
+                Log.e("ProfileRepository", "Error logging out", e)
+            }
+        }
     }

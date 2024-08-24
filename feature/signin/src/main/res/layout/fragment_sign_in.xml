@@ -19,7 +19,7 @@
         android:layout_marginTop="166dp"
         android:layout_marginEnd="126dp"
         android:text="Giriş Ekranı"
-        android:textColor="#C2185B"
+        android:textColor="@color/blue"
         android:textSize="36dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarSignIn" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextLoginPassword" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogin"
@@ -94,7 +94,7 @@
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Hesabın yok mu ? Kayıt Ol!"
         android:textAlignment="center"
@@ -114,8 +114,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.314"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.509" />
 
     <ImageView
         android:id="@+id/imageView"

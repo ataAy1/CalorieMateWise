@@ -17,17 +17,26 @@
             android:id="@+id/dateOfMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="Meal Type"
-            android:textColor="@color/brown"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="44dp"
+            android:layout_height="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_forward"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_margin="4dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="1dp"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="151dp"
-        android:layout_height="187dp"
+        android:layout_width="wrap_content"
+        android:layout_height="190dp"
         android:background="@drawable/card_today_food_background"
         android:padding="16dp">
 
         <ImageView
             android:id="@+id/imageViewFood"
-            android:layout_width="113dp"
-            android:layout_height="98dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="124dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +44,7 @@
             android:id="@+id/textFoodCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:text="100 kcal"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/imageViewFood"
