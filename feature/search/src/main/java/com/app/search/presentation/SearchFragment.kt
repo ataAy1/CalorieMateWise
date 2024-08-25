@@ -72,6 +72,9 @@ class SearchFragment : Fragment() {
                         if (currentTime - lastQueryTime > debounceTime) {
                             lastQueryTime = currentTime
                             Log.d("SearchFragment", "Search query submitted: $it")
+
+                            adapter.submitList(emptyList())
+
                             searchViewModel.search(it)
                             observeSearchResults()
                         }
@@ -80,6 +83,7 @@ class SearchFragment : Fragment() {
                 return true
             }
 
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
             }
@@ -87,14 +91,14 @@ class SearchFragment : Fragment() {
     }
 
     private fun observeSearchResults() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             searchViewModel.uiState.collect { state ->
                 Log.d("SearchFragment", "State received: $state")
+                binding.progressBarSearch.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+
                 if (state.isLoading) {
-                    binding.progressBarSearch.visibility = View.VISIBLE
                     Log.d("SearchFragment", "Loading data...")
                 } else {
-                    binding.progressBarSearch.visibility = View.GONE
                     Log.d("SearchFragment", "Data loading complete.")
 
                     state.combinedResponseState?.let { combinedResponse ->
@@ -106,7 +110,7 @@ class SearchFragment : Fragment() {
                                 val roundedCalories = roundToTwoDecimalPlaces(parsedFood.nutrients.ENERC_KCAL)
                                 val roundedFat = roundToTwoDecimalPlaces(parsedFood.nutrients.FAT)
                                 val roundedCarbs = roundToTwoDecimalPlaces(parsedFood.nutrients.CHOCDF)
-                                val label = TranslationUtil.translateToTurkish(parsedFood.label?: "")
+                                val label = TranslationUtil.translateToTurkish(parsedFood.label ?: "")
 
                                 parsedFood.copy(
                                     nutrients = parsedFood.nutrients.copy(
@@ -131,10 +135,13 @@ class SearchFragment : Fragment() {
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter.submitList(emptyList())
         _binding = null
     }
+
 
     private fun roundToTwoDecimalPlaces(value: Double): Double {
         val symbols = DecimalFormatSymbols(Locale.getDefault()).apply {
@@ -143,5 +150,11 @@ class SearchFragment : Fragment() {
         val decimalFormat = DecimalFormat("#.0", symbols)
         return decimalFormat.format(value).toDouble()
     }
+
+    override fun onPause() {
+        super.onPause()
+        adapter.submitList(emptyList())
+    }
+
 
 }

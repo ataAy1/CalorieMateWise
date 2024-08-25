@@ -7,66 +7,97 @@
     tools:context=".presentation.HomeFragment">
 
 
-    <TextView
-        android:id="@+id/textViewtotalCalories"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
+        android:layout_height="160dp"
         android:background="@drawable/gradient_bg"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="66dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textViewtotalCalories"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="46"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="44dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBarTargetCalorie"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
+            android:max="100"
+            android:outlineAmbientShadowColor="@color/crimson"
+            android:outlineSpotShadowColor="@color/coral"
+            android:progress="0"
+            android:progressDrawable="@drawable/custom_progress_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewWarning" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTodayFoods"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="404dp"
+        android:layout_height="205dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTodayFood" />
 
     <TextView
         android:id="@+id/textViewTodayDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="TextView"
+        android:text=""
         android:textSize="18dp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewtotalCalories" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewTodayFood"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="6dp"
         android:gravity="start|center"
         android:text="Bugün Ne Yedim?"
         android:textColor="@color/black"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProtein" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCarbohydrates" />
 
     <TextView
         android:id="@+id/textViewProtein"
@@ -118,4 +149,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewWarning"
+        android:layout_width="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTodayDate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

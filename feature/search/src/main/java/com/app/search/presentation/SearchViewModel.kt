@@ -29,15 +29,23 @@ class SearchViewModel @Inject constructor(
             try {
                 val translatedQuery = TranslationUtil.translateToEnglish(query)
                 searchUseCase.execute(translatedQuery).collect { response ->
+                    val availableImages = (response.parsed.map { it.food.image } +
+                            response.hints.map { it.food.image })
+                        .filter { it.isNullOrEmpty().not() }
+
                     val parsedFoods = response.parsed.map { parsed ->
-                        mapper.mapFoodToParsedFood(parsed.food)
-                    }
+                        mapper.mapFoodToParsedFood(parsed.food, availableImages)
+                    }.filter { it.image.isNotEmpty() }
 
                     val hintFoods = response.hints.map { hint ->
-                        mapper.mapFoodToParsedFood(hint.food)
-                    }
+                        mapper.mapFoodToParsedFood(hint.food, availableImages)
+                    }.filter { it.image.isNotEmpty() }
 
                     val combinedResponse = parsedFoods + hintFoods
+
+                    combinedResponse.forEach {
+                        Log.d("SearchUIStateDee", "FoodId: ${it.foodId}, Image: ${it.image}")
+                    }
 
                     _uiState.value = SearchUIState(
                         combinedResponseState = combinedResponse,

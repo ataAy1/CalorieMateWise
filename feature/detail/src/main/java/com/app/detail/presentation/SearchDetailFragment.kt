@@ -83,8 +83,11 @@ class SearchDetailFragment : Fragment() {
                     val adjustedProtein = (foodDetail.nutrients.PROCNT * ratio).toInt()
                     val adjustedFat = (foodDetail.nutrients.FAT * ratio).toInt()
                     val adjustedCarbohydrates = (foodDetail.nutrients.CHOCDF * ratio).toInt()
+                    Log.d("SearchDetailFragmentDes", "Attempting to download image from URL: ${foodDetail.image}")
 
-                    if (foodDetail.image != null) {
+                    if (foodDetail.image.isNotEmpty()&& foodDetail.image.isNotBlank()) {
+                        Log.d("SearchDetailFragmentEnter", "Attempting to download image from URL: ${foodDetail.image}")
+
                         viewLifecycleOwner.lifecycleScope.launch {
                             val imageFile = ImageUtils.downloadImage(foodDetail.image, requireContext())
                             val imageUri = imageFile?.let { Uri.fromFile(it) }
@@ -193,7 +196,7 @@ class SearchDetailFragment : Fragment() {
         )
 
         val dataSet = PieDataSet(entries, "Makro Değerleri").apply {
-            colors = ColorTemplate.JOYFUL_COLORS.toList()
+            colors = ColorTemplate.PASTEL_COLORS.toList()
             valueTextSize = 16f
             valueTextColor = android.graphics.Color.BLACK
         }
@@ -213,4 +216,6 @@ class SearchDetailFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

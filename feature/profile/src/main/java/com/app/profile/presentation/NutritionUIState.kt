@@ -1,10 +1,10 @@
 package com.app.profile.presentation
 
+import com.app.domain.model.NutritionResult
+
 data class NutritionUIState(
-    val calories: Int = 0,
-    val protein: Int = 0,
-    val fat: Int = 0,
-    val carbs: Int = 0,
+    val nutritionResult: NutritionResult? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val saveSuccess: Boolean = false
 )

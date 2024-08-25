@@ -13,7 +13,6 @@ class FoodHistoryAdapter(private val foodList: Array<FoodModelParcelize>) :
     inner class FoodViewHolder(private val binding: ItemHistoryMealsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(food: FoodModelParcelize, position: Int) {
-            binding.foodCounterTextView.text = (position + 1).toString()
             binding.foodCalorieTextView.text = food.calories.toString()
             binding.foodProteinTextView.text = food.protein.toString()
             binding.foodFatTextView.text = food.fat.toString()
@@ -24,8 +23,7 @@ class FoodHistoryAdapter(private val foodList: Array<FoodModelParcelize>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
-        val binding =
-            ItemHistoryMealsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHistoryMealsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FoodViewHolder(binding)
     }
 

@@ -1,4 +1,3 @@
-// File: SearchRepositoryImpl.kt
 package com.app.search.data.repository
 
 import android.util.Log
@@ -18,26 +17,17 @@ class SearchRepositoryImpl @Inject constructor(
     private val apiService: FoodDatabaseApi
 ) : SearchRepository {
     override fun searchFood(query: String): Flow<ApiResponse> = flow {
-        try {
-            val response = apiService.searchFood(
-                appId = Constants.APP_ID,
-                appKey = Constants.APP_KEY,
-                query = query,
-                nutritionType = Constants.NUTRITION_TYPE
-            )
-
-            Log.d("SearchRepositoryImpl", "API response: $response")
-
-
-            emit(response)
-        } catch (e: Exception) {
-            Log.e("SearchRepositoryImpl", "Error fetching food data", e)
-            emit(ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))
-        }
+        val response = apiService.searchFood(
+            appId = Constants.APP_ID,
+            appKey = Constants.APP_KEY,
+            query = query,
+            nutritionType = Constants.NUTRITION_TYPE
+        )
+        emit(response)
     }.onStart {
         Log.d("SearchRepositoryImpl", "Search started for query: $query")
     }.catch { e ->
         Log.e("SearchRepositoryImpl", "Error fetching food data", e)
-        emit(ApiResponse(text = "Error fetching food data", parsed = emptyList(), hints = emptyList()))
+        throw e
     }
 }

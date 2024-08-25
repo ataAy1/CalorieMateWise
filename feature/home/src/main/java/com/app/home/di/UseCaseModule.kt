@@ -2,6 +2,7 @@ package com.app.home.di
 
 import com.app.home.domain.repository.HomeRepository
 import com.app.home.domain.usecase.GetAllFoodsUseCase
+import com.app.home.domain.usecase.GetAnalysisDataUseCase
 import com.app.home.domain.usecase.GetTodayFoodsUseCase
 import dagger.Module
 import dagger.Provides
@@ -28,4 +29,13 @@ object UseCaseModule {
     ): GetAllFoodsUseCase {
         return GetAllFoodsUseCase(homeRepository)
     }
+
+    @Provides
+    @Singleton
+    fun provideGetAnalysisDataUseCase(
+        homeRepository: HomeRepository
+    ): GetAnalysisDataUseCase {
+        return GetAnalysisDataUseCase(homeRepository)
+    }
+
 }

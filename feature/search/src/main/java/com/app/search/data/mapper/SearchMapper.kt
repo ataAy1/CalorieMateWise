@@ -9,12 +9,22 @@ import kotlinx.coroutines.withContext
 
 class SearchMapper {
 
-    suspend fun mapFoodToParsedFood(food: Food): ParsedFood {
+    suspend fun mapFoodToParsedFood(food: Food, availableImages: List<String>): ParsedFood {
         Log.d("SearchMapper", "Mapping Food to ParsedFood")
 
         val label = withContext(Dispatchers.IO) {
             TranslationUtil.translateToTurkish(food.label ?: "")
+        } ?: ""
+
+        val image: String = if (food.image.isNullOrEmpty()) {
+            val randomImage = availableImages.randomOrNull() ?: ""
+            Log.d("SearchMapper", "No image provided for foodId: ${food.foodId}, using random image: $randomImage")
+            randomImage
+        } else {
+            food.image
         }
+
+        Log.d("SearchMapper", "FoodId: ${food.foodId}, Image: $image")
 
         return ParsedFood(
             foodId = food.foodId,
@@ -23,7 +33,7 @@ class SearchMapper {
             nutrients = food.nutrients,
             category = food.category,
             categoryLabel = food.categoryLabel,
-            image = food.image ?: ""
+            image = image
         )
     }
 

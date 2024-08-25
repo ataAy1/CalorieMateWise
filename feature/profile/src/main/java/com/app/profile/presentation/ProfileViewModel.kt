@@ -35,6 +35,8 @@ class ProfileViewModel @Inject constructor(
     private val _nutritionResult = MutableStateFlow<NutritionResult?>(null)
     val nutritionResult: StateFlow<NutritionResult?> = _nutritionResult
 
+    private val _nutritionSaveState = MutableStateFlow<NutritionUIState?>(null)
+    val nutritionSaveState: StateFlow<NutritionUIState?> = _nutritionSaveState
 
     private val _logoutUiState = MutableStateFlow<LogoutUiState>(LogoutUiState.Idle)
     val logoutUiState: StateFlow<LogoutUiState> = _logoutUiState
@@ -85,12 +87,18 @@ class ProfileViewModel @Inject constructor(
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             viewModelScope.launch {
+                _nutritionSaveState.value = NutritionUIState(isLoading = true)
                 try {
                     calculateNutritionUseCase.saveNutritionAnalysis(userId, result)
+                    _nutritionSaveState.value = NutritionUIState(saveSuccess = true)
+                    Log.d("ViewModel", "Nutrition analysis saved successfully")
                 } catch (e: Exception) {
+                    _nutritionSaveState.value = NutritionUIState(error = e.message)
                     Log.e("ViewModelError", "Error saving nutrition analysis", e)
                 }
             }
+        } else {
+            _nutritionSaveState.value = NutritionUIState(error = "User not authenticated")
         }
     }
 

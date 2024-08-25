@@ -3,6 +3,7 @@
     import android.content.ContentValues.TAG
     import android.util.Log
     import com.app.core.data.model.FoodModel
+    import com.app.domain.model.NutritionResult
     import com.app.home.domain.repository.HomeRepository
     import com.google.firebase.auth.FirebaseAuth
     import com.google.firebase.firestore.FirebaseFirestore
@@ -178,6 +179,28 @@
                 throw e
             }
         }
+        override fun getAnalysisData(): Flow<NutritionResult> = flow {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: throw Exception("User not logged in")
 
+            val analysisRef = firestore.collection("Users")
+                .document(userId)
+                .collection("user_calculate_analysis")
 
+            try {
+                val querySnapshot = analysisRef.get().await()
+
+                if (querySnapshot.documents.isNotEmpty()) {
+                    val snapshot = querySnapshot.documents.first()
+                    val nutritionResult = snapshot.toObject(NutritionResult::class.java)
+                    nutritionResult?.let {
+                        emit(it)
+                    } ?: throw Exception("No analysis data found")
+                } else {
+                    throw Exception("No analysis data found")
+                }
+            } catch (e: Exception) {
+                Log.e("ProfileRepository", "Error fetching nutrition analysis", e)
+                throw e
+            }
+        }
     }

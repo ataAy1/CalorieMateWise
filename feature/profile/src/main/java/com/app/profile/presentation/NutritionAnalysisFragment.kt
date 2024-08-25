@@ -63,7 +63,25 @@ class NutritionAnalysisFragment : Fragment(R.layout.fragment_nutrition_analysis)
                 viewModel.saveNutritionAnalysis(result)
             } else {
                 Toast.makeText(requireContext(), "Lütfen tüm alanları doldurun ve hesaplama yapınız", Toast.LENGTH_SHORT).show()
+            }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.nutritionSaveState.collect { state ->
+                if (state != null) {
+                    if (state.isLoading) {
+                    } else {
+                        state.saveSuccess?.let { success ->
+                            if (success) {
+                                Toast.makeText(requireContext(), "Başarıyla kaydedildi!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        state.error?.let { error ->
+                            Toast.makeText(requireContext(), "Hata: $error", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
     }
