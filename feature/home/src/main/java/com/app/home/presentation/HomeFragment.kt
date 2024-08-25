@@ -72,12 +72,13 @@ class HomeFragment : Fragment() {
                     if (state.todayFoods.isNullOrEmpty()) {
                         binding.textViewTodayFood.text = "Bugün bir şey yemediniz."
                         todayFoodsAdapter.updateData(emptyList())
-                        updateBarChartAndTotalCalorie(emptyList())
                     } else {
                         todayFoodsAdapter.updateData(state.todayFoods)
-                        updateBarChartAndTotalCalorie(state.todayFoods)
                     }
+
+                    updateUI(state.todayFoods, viewModel.analysisDataState.value.nutritionResult)
                 }
+
                 state.error?.let { error ->
                     Log.e("HomeFragment", "Error fetching today's foods: $error")
                 }
@@ -89,14 +90,11 @@ class HomeFragment : Fragment() {
                 if (state.isLoading) {
                     Log.d("HomeFragment", "Loading analysis data...")
                 } else {
-                    if (state.nutritionResult == null) {
-                        binding.textViewWarning.text = "Makro analizinizi henüz ayarlanmamış. Profilim kısmında yapınız!"
-                    } else {
-                        addRedLimitLines(state.nutritionResult)
-                    }
                     state.error?.let { error ->
                         Log.e("HomeFragment", "Error fetching analysis data: $error")
                     }
+
+                    updateUI(viewModel.uiState.value.todayFoods, state.nutritionResult)
                 }
             }
         }
@@ -117,72 +115,26 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun addRedLimitLines(nutritionResult: NutritionResult) {
-        val yAxisLeft = binding.barChart.axisLeft
-        yAxisLeft.removeAllLimitLines()
+    private fun updateUI(foods: List<FoodModel>?, nutritionResult: NutritionResult?) {
+        if (foods.isNullOrEmpty()) {
+            binding.textViewTodayFood.text = "Bugün bir şey yemediniz."
+            binding.textViewtotalCalories.text = "0"
+            binding.textViewProtein.text = "Protein: 0"
+            binding.textViewCarbohydrates.text = "Karbonhidrat: 0"
+            binding.textViewFat.text = "Yağ: 0"
+            binding.barChart.clear()
+            return
+        }
 
-        yAxisLeft.isEnabled = true
-        yAxisLeft.setDrawLimitLinesBehindData(true)
-
-        val proteinLimitLine = LimitLine(nutritionResult.protein.toFloat())
-        val carbsLimitLine = LimitLine(nutritionResult.carbs.toFloat())
-        val fatLimitLine = LimitLine(nutritionResult.fat.toFloat())
-
-        proteinLimitLine.lineWidth = 2f
-        proteinLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
-        proteinLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
-        proteinLimitLine.textSize = 12f
-
-        carbsLimitLine.lineWidth = 2f
-        carbsLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
-        carbsLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
-        carbsLimitLine.textSize = 12f
-
-        fatLimitLine.lineWidth = 2f
-        fatLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
-        fatLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
-        fatLimitLine.textSize = 12f
-
-        yAxisLeft.addLimitLine(proteinLimitLine)
-        yAxisLeft.addLimitLine(carbsLimitLine)
-        yAxisLeft.addLimitLine(fatLimitLine)
-
-        binding.barChart.invalidate()
-    }
-
-
-    private fun updateBarChartAndTotalCalorie(foods: List<FoodModel>) {
         val protein = foods.sumOf { it.protein }
         val carbohydrates = foods.sumOf { it.carbohydrates }
         val fat = foods.sumOf { it.fat }
         val totalCaloriesToday = foods.sumOf { it.calories }
 
-        val calorieText = "Bugün tükettiğiniz kalori: <b>$totalCaloriesToday</b>"
-        binding.textViewtotalCalories.text = Html.fromHtml(calorieText)
-
+        binding.textViewtotalCalories.text = totalCaloriesToday.toString()
         binding.textViewProtein.text = "Protein: ${protein.toString()}"
         binding.textViewCarbohydrates.text = "Karbonhidrat: ${carbohydrates.toString()}"
         binding.textViewFat.text = "Yağ: ${fat.toString()}"
-
-        val nutritionResult = viewModel.analysisDataState.value.nutritionResult
-
-        nutritionResult?.let {
-            val targetCalories = it.calories.toFloat()
-            binding.progressBarTargetCalorie.max = targetCalories.toInt()
-            binding.progressBarTargetCalorie.progress = totalCaloriesToday.toInt()
-
-            val remainingCalories = targetCalories - totalCaloriesToday
-
-            val message = if (totalCaloriesToday >= targetCalories) {
-                "Tebrikler! Hedef kaloriye ulaştınız."
-            } else {
-                "Hedefinize ulaşmanız için $remainingCalories kalori kaldı."
-            }
-            binding.textViewTodayDate.text = message
-        } ?: run {
-            binding.textViewWarning.text = "Makro analizinizi henüz ayarlanmamış. Profilim kısmında yapınız!"
-            binding.progressBarTargetCalorie.visibility = View.GONE
-        }
 
         val entries = listOf(
             BarEntry(0f, protein.toFloat()),
@@ -207,33 +159,74 @@ class HomeFragment : Fragment() {
         xAxis.labelCount = entries.size
         xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Protein", "Karbonhidrat", "Yağ"))
 
-        val yAxisLeft = binding.barChart.axisLeft
-        yAxisLeft.setDrawGridLines(true)
-        yAxisLeft.granularity = 40f
-        yAxisLeft.axisMinimum = 0f
-        yAxisLeft.axisMaximum = 300f
-
-        val yAxisRight = binding.barChart.axisRight
-        yAxisRight.setDrawGridLines(false)
-        yAxisRight.isEnabled = false
-
+        binding.barChart.axisRight.isEnabled = false
         binding.barChart.description.isEnabled = false
         binding.barChart.legend.isEnabled = false
         binding.barChart.invalidate()
-        binding.barChart.animateY(1500)
+
+        nutritionResult?.let {
+            binding.progressBarTargetCalorie.max = it.calories.toInt()
+            binding.progressBarTargetCalorie.progress = totalCaloriesToday.toInt()
+            binding.textViewMaxCalories.text = "Hedeflenen kalori : ${it.calories}"
+
+            val remainingCalories = it.calories - totalCaloriesToday
+            binding.textViewTodayDate.text = if (totalCaloriesToday >= it.calories) {
+                "Tebrikler! Hedef kaloriye ulaştınız."
+            } else {
+                "Hedefinize ulaşmanız için $remainingCalories kalori kaldı."
+            }
+
+            addRedLimitLines(it)
+            binding.progressBarTargetCalorie.visibility = View.VISIBLE
+        } ?: run {
+            binding.textViewWarning.text = "Makro analizinizi henüz ayarlanmamış. Profilim Kısmından ayarlarını yapınız"
+            binding.progressBarTargetCalorie.visibility = View.GONE
+        }
     }
+
+
+    private fun addRedLimitLines(nutritionResult: NutritionResult) {
+        val yAxisLeft = binding.barChart.axisLeft
+        yAxisLeft.removeAllLimitLines()
+
+        yAxisLeft.isEnabled = true
+        yAxisLeft.setDrawLimitLinesBehindData(true)
+
+        val proteinLimitLine = LimitLine(nutritionResult.protein.toFloat())
+        val carbsLimitLine = LimitLine(nutritionResult.carbs.toFloat())
+        val fatLimitLine = LimitLine(nutritionResult.fat.toFloat())
+
+        proteinLimitLine.lineWidth = 2f
+        proteinLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
+        proteinLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
+        proteinLimitLine.textSize = 12f
+
+        carbsLimitLine.lineWidth = 2f
+        carbsLimitLine.lineColor =
+            ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
+        carbsLimitLine.textColor =
+            ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
+        carbsLimitLine.textSize = 12f
+
+        fatLimitLine.lineWidth = 2f
+        fatLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
+        fatLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
+        fatLimitLine.textSize = 12f
+
+        yAxisLeft.addLimitLine(proteinLimitLine)
+        yAxisLeft.addLimitLine(carbsLimitLine)
+        yAxisLeft.addLimitLine(fatLimitLine)
+
+        binding.barChart.invalidate()
+    }
+
 
 
     private fun setDate() {
+        val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("tr"))
         val today = LocalDate.now()
-
-        val locale = Locale("tr")
-
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", locale)
-        val formattedDate = today.format(formatter)
-
+        binding.textViewTodayDate.text = today.format(formatter)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

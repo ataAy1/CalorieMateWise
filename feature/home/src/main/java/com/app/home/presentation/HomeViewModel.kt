@@ -32,8 +32,8 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getTodayFoods()
         fetchAnalysisData()
+        getTodayFoods()
     }
 
     fun getTodayFoods() {
