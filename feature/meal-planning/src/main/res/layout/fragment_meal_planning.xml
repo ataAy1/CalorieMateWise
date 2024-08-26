@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:background="@color/black"
-        android:text="Öğün Planlayıcı"
+        android:text="Kalori Planlayıcı"
         android:textSize="22sp"
         android:gravity="center"
         android:textColor="@color/white"
@@ -24,7 +24,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
+        android:layout_height="440dp"
         android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -36,15 +36,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMealPlanning"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/inputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewChat"
-        app:layout_constraintVertical_bias="0.337" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/inputLayout"

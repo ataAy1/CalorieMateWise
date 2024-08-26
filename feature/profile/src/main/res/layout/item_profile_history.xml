@@ -33,6 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Total Calories"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/historyImageView"

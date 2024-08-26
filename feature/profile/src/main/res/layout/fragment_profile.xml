@@ -223,6 +223,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:textColor="@color/brown"
         android:text="Avatar Değiş"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/changePhotoImageView"

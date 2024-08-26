@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:background="@color/black"
-        android:text="Öğün Tarihleri"
+        android:text="Öğünlerim"
         android:textSize="22sp"
         android:gravity="center"
         android:textColor="@color/white"

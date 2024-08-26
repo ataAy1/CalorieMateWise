@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="2dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="1dp"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="190dp"
+        android:layout_height="184dp"
         android:background="@drawable/card_today_food_background"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageViewFood"
             android:layout_width="124dp"
             android:layout_height="104dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageViewFood"
             app:layout_constraintStart_toStartOf="@+id/imageViewFood"
@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="100 kcal"
-            android:textSize="14sp"
+            android:textColor="@color/light_blue"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/imageViewFood"
             app:layout_constraintStart_toStartOf="@+id/imageViewFood"
             app:layout_constraintTop_toBottomOf="@+id/textFoodLabel" />
