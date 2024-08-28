@@ -60,11 +60,11 @@ class MealPlanningFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewMealPlanning.adapter = mealAdapter
 
-        startChatFlow()
+        checkUserStatus()
     }
 
     private fun startChatFlow() {
-        chatAdapter.promptForInput("Merhaba Hoşgeldiniz, Günlük kalori hedefiniz nedir ?")
+        chatAdapter.promptForInput("Merhaba,Günlük kalori hedefiniz nedir ?")
 
         binding.buttonSend.setOnClickListener {
             val userInput = binding.editTextMessage.text.toString()
@@ -83,7 +83,7 @@ class MealPlanningFragment : Fragment() {
                 val calorieRange = parseCalorieRange(response)
                 if (calorieRange != null) {
                     userInputs["calories"] = response
-                    chatAdapter.promptForInput("Kaç Günlük Program Listesi Planlansın?")
+                    chatAdapter.promptForInput("Kaç Günlük Program Yapılsın?")
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -124,9 +124,11 @@ class MealPlanningFragment : Fragment() {
         val sections = mutableMapOf<String, SectionDetail>()
 
         val validDishes = listOf(
-            "desserts","main course","salad",
-            "seafood", "side dish", "soup",  "starter", "sweets"
-        )
+            "Sandwiches", "Pizza", "Special occasions", "Side dish",
+            "Seafood", "Soup", "Salad", "Pies and tarts", "Drinks",
+            "Main course", "Cereals", "Biscuits and cookies", "Bread",
+            "Desserts", "Ice cream and custard", "Egg", "Condiments and sauces",
+            "Pasta", "Preps", "Preserve", "Pastry", "Pancake")
 
         val turkishToEnglishMapping = mapOf(
             "tatlılar" to "desserts",
@@ -219,9 +221,11 @@ class MealPlanningFragment : Fragment() {
                                 "MealPlanningFragment",
                                 "Meals from server: ${state.updatedMeals}"
                             )
+                            chatAdapter.promptForInput("Programınız Hazır!")
+
                             Toast.makeText(
                                 requireContext(),
-                                "Öğün Programın Hazır! Detayları 'Öğünlerim' kısmında görebilirsin.",
+                                "Programınız Hazır! Detayları 'Öğünlerim' kısmında görebilirsin.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             mealAdapter.submitList(state.updatedMeals)

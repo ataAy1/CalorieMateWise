@@ -25,7 +25,7 @@ class MealPlanningListAdapter(private val onClick: (String, String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(date: String) {
-            binding.dateOfMeal.text = "$date - Tarihli Öğün Planınız"
+            binding.dateOfMeal.text = "$date -Yemek Programınız"
             binding.root.setOnClickListener {
                 onClick(date, binding.dateOfMeal.text.toString())
             }

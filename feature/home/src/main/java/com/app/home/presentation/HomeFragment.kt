@@ -1,6 +1,7 @@
 package com.app.home.presentation
 
 import TodayFoodsAdapter
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -68,9 +69,7 @@ class HomeFragment : Fragment() {
                     binding.progressBarHome.visibility = View.VISIBLE
                 } else {
                     binding.progressBarHome.visibility = View.GONE
-
                     if (state.todayFoods.isNullOrEmpty()) {
-                        binding.textViewTodayFood.text = "Bugün bir şey yemediniz."
                         todayFoodsAdapter.updateData(emptyList())
                     } else {
                         todayFoodsAdapter.updateData(state.todayFoods)
@@ -126,6 +125,7 @@ class HomeFragment : Fragment() {
             return
         }
 
+        binding.textViewTodayFood.text = "Bugün Ne Yedim?"
         val protein = foods.sumOf { it.protein }
         val carbohydrates = foods.sumOf { it.carbohydrates }
         val fat = foods.sumOf { it.fat }
@@ -159,12 +159,49 @@ class HomeFragment : Fragment() {
         xAxis.labelCount = entries.size
         xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Protein", "Karbonhidrat", "Yağ"))
 
+        xAxis.labelRotationAngle = 270f
+        xAxis.typeface = Typeface.DEFAULT_BOLD
+
+        val yAxisLeft = binding.barChart.axisLeft
+        yAxisLeft.isEnabled = true
+        yAxisLeft.setDrawLimitLinesBehindData(true)
+
+        yAxisLeft.granularity = 25f
+        yAxisLeft.axisMinimum = 0f
+        yAxisLeft.axisMaximum = 300f
+
+        yAxisLeft.removeAllLimitLines()
+
+        val proteinLimitLine = LimitLine(nutritionResult?.protein?.toFloat() ?: 0f)
+        val carbsLimitLine = LimitLine(nutritionResult?.carbs?.toFloat() ?: 0f)
+        val fatLimitLine = LimitLine(nutritionResult?.fat?.toFloat() ?: 0f)
+
+        proteinLimitLine.lineWidth = 2f
+        proteinLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
+        proteinLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.proteinColor)
+        proteinLimitLine.textSize = 12f
+
+        carbsLimitLine.lineWidth = 2f
+        carbsLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
+        carbsLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.carbohydratesColor)
+        carbsLimitLine.textSize = 12f
+
+        fatLimitLine.lineWidth = 2f
+        fatLimitLine.lineColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
+        fatLimitLine.textColor = ContextCompat.getColor(requireContext(), R.color.fatColor)
+        fatLimitLine.textSize = 12f
+
+        yAxisLeft.addLimitLine(proteinLimitLine)
+        yAxisLeft.addLimitLine(carbsLimitLine)
+        yAxisLeft.addLimitLine(fatLimitLine)
+
         binding.barChart.axisRight.isEnabled = false
         binding.barChart.description.isEnabled = false
         binding.barChart.legend.isEnabled = false
         binding.barChart.invalidate()
 
         nutritionResult?.let {
+            binding.textViewWarning.text = ""
             binding.progressBarTargetCalorie.max = it.calories.toInt()
             binding.progressBarTargetCalorie.progress = totalCaloriesToday.toInt()
             binding.textViewMaxCalories.text = "Hedeflenen kalori : ${it.calories}"
@@ -177,12 +214,14 @@ class HomeFragment : Fragment() {
             }
 
             addRedLimitLines(it)
+
             binding.progressBarTargetCalorie.visibility = View.VISIBLE
         } ?: run {
             binding.textViewWarning.text = "Makro analizinizi henüz ayarlanmamış. Profilim Kısmından ayarlarını yapınız"
             binding.progressBarTargetCalorie.visibility = View.GONE
         }
     }
+
 
 
     private fun addRedLimitLines(nutritionResult: NutritionResult) {

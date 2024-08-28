@@ -7,18 +7,32 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.core.data.model.FoodModelParcelize
 import com.app.profile.databinding.ItemProfileHistoryBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 
 class ProfileAdapter(
     private val onItemClick: (String, List<FoodModelParcelize>) -> Unit
 ) : RecyclerView.Adapter<ProfileAdapter.FoodViewHolder>() {
 
-    private var groupedData: Map<String, List<FoodModelParcelize>> = emptyMap()
+    private var groupedData: List<Pair<String, List<FoodModelParcelize>>> = emptyList()
+
 
     fun updateData(newFoods: List<FoodModelParcelize>) {
         Log.d("ProfileAdapter", "Updating data with newFoods: $newFoods")
-        groupedData = newFoods.groupBy { it.date }
+
+        val formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("tr"))
+
+        groupedData = newFoods.groupBy { LocalDate.parse(it.date, formatter) }
+            .toList()
+            .sortedByDescending { it.first }
+            .map { it.first.format(formatter) to it.second }
+
         notifyDataSetChanged()
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         val binding = ItemProfileHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,8 +40,7 @@ class ProfileAdapter(
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        val date = groupedData.keys.elementAt(position)
-        val foods = groupedData[date] ?: emptyList()
+        val (date, foods) = groupedData[position]
         Log.d("ProfileAdapter", "Binding data at position $position with date: $date and foods: $foods")
         holder.bind(date, foods)
     }
