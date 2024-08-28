@@ -58,7 +58,7 @@ class TodayFoodsAdapter(
             val dialog = android.app.AlertDialog.Builder(binding.root.context)
                 .setView(dialogBinding.root)
                 .setPositiveButton("Tamam", null)
-                .setNegativeButton("Sil") { _, _ ->
+                .setNegativeButton("Kaldır") { _, _ ->
                     onDeleteFood(food)
                 }
                 .create()

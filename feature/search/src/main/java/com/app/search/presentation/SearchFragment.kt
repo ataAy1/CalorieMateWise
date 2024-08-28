@@ -47,15 +47,7 @@ class SearchFragment : Fragment() {
 
         setupRecyclerView()
         setupSearchView()
-    }
 
-    private fun setupRecyclerView() {
-        navController = findNavController()
-        adapter = FoodAdapter(navController)
-
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-        binding.searchRecylerview.layoutManager = gridLayoutManager
-        binding.searchRecylerview.adapter = adapter
     }
 
     private fun setupSearchView() {
@@ -77,12 +69,12 @@ class SearchFragment : Fragment() {
 
                             searchViewModel.search(it)
                             observeSearchResults()
+
                         }
                     }
                 }
                 return true
             }
-
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
@@ -100,7 +92,6 @@ class SearchFragment : Fragment() {
                     Log.d("SearchFragment", "Loading data...")
                 } else {
                     Log.d("SearchFragment", "Data loading complete.")
-
                     state.combinedResponseState?.let { combinedResponse ->
                         if (combinedResponse.isEmpty()) {
                             Toast.makeText(requireContext(), "Sonuç Bulunamadı", Toast.LENGTH_SHORT).show()
@@ -136,6 +127,14 @@ class SearchFragment : Fragment() {
     }
 
 
+    private fun setupRecyclerView() {
+        navController = findNavController()
+        adapter = FoodAdapter(navController)
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        binding.searchRecylerview.layoutManager = gridLayoutManager
+        binding.searchRecylerview.adapter = adapter
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         adapter.submitList(emptyList())

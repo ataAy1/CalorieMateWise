@@ -15,12 +15,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.app.data.dto.ParsedFood
+import com.app.detail.R
 import com.app.detail.data.model.FoodModel
 import com.app.detail.databinding.FragmentSearchDetailBinding
 import com.app.utils.ImageUtils
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,6 +70,7 @@ class SearchDetailFragment : Fragment() {
             val user = FirebaseAuth.getInstance().currentUser
 
             if (user != null) {
+                binding.buttonAddToMeal.isEnabled = false
                 val today = LocalDate.now()
                 val locale = Locale("tr")
                 val year = today.format(DateTimeFormatter.ofPattern("yyyy", locale))
@@ -154,16 +157,18 @@ class SearchDetailFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             Log.d("dene", "No user is authenticated")
-
             launch {
                 viewModel.uiState.collect { state ->
                     binding.progressBarAddToMeal.visibility = if (state.isLoading) View.VISIBLE else View.GONE
                     if (state.isSuccess) {
-                        Toast.makeText(context, "Yemek Eklendi", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Yiyecek Eklendi", Toast.LENGTH_SHORT).show()
                         binding.progressBarAddToMeal.visibility = View.GONE
+                        binding.buttonAddToMeal.isEnabled = true
+
                     } else if (state.error != null) {
                         Toast.makeText(context, "Error: ${state.error}", Toast.LENGTH_SHORT).show()
                         binding.progressBarAddToMeal.visibility = View.GONE
+                        binding.buttonAddToMeal.isEnabled = true
                     }
                 }
             }
@@ -188,29 +193,56 @@ class SearchDetailFragment : Fragment() {
 
     private fun setupPieChart(food: ParsedFood) {
         val pieChart = binding.foodsPieChart
+        pieChart.description.isEnabled = false
+
+        val colorsGraph = listOf(
+            ColorTemplate.rgb("#FFA726"),
+            ColorTemplate.rgb("#66BB6A"),
+            ColorTemplate.rgb("#29B6F6")
+        )
 
         val entries = listOf(
             PieEntry(food.nutrients.PROCNT.toFloat(), "Protein"),
             PieEntry(food.nutrients.FAT.toFloat(), "Yağ"),
             PieEntry(food.nutrients.CHOCDF.toFloat(), "KarbonHidrat")
-        )
+        ).filter { it.value > 0.0f }
 
-        val dataSet = PieDataSet(entries, "Makro Değerleri").apply {
-            colors = ColorTemplate.PASTEL_COLORS.toList()
-            valueTextSize = 16f
-            valueTextColor = android.graphics.Color.BLACK
-        }
 
-        val data = PieData(dataSet)
 
-        pieChart.apply {
-            this.data = data
-            setDrawEntryLabels(true)
-            setDrawHoleEnabled(true)
-            holeRadius = 70f
-            animateY(1250)
+        if (entries.isNotEmpty()) {
+            val dataSet = PieDataSet(entries, "Makro Değerleri").apply {
+                this.colors = colorsGraph
+                valueTextSize = 16f
+                valueTextColor = android.graphics.Color.BLACK
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return if (value >= 1) value.toInt().toString() else ""
+                    }
+                }
+            }
+
+            val data = PieData(dataSet)
+
+            pieChart.apply {
+                this.data = data
+                setDrawEntryLabels(true)
+                setDrawHoleEnabled(true)
+                holeRadius = 70f
+                animateY(1250)
+
+                legend.apply {
+                    textColor = Color.BLACK
+                    isEnabled = true
+                }
+                setEntryLabelColor(Color.BLACK)
+                setEntryLabelTextSize(12f)
+            }
+        } else {
+            pieChart.clear()
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
