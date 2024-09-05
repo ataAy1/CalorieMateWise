@@ -26,21 +26,20 @@ CalorieMateWise is a comprehensive calorie tracking app that helps users monitor
 <div style="text-align: center;">
   <div style="display: inline-block; text-align: center;">
     <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
-      <img src="/docs/1.png" alt="Screenshot 1" width="320" height="540"/> 
-      <img src="/docs/2.png" alt="Screenshot 2" width="320" height="540"/>
-      <img src="/docs/3.png" alt="Screenshot 3" width="320" height="540"/>
+      <img src="/docs/1.png" alt="Screenshot 1" width="280" height="540"/> 
+      <img src="/docs/2.png" alt="Screenshot 2" width="280" height="540"/>
+      <img src="/docs/3.png" alt="Screenshot 3" width="280" height="540"/>
     </div>
 
 <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
-  <img src="/docs/4.png" alt="Screenshot 4" width="320" height="540"/>
-  <img src="/docs/5.png" alt="Screenshot 5" width="320" height="540"/>
-  <img src="/docs/6.png" alt="Screenshot 6" width="320" height="540"/>
+  <img src="/docs/4.png" alt="Screenshot 4" width="280" height="540"/>
+  <img src="/docs/5.png" alt="Screenshot 5" width="280" height="540"/>
+  <img src="/docs/6.png" alt="Screenshot 6" width="280" height="540"/>
 </div>
 
 <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
-  <img src="/docs/7.png" alt="Screenshot 7" width="320" height="540"/>
-  <img src="/docs/8.png" alt="Screenshot 8" width="320" height="540"/>
-  <img src="/docs/9.png" alt="Screenshot 9" width="320" height="540"/>
+  <img src="/docs/7.png" alt="Screenshot 7" width="280" height="540"/>
+  <img src="/docs/8.png" alt="Screenshot 8" width="280" height="540"/>
 </div>
 
 </div>
