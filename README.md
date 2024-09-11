@@ -16,7 +16,7 @@ CalorieMateWise is a comprehensive calorie tracking app that helps users monitor
 - XML
 - Serialization
 
-## Installation
+## ⬇️ Installation
 [![Google_Play_Badge](https://github.com/user-attachments/assets/9a99acc5-43e0-4c6e-8b0e-7d1bcbf8c80a)](https://play.google.com/store/apps/details?id=com.caloriematewise)
 
 
@@ -25,14 +25,14 @@ CalorieMateWise is a comprehensive calorie tracking app that helps users monitor
 
 <div style="text-align: center;">
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-    <img src="/docs/1.png" alt="Screenshot 1" width="240" height="580"/> 
-    <img src="/docs/2.png" alt="Screenshot 2" width="240" height="580"/> 
-    <img src="/docs/3.png" alt="Screenshot 3" width="240" height="580"/> 
-    <img src="/docs/4.png" alt="Screenshot 4" width="240" height="580"/> 
-    <img src="/docs/5.png" alt="Screenshot 5" width="240" height="580"/> 
-    <img src="/docs/6.png" alt="Screenshot 6" width="240" height="580"/> 
-    <img src="/docs/7.png" alt="Screenshot 7" width="240" height="580"/> 
-    <img src="/docs/8.png" alt="Screenshot 8" width="240" height="580"/> 
+    <img src="/docs/1.png" alt="Screenshot 1" width="250" height="540"/> 
+    <img src="/docs/2.png" alt="Screenshot 2" width="250" height="540"/> 
+    <img src="/docs/3.png" alt="Screenshot 3" width="250" height="540"/> 
+    <img src="/docs/4.png" alt="Screenshot 4" width="250" height="540"/> 
+    <img src="/docs/5.png" alt="Screenshot 5" width="250" height="540"/> 
+    <img src="/docs/6.png" alt="Screenshot 6" width="250" height="540"/> 
+    <img src="/docs/7.png" alt="Screenshot 7" width="250" height="540"/> 
+    <img src="/docs/8.png" alt="Screenshot 8" width="250" height="540"/> 
   </div>
 </div>
 
